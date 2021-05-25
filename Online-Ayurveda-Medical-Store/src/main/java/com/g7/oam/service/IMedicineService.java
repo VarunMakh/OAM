@@ -13,7 +13,7 @@ public interface IMedicineService {
 
 	public Medicine updateMedicine(Medicine medicine) throws MedicineNotFoundException;
 
-	public Medicine deleteMedicine(int medicineId) throws MedicineNotFoundException;
+	public Medicine deleteMedicine(String medicineId) throws MedicineNotFoundException;
 
 	public List<Medicine> showAllMedicine();
 	

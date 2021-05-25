@@ -27,6 +27,10 @@ public class User {
 	@Column
 	private String userType;
 
+	public User() {
+		super();
+	}
+
 	public User(int userId, String password, String userType) {
 		super();
 		this.userId = userId;

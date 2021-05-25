@@ -1,20 +1,9 @@
 package com.g7.oam.repository;
 
-import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.g7.oam.entities.Medicine;
-import com.g7.oam.exception.MedicineNotFoundException;
 
-public interface IMedicineRepository {
-
-	public Medicine addMedicine(Medicine medicine);
-
-	public Medicine viewMedicine(Medicine medicine) throws MedicineNotFoundException;
-
-	public Medicine updateMedicine(Medicine medicine) throws MedicineNotFoundException;
-
-	public Medicine deleteMedicine(int id) throws MedicineNotFoundException;
-
-	public List<Medicine> showAllMedicine();
+public interface IMedicineRepository extends JpaRepository<Medicine, Integer> {
 
 }

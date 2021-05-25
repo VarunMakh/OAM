@@ -11,6 +11,11 @@ public class Customer extends User {
 	@Column
 	private String customerName;
 
+	public Customer() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public Customer(int userId, String password) {
 		super(userId, password, "customer");
 		// TODO Auto-generated constructor stub

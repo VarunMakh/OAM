@@ -11,6 +11,11 @@ public class Admin extends User {
 	@Column
 	private String adminName;
 
+	public Admin() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public Admin(int userId, String password) {
 		super(userId, password, "admin");
 		// TODO Auto-generated constructor stub

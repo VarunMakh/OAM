@@ -1,6 +1,7 @@
 package com.g7.oam.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -34,15 +35,19 @@ public class CustomerServiceImpl implements ICustomerService {
 
 	@Override
 	public Customer updateCustomer(Customer customer) throws CustomerNotFoundException {
+		Optional<Customer> optional = null;
 		try {
+			optional = repository.findById(customer.getUserId());
 			repository.save(customer);
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new CustomerNotFoundException("Customer not found for updation!");
+			if (optional.get() == null) {
+				throw new CustomerNotFoundException("Customer not found for updation!");
+			}
 			// TODO: handle exception
 		}
 		// TODO Auto-generated method stub
-		return customer;
+		return optional.get();
 	}
 
 	@Override
@@ -59,16 +64,18 @@ public class CustomerServiceImpl implements ICustomerService {
 
 	@Override
 	public Customer deleteCustomer(int customerId) throws CustomerNotFoundException {
-		Customer customer = new Customer();
-		customer.setUserId(customerId);
+		Optional<Customer> optional = null;
 		try {
+			optional = repository.findById(customerId);
 			repository.deleteById(customerId);
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new CustomerNotFoundException("Customer not found for deletion!");
+			if (optional.get() == null) {
+				throw new CustomerNotFoundException("Customer not found for deletion!");
+			}
 		}
 		// TODO Auto-generated method stub
-		return customer;
+		return optional.get();
 	}
 
 	@Override

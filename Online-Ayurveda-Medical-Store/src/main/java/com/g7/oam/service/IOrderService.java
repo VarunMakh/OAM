@@ -19,12 +19,12 @@ public interface IOrderService {
 
 	public Order cancelOrder(int orderId) throws OrderNotFoundException;
 
-	public List<Order> showAllOrders(int medicineid) throws MedicineNotFoundException;
+	public List<Order> showAllOrders(String medicineid) throws MedicineNotFoundException;
 
 	public List<Order> showAllOrders(Customer customer) throws CustomerNotFoundException;
 
 	public List<Order> showAllOrders(LocalDate date);
 
-	public double calculateTotalCost(int orderid) throws OrderNotFoundException;
+	public float calculateTotalCost(int orderid) throws OrderNotFoundException;
 
 }

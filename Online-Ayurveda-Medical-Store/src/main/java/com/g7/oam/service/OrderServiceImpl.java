@@ -104,7 +104,6 @@ public class OrderServiceImpl implements IOrderService {
 
 	@Override
 	public List<Order> showAllOrders(Customer customer) throws CustomerNotFoundException {
-
 		List<Order> orderList = null;
 		List<Order> allOrderList = new ArrayList<>();
 		try {

@@ -6,6 +6,6 @@ import com.g7.oam.entities.User;
 
 public interface IUserService {
 
-	public List<User> showAllUsers();
+	public List<User>showAllUsers();
 
 }

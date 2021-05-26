@@ -1,6 +1,7 @@
 package com.g7.oam.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -34,15 +35,19 @@ public class AdminServiceImpl implements IAdminService {
 
 	@Override
 	public Admin updateAdmin(Admin admin) throws AdminNotFoundException {
+		Optional<Admin> optional = null;
 		try {
+			optional = repository.findById(admin.getUserId());
 			repository.save(admin);
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new AdminNotFoundException("Admin not found for updation!");
+			if (optional.get() == null) {
+				throw new AdminNotFoundException("Admin not found for updation!");
+			}
 			// TODO: handle exception
 		}
 		// TODO Auto-generated method stub
-		return admin;
+		return optional.get();
 	}
 
 	@Override
@@ -59,16 +64,18 @@ public class AdminServiceImpl implements IAdminService {
 
 	@Override
 	public Admin deleteAdmin(int adminId) throws AdminNotFoundException {
-		Admin admin = new Admin();
-		admin.setUserId(adminId);
+		Optional<Admin> optional = null;
 		try {
+			optional = repository.findById(adminId);
 			repository.deleteById(adminId);
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new AdminNotFoundException("Admin not found for deletion!");
+			if (optional.get() == null) {
+				throw new AdminNotFoundException("Admin not found for deletion!");
+			}
 		}
 		// TODO Auto-generated method stub
-		return admin;
+		return optional.get();
 	}
 
 	@Override

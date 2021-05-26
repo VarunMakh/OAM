@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.g7.oam.entities.Medicine;
 import com.g7.oam.exception.MedicineNotFoundException;
 import com.g7.oam.repository.IMedicineRepository;
 
+@Service
 public class MedicineServiceImpl implements IMedicineService {
 
 	@Autowired

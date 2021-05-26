@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.g7.oam.entities.Customer;
 import com.g7.oam.entities.User;
 import com.g7.oam.exception.CustomerNotFoundException;
 import com.g7.oam.repository.ICustomerRepository;
 
+@Service
 public class CustomerServiceImpl implements ICustomerService {
 
 	@Autowired

@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.g7.oam.entities.Admin;
 import com.g7.oam.entities.User;
 import com.g7.oam.exception.AdminNotFoundException;
 import com.g7.oam.repository.IAdminRepository;
 
+@Service
 public class AdminServiceImpl implements IAdminService {
 
 	@Autowired

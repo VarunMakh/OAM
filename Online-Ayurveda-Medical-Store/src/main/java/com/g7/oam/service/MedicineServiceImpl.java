@@ -18,31 +18,31 @@ public class MedicineServiceImpl implements IMedicineService {
 
 	@Override
 	public Medicine addMedicine(Medicine medicine) {
-
 		try {
 			repository.save(medicine);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		// TODO Auto-generated method stub
 		return medicine;
 	}
 
 	@Override
 	public Medicine viewMedicine(Medicine medicine) throws MedicineNotFoundException {
-		// TODO Auto-generated method stub
+		Optional<Medicine> optional = null;
 		try {
-
+			optional = repository.findById(medicine.getMedicineId());
+			repository.findById(medicine.getMedicineId());
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new MedicineNotFoundException("Medicine not found");
+			if (optional.get() == null) {
+				throw new MedicineNotFoundException("Medicine not found!");
+			}
 		}
 		return medicine;
 	}
 
 	@Override
 	public Medicine updateMedicine(Medicine medicine) throws MedicineNotFoundException {
-		// TODO Auto-generated method stub
 		Optional<Medicine> optional = null;
 		try {
 			optional = repository.findById(medicine.getMedicineId());
@@ -50,7 +50,7 @@ public class MedicineServiceImpl implements IMedicineService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			if (optional.get() == null) {
-				throw new MedicineNotFoundException("Medicine not found for update");
+				throw new MedicineNotFoundException("Medicine not found for updation!");
 			}
 
 		}
@@ -59,7 +59,6 @@ public class MedicineServiceImpl implements IMedicineService {
 
 	@Override
 	public List<Medicine> showAllMedicine() {
-		// TODO Auto-generated method stub
 		List<Medicine> medsList = null;
 		try {
 			medsList = repository.findAll();
@@ -82,7 +81,6 @@ public class MedicineServiceImpl implements IMedicineService {
 			}
 		}
 		return optional.get();
-
 	}
 
 }

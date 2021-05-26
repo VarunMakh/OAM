@@ -27,7 +27,6 @@ public class OrderServiceImpl implements IOrderService {
 		try {
 			repository.save(order);
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		}
 		return order;
@@ -35,14 +34,17 @@ public class OrderServiceImpl implements IOrderService {
 
 	@Override
 	public Order viewOrder(Order order) throws OrderNotFoundException {
+		Optional<Order> optional = null;
 		try {
+			optional = repository.findById(order.getOrderId());
 			repository.findById(order.getOrderId());
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
-			throw new OrderNotFoundException("Order not found");
+			if (optional.get() == null) {
+				throw new OrderNotFoundException("Order not found!");
+			}
 		}
-		return order;
+		return optional.get();
 	}
 
 	@Override
@@ -52,7 +54,6 @@ public class OrderServiceImpl implements IOrderService {
 			optional = repository.findById(order.getOrderId());
 			repository.save(order);
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 			if (optional.get() == null) {
 				throw new OrderNotFoundException("Order not found for updation!");
@@ -68,7 +69,6 @@ public class OrderServiceImpl implements IOrderService {
 			optional = repository.findById(orderId);
 			repository.deleteById(orderId);
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 			if (optional.get() == null) {
 				throw new OrderNotFoundException("Order not found for cancellation!");
@@ -91,9 +91,8 @@ public class OrderServiceImpl implements IOrderService {
 				}
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
-			throw new MedicineNotFoundException();
+			throw new MedicineNotFoundException("Medicine not found!");
 		}
 		return allOrderList;
 	}
@@ -111,9 +110,8 @@ public class OrderServiceImpl implements IOrderService {
 				}
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
-			throw new CustomerNotFoundException();
+			throw new CustomerNotFoundException("Customer not found!");
 		}
 		return allOrderList;
 	}
@@ -131,7 +129,6 @@ public class OrderServiceImpl implements IOrderService {
 				}
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		}
 		return allOrderList;
@@ -149,9 +146,8 @@ public class OrderServiceImpl implements IOrderService {
 				}
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
-			throw new OrderNotFoundException();
+			throw new OrderNotFoundException("Order not found!");
 		}
 		return cost;
 	}

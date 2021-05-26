@@ -19,7 +19,6 @@ public class CustomerServiceImpl implements ICustomerService {
 
 	@Override
 	public List<User> showAllUsers() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -29,9 +28,7 @@ public class CustomerServiceImpl implements ICustomerService {
 			repository.save(customer);
 		} catch (Exception e) {
 			e.printStackTrace();
-			// TODO: handle exception
 		}
-		// TODO Auto-generated method stub
 		return customer;
 	}
 
@@ -46,22 +43,23 @@ public class CustomerServiceImpl implements ICustomerService {
 			if (optional.get() == null) {
 				throw new CustomerNotFoundException("Customer not found for updation!");
 			}
-			// TODO: handle exception
 		}
-		// TODO Auto-generated method stub
 		return optional.get();
 	}
 
 	@Override
 	public Customer viewCustomer(Customer customer) throws CustomerNotFoundException {
+		Optional<Customer> optional = null;
 		try {
+			optional = repository.findById(customer.getUserId());
 			repository.findById(customer.getUserId());
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new CustomerNotFoundException("Customer not found!");
+			if (optional.get() == null) {
+				throw new CustomerNotFoundException("Customer not found!");
+			}
 		}
-		// TODO Auto-generated method stub
-		return customer;
+		return optional.get();
 	}
 
 	@Override
@@ -76,7 +74,6 @@ public class CustomerServiceImpl implements ICustomerService {
 				throw new CustomerNotFoundException("Customer not found for deletion!");
 			}
 		}
-		// TODO Auto-generated method stub
 		return optional.get();
 	}
 
@@ -87,9 +84,7 @@ public class CustomerServiceImpl implements ICustomerService {
 			customerList = repository.findAll();
 		} catch (Exception e) {
 			e.printStackTrace();
-			// TODO: handle exception
 		}
-		// TODO Auto-generated method stub
 		return customerList;
 	}
 

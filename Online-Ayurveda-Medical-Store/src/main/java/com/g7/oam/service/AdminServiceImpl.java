@@ -19,7 +19,6 @@ public class AdminServiceImpl implements IAdminService {
 
 	@Override
 	public List<User> showAllUsers() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -29,9 +28,7 @@ public class AdminServiceImpl implements IAdminService {
 			repository.save(admin);
 		} catch (Exception e) {
 			e.printStackTrace();
-			// TODO: handle exception
 		}
-		// TODO Auto-generated method stub
 		return admin;
 	}
 
@@ -46,22 +43,23 @@ public class AdminServiceImpl implements IAdminService {
 			if (optional.get() == null) {
 				throw new AdminNotFoundException("Admin not found for updation!");
 			}
-			// TODO: handle exception
 		}
-		// TODO Auto-generated method stub
 		return optional.get();
 	}
 
 	@Override
 	public Admin viewAdmin(Admin admin) throws AdminNotFoundException {
+		Optional<Admin> optional = null;
 		try {
+			optional = repository.findById(admin.getUserId());
 			repository.findById(admin.getUserId());
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new AdminNotFoundException("Admin not found!");
+			if (optional.get() == null) {
+				throw new AdminNotFoundException("Admin not found!");
+			}
 		}
-		// TODO Auto-generated method stub
-		return admin;
+		return optional.get();
 	}
 
 	@Override
@@ -76,7 +74,6 @@ public class AdminServiceImpl implements IAdminService {
 				throw new AdminNotFoundException("Admin not found for deletion!");
 			}
 		}
-		// TODO Auto-generated method stub
 		return optional.get();
 	}
 
@@ -87,9 +84,7 @@ public class AdminServiceImpl implements IAdminService {
 			adminList = repository.findAll();
 		} catch (Exception e) {
 			e.printStackTrace();
-			// TODO: handle exception
 		}
-		// TODO Auto-generated method stub
 		return adminList;
 	}
 

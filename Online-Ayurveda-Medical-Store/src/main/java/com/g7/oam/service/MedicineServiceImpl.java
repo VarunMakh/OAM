@@ -3,6 +3,8 @@ package com.g7.oam.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,7 @@ public class MedicineServiceImpl implements IMedicineService {
 	IMedicineRepository repository;
 
 	@Override
+	@Transactional
 	public Medicine addMedicine(Medicine medicine) {
 		try {
 			repository.save(medicine);
@@ -42,6 +45,7 @@ public class MedicineServiceImpl implements IMedicineService {
 	}
 
 	@Override
+	@Transactional
 	public Medicine updateMedicine(Medicine medicine) throws MedicineNotFoundException {
 		Optional<Medicine> optional = null;
 		try {
@@ -69,6 +73,7 @@ public class MedicineServiceImpl implements IMedicineService {
 	}
 
 	@Override
+	@Transactional
 	public Medicine deleteMedicine(String medicineId) throws MedicineNotFoundException {
 		Optional<Medicine> optional = null;
 		try {

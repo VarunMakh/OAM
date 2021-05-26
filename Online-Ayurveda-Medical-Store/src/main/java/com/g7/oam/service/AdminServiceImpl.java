@@ -3,6 +3,8 @@ package com.g7.oam.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,7 @@ public class AdminServiceImpl implements IAdminService {
 	}
 
 	@Override
+	@Transactional
 	public Admin addAdmin(Admin admin) {
 		try {
 			repository.save(admin);
@@ -33,6 +36,7 @@ public class AdminServiceImpl implements IAdminService {
 	}
 
 	@Override
+	@Transactional
 	public Admin updateAdmin(Admin admin) throws AdminNotFoundException {
 		Optional<Admin> optional = null;
 		try {
@@ -63,6 +67,7 @@ public class AdminServiceImpl implements IAdminService {
 	}
 
 	@Override
+	@Transactional
 	public Admin deleteAdmin(int adminId) throws AdminNotFoundException {
 		Optional<Admin> optional = null;
 		try {

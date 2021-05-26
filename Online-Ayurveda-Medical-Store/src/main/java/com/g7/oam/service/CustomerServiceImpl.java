@@ -3,6 +3,8 @@ package com.g7.oam.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,7 @@ public class CustomerServiceImpl implements ICustomerService {
 	}
 
 	@Override
+	@Transactional
 	public Customer addCustomer(Customer customer) {
 		try {
 			repository.save(customer);
@@ -33,6 +36,7 @@ public class CustomerServiceImpl implements ICustomerService {
 	}
 
 	@Override
+	@Transactional
 	public Customer updateCustomer(Customer customer) throws CustomerNotFoundException {
 		Optional<Customer> optional = null;
 		try {
@@ -63,6 +67,7 @@ public class CustomerServiceImpl implements ICustomerService {
 	}
 
 	@Override
+	@Transactional
 	public Customer deleteCustomer(int customerId) throws CustomerNotFoundException {
 		Optional<Customer> optional = null;
 		try {

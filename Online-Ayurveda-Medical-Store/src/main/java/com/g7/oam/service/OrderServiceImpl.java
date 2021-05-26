@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,7 @@ public class OrderServiceImpl implements IOrderService {
 	IOrderRepository repository;
 
 	@Override
+	@Transactional
 	public Order addOrder(Order order) {
 		try {
 			repository.save(order);
@@ -48,6 +51,7 @@ public class OrderServiceImpl implements IOrderService {
 	}
 
 	@Override
+	@Transactional
 	public Order updateOrder(Order order) throws OrderNotFoundException {
 		Optional<Order> optional = null;
 		try {
@@ -63,6 +67,7 @@ public class OrderServiceImpl implements IOrderService {
 	}
 
 	@Override
+	@Transactional
 	public Order cancelOrder(int orderId) throws OrderNotFoundException {
 		Optional<Order> optional = null;
 		try {
@@ -142,7 +147,7 @@ public class OrderServiceImpl implements IOrderService {
 			orderList = repository.findAll();
 			for (Order ol : orderList) {
 				if (ol.getOrderId() == orderid) {
-					cost = ol.getTotalCost();
+					cost += ol.getTotalCost();
 				}
 			}
 		} catch (Exception e) {

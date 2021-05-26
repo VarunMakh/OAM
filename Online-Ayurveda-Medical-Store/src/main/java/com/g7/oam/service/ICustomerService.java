@@ -5,7 +5,7 @@ import java.util.List;
 import com.g7.oam.entities.Customer;
 import com.g7.oam.exception.CustomerNotFoundException;
 
-public interface ICustomerService extends IUserService {
+public interface ICustomerService {
 
 	public Customer addCustomer(Customer customer);
 

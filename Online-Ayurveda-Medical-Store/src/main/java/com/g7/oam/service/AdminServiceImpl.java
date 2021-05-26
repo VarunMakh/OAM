@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.g7.oam.entities.Admin;
-import com.g7.oam.entities.User;
 import com.g7.oam.exception.AdminNotFoundException;
 import com.g7.oam.repository.IAdminRepository;
 
@@ -18,11 +17,6 @@ public class AdminServiceImpl implements IAdminService {
 
 	@Autowired
 	IAdminRepository repository;
-
-	@Override
-	public List<User> showAllUsers() {
-		return null;
-	}
 
 	@Override
 	@Transactional

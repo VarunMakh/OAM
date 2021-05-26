@@ -5,7 +5,7 @@ import java.util.List;
 import com.g7.oam.entities.Admin;
 import com.g7.oam.exception.AdminNotFoundException;
 
-public interface IAdminService extends IUserService {
+public interface IAdminService {
 
 	public Admin addAdmin(Admin admin);
 

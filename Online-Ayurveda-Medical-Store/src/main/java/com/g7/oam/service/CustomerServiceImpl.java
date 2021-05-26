@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.g7.oam.entities.Customer;
-import com.g7.oam.entities.User;
 import com.g7.oam.exception.CustomerNotFoundException;
 import com.g7.oam.repository.ICustomerRepository;
 
@@ -18,11 +17,6 @@ public class CustomerServiceImpl implements ICustomerService {
 
 	@Autowired
 	ICustomerRepository repository;
-
-	@Override
-	public List<User> showAllUsers() {
-		return null;
-	}
 
 	@Override
 	@Transactional

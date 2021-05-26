@@ -43,8 +43,8 @@ public class OrderController {
 		return this.orderService.updateOrder(order);
 	}
 	
-	@DeleteMapping("/cancel/{userId}")
-	public Order cancelOrder(@PathVariable("userId") int orderId) throws OrderNotFoundException{
+	@DeleteMapping("/cancel")
+	public Order cancelOrder(@RequestBody int orderId) throws OrderNotFoundException{
 		return this.orderService.cancelOrder(orderId);
 	}
 	
@@ -58,8 +58,8 @@ public class OrderController {
 		return this.orderService.showAllOrders(customer);
 	}
 	
-	@GetMapping("/viewall-orders/date/{localdate}")
-	public List<Order> showAllOrders(@PathVariable("localdate") LocalDate date){
+	@GetMapping("/viewall-orders/date")
+	public List<Order> showAllOrders(@RequestBody LocalDate date){
 		return this.orderService.showAllOrders(date);
 	}
 	@GetMapping("/calculatecost/{userId}")

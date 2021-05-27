@@ -3,7 +3,6 @@ package com.g7.oam.entities;
 import java.time.LocalDate;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -13,7 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -26,15 +25,15 @@ public class Order {
 	private int orderId;
 	@Column
 	private LocalDate orderDate;
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "Order_Medicine", joinColumns = @JoinColumn(name = "orderId"), inverseJoinColumns = @JoinColumn(name = "medicineId"))
+	@ManyToMany
+	@JoinTable(name = "Order_Medicine", joinColumns = @JoinColumn(name = "Order_ID", referencedColumnName = "orderId"), inverseJoinColumns = @JoinColumn(name = "Medicine_ID", referencedColumnName = "medicineId"))
 	private List<Medicine> medicineList;
 	@Column
 	private LocalDate dispatchDate;
 	@Column
 	private float totalCost;
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "user_ID", referencedColumnName = "userId")
+	@OneToOne
+	@JoinColumn(name = "User_ID", referencedColumnName = "userId")
 	private Customer customer;
 	@Column
 	@Enumerated(EnumType.STRING)

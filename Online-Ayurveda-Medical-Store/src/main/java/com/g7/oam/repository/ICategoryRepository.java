@@ -3,9 +3,9 @@ package com.g7.oam.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.g7.oam.entities.Customer;
+import com.g7.oam.entities.Category;
 
 @Repository
-public interface ICustomerRepository extends JpaRepository<Customer, Integer> {
+public interface ICategoryRepository extends JpaRepository<Category, Integer> {
 
 }

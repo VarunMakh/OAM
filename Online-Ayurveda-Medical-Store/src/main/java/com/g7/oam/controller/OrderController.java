@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,47 +24,49 @@ import com.g7.oam.service.IOrderService;
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
-	
+
 	@Autowired
 	IOrderService orderService;
-	
+
 	@PostMapping("/add")
 	public Order addOrder(@RequestBody Order order) {
 		this.orderService.addOrder(order);
 		return order;
 	}
-	
-	@GetMapping("/view/{userId}")
-	public Order viewOrder(@PathVariable("userId") Order order) throws OrderNotFoundException{
+
+	@GetMapping("/view/{orderId}")
+	public Order viewOrder(@PathVariable("orderId") Order order) throws OrderNotFoundException {
 		return this.orderService.viewOrder(order);
 	}
-	
+
 	@PutMapping("/update")
-	public Order updateOrder(@RequestBody Order order) throws OrderNotFoundException{
+	public Order updateOrder(@RequestBody Order order) throws OrderNotFoundException {
 		return this.orderService.updateOrder(order);
 	}
-	
-	@DeleteMapping("/cancel")
-	public Order cancelOrder(@RequestBody int orderId) throws OrderNotFoundException{
+
+	@DeleteMapping("/cancel/{orderId}")
+	public Order cancelOrder(@PathVariable("orderId") int orderId) throws OrderNotFoundException {
 		return this.orderService.cancelOrder(orderId);
 	}
-	
-	@GetMapping("/viewall-orders/medicine")
-	public List<Order> showAllOrders(@RequestBody String medicineid) throws MedicineNotFoundException{
+
+	@GetMapping("/showAllByMedicine/{medicineId}")
+	public List<Order> showAllOrders(@PathVariable("medicineId") int medicineid) throws MedicineNotFoundException {
 		return this.orderService.showAllOrders(medicineid);
 	}
-	
-	@GetMapping("/viewall-orders/customer")
-	public List<Order> showAllOrders(@RequestBody Customer customer) throws CustomerNotFoundException{
+
+	@GetMapping("/showAllByCustomer/{userId}")
+	public List<Order> showAllOrders(@PathVariable("userId") Customer customer) throws CustomerNotFoundException {
 		return this.orderService.showAllOrders(customer);
 	}
-	
-	@GetMapping("/viewall-orders/date")
-	public List<Order> showAllOrders(@RequestBody LocalDate date){
+
+	@GetMapping("/showAllByDate/{orderDate}")
+	public List<Order> showAllOrders(
+			@PathVariable("orderDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
 		return this.orderService.showAllOrders(date);
 	}
-	@GetMapping("/calculatecost/{userId}")
-	public float calculateTotalCost(@PathVariable("userId") int orderid) throws OrderNotFoundException{
+
+	@GetMapping("/calculateCost/{orderId}")
+	public float calculateTotalCost(@PathVariable("orderId") int orderid) throws OrderNotFoundException {
 		return this.orderService.calculateTotalCost(orderid);
 	}
 }

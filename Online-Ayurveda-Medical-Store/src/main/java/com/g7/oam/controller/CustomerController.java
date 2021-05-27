@@ -43,9 +43,9 @@ public class CustomerController {
 	public Customer deleteCustomer(@PathVariable("userId") Customer customer) throws CustomerNotFoundException {
 		return this.customerService.deleteCustomer(customer.getUserId());
 	}
-	
+
 	@GetMapping("/showAll")
-	public List<Customer> showAllCustomers(){
+	public List<Customer> showAllCustomers() {
 		return this.customerService.showAllCustomers();
 	}
 

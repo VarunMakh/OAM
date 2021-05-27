@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.g7.oam.entities.Customer;
 import com.g7.oam.entities.User;
 import com.g7.oam.service.IUserService;
 

@@ -2,7 +2,6 @@ package com.g7.oam.entities;
 
 import java.time.LocalDate;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -18,7 +17,7 @@ public class Medicine {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private String medicineId;
+	private int medicineId;
 	@Column
 	private String medicineName;
 	@Column
@@ -30,8 +29,8 @@ public class Medicine {
 	@Column
 	@Enumerated(EnumType.STRING)
 	private Company company;
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "category_ID", referencedColumnName = "categoryId")
+	@OneToOne
+	@JoinColumn(name = "Category_ID", referencedColumnName = "categoryId")
 	private Category category;
 
 	public Medicine() {
@@ -39,7 +38,7 @@ public class Medicine {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Medicine(String medicineId, String medicineName, float medicineCost, LocalDate mfd, LocalDate expiryDate,
+	public Medicine(int medicineId, String medicineName, float medicineCost, LocalDate mfd, LocalDate expiryDate,
 			Company company, Category category) {
 		super();
 		this.medicineId = medicineId;
@@ -51,11 +50,11 @@ public class Medicine {
 		this.category = category;
 	}
 
-	public String getMedicineId() {
+	public int getMedicineId() {
 		return medicineId;
 	}
 
-	public void setMedicineId(String medicineId) {
+	public void setMedicineId(int medicineId) {
 		this.medicineId = medicineId;
 	}
 
@@ -111,7 +110,7 @@ public class Medicine {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((medicineId == null) ? 0 : medicineId.hashCode());
+		result = prime * result + medicineId;
 		return result;
 	}
 
@@ -124,10 +123,7 @@ public class Medicine {
 		if (getClass() != obj.getClass())
 			return false;
 		Medicine other = (Medicine) obj;
-		if (medicineId == null) {
-			if (other.medicineId != null)
-				return false;
-		} else if (!medicineId.equals(other.medicineId))
+		if (medicineId != other.medicineId)
 			return false;
 		return true;
 	}

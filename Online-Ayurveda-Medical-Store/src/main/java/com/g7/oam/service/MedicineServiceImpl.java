@@ -30,6 +30,22 @@ public class MedicineServiceImpl implements IMedicineService {
 	}
 
 	@Override
+	@Transactional
+	public Medicine updateMedicine(Medicine medicine) throws MedicineNotFoundException {
+		Optional<Medicine> optional = null;
+		try {
+			optional = repository.findById(medicine.getMedicineId());
+			repository.save(medicine);
+		} catch (Exception e) {
+			e.printStackTrace();
+			if (optional.get() == null) {
+				throw new MedicineNotFoundException("Medicine not found for updation!");
+			}
+		}
+		return optional.get();
+	}
+
+	@Override
 	public Medicine viewMedicine(Medicine medicine) throws MedicineNotFoundException {
 		Optional<Medicine> optional = null;
 		try {
@@ -46,17 +62,16 @@ public class MedicineServiceImpl implements IMedicineService {
 
 	@Override
 	@Transactional
-	public Medicine updateMedicine(Medicine medicine) throws MedicineNotFoundException {
+	public Medicine deleteMedicine(int medicineId) throws MedicineNotFoundException {
 		Optional<Medicine> optional = null;
 		try {
-			optional = repository.findById(medicine.getMedicineId());
-			repository.save(medicine);
+			optional = repository.findById(medicineId);
+			repository.deleteById(medicineId);
 		} catch (Exception e) {
 			e.printStackTrace();
 			if (optional.get() == null) {
-				throw new MedicineNotFoundException("Medicine not found for updation!");
+				throw new MedicineNotFoundException("Medicine not found for deletion");
 			}
-
 		}
 		return optional.get();
 	}
@@ -70,22 +85,6 @@ public class MedicineServiceImpl implements IMedicineService {
 			e.printStackTrace();
 		}
 		return medsList;
-	}
-
-	@Override
-	@Transactional
-	public Medicine deleteMedicine(String medicineId) throws MedicineNotFoundException {
-		Optional<Medicine> optional = null;
-		try {
-			optional = repository.findById(medicineId);
-			repository.deleteById(medicineId);
-		} catch (Exception e) {
-			e.printStackTrace();
-			if (optional.get() == null) {
-				throw new MedicineNotFoundException("Medicine not found for deletion");
-			}
-		}
-		return optional.get();
 	}
 
 }

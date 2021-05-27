@@ -39,7 +39,7 @@ public class AdminController {
 		return this.adminService.viewAdmin(admin);
 	}
 
-	@DeleteMapping("delete/{userId}")
+	@DeleteMapping("/delete/{userId}")
 	public Admin deleteAdmin(@PathVariable("userId") Admin admin) throws AdminNotFoundException {
 		return this.adminService.deleteAdmin(admin.getUserId());
 	}

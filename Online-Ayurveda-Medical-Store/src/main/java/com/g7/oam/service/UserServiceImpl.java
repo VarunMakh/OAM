@@ -10,7 +10,7 @@ import com.g7.oam.repository.IUserRepository;
 
 @Service
 public class UserServiceImpl implements IUserService {
-	
+
 	@Autowired
 	IUserRepository repository;
 

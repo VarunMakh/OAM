@@ -16,5 +16,5 @@ public interface IAdminService {
 	public Admin deleteAdmin(int adminId) throws AdminNotFoundException;
 
 	public List<Admin> showAllAdmins();
-	
+
 }

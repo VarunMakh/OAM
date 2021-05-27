@@ -11,7 +11,7 @@ public class Category {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private String categoryId;
+	private int categoryId;
 	@Column
 	private String categoryName;
 
@@ -20,17 +20,17 @@ public class Category {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Category(String categoryId, String categoryName) {
+	public Category(int categoryId, String categoryName) {
 		super();
 		this.categoryId = categoryId;
 		this.categoryName = categoryName;
 	}
 
-	public String getCategoryId() {
+	public int getCategoryId() {
 		return categoryId;
 	}
 
-	public void setCategoryId(String categoryId) {
+	public void setCategoryId(int categoryId) {
 		this.categoryId = categoryId;
 	}
 
@@ -46,7 +46,7 @@ public class Category {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((categoryId == null) ? 0 : categoryId.hashCode());
+		result = prime * result + categoryId;
 		return result;
 	}
 
@@ -59,10 +59,7 @@ public class Category {
 		if (getClass() != obj.getClass())
 			return false;
 		Category other = (Category) obj;
-		if (categoryId == null) {
-			if (other.categoryId != null)
-				return false;
-		} else if (!categoryId.equals(other.categoryId))
+		if (categoryId != other.categoryId)
 			return false;
 		return true;
 	}

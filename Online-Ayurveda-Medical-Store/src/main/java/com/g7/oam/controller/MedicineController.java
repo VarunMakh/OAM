@@ -19,35 +19,36 @@ import com.g7.oam.service.IMedicineService;
 @RestController
 @RequestMapping("/medicines")
 public class MedicineController {
-	
+
 	@Autowired
 	IMedicineService medicineService;
-	
+
 	@PostMapping("/add")
 	public Medicine addMedicine(@RequestBody Medicine medicine) {
 		this.medicineService.addMedicine(medicine);
 		return medicine;
 	}
-	@GetMapping("/view/{medicineId}")	
-	public Medicine viewMedicine(@PathVariable("medicineId")Medicine medicine) throws MedicineNotFoundException{
+
+	@GetMapping("/view/{medicineId}")
+	public Medicine viewMedicine(@PathVariable("medicineId") Medicine medicine) throws MedicineNotFoundException {
 		return this.medicineService.viewMedicine(medicine);
-		
-		
+
 	}
+
 	@PutMapping("/update")
-	public Medicine updateMedicine(@RequestBody Medicine medicine) throws MedicineNotFoundException{
+	public Medicine updateMedicine(@RequestBody Medicine medicine) throws MedicineNotFoundException {
 		return this.medicineService.updateMedicine(medicine);
 	}
-	
-	@DeleteMapping("/medicine/{medicineId}")
-	public Medicine deleteMedicine(@PathVariable("medicineId") String medicineId) throws MedicineNotFoundException{
-		return this.medicineService.deleteMedicine(medicineId) ;
-		
+
+	@DeleteMapping("/delete/{medicineId}")
+	public Medicine deleteMedicine(@PathVariable("medicineId") int medicineId) throws MedicineNotFoundException {
+		return this.medicineService.deleteMedicine(medicineId);
+
 	}
-	
+
 	@GetMapping("/showAll")
-	public List<Medicine> showAllMedicine(){
+	public List<Medicine> showAllMedicine() {
 		return this.medicineService.showAllMedicine();
-		
+
 	}
 }

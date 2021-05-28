@@ -29,15 +29,15 @@ public class MedicineController {
 		return medicine;
 	}
 
-	@GetMapping("/view/{medicineId}")
-	public Medicine viewMedicine(@PathVariable("medicineId") Medicine medicine) throws MedicineNotFoundException {
-		return this.medicineService.viewMedicine(medicine);
-
-	}
-
 	@PutMapping("/update")
 	public Medicine updateMedicine(@RequestBody Medicine medicine) throws MedicineNotFoundException {
 		return this.medicineService.updateMedicine(medicine);
+	}
+
+	@GetMapping("/view")
+	public Medicine viewMedicine(@RequestBody Medicine medicine) throws MedicineNotFoundException {
+		return this.medicineService.viewMedicine(medicine);
+
 	}
 
 	@DeleteMapping("/delete/{medicineId}")
@@ -51,4 +51,5 @@ public class MedicineController {
 		return this.medicineService.showAllMedicine();
 
 	}
+
 }

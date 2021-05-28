@@ -34,14 +34,14 @@ public class OrderController {
 		return order;
 	}
 
-	@GetMapping("/view/{orderId}")
-	public Order viewOrder(@PathVariable("orderId") Order order) throws OrderNotFoundException {
-		return this.orderService.viewOrder(order);
-	}
-
 	@PutMapping("/update")
 	public Order updateOrder(@RequestBody Order order) throws OrderNotFoundException {
 		return this.orderService.updateOrder(order);
+	}
+
+	@GetMapping("/view")
+	public Order viewOrder(@RequestBody Order order) throws OrderNotFoundException {
+		return this.orderService.viewOrder(order);
 	}
 
 	@DeleteMapping("/cancel/{orderId}")
@@ -54,8 +54,8 @@ public class OrderController {
 		return this.orderService.showAllOrders(medicineid);
 	}
 
-	@GetMapping("/showAllByCustomer/{userId}")
-	public List<Order> showAllOrders(@PathVariable("userId") Customer customer) throws CustomerNotFoundException {
+	@GetMapping("/showAllByCustomer")
+	public List<Order> showAllOrders(@RequestBody Customer customer) throws CustomerNotFoundException {
 		return this.orderService.showAllOrders(customer);
 	}
 

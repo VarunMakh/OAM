@@ -25,7 +25,11 @@ public class OrderServiceImpl implements IOrderService {
 
 	@Autowired
 	IOrderRepository orderRepository;
+	
+	@Autowired
 	IMedicineRepository medicineRepository;
+	
+	@Autowired
 	ICustomerRepository customerRepository;
 
 	@Override

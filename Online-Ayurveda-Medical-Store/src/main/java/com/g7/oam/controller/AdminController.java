@@ -34,14 +34,14 @@ public class AdminController {
 		return this.adminService.updateAdmin(admin);
 	}
 
-	@GetMapping("/view/{userId}")
-	public Admin viewAdmin(@PathVariable("userId") Admin admin) throws AdminNotFoundException {
+	@GetMapping("/view")
+	public Admin viewAdmin(@RequestBody Admin admin) throws AdminNotFoundException {
 		return this.adminService.viewAdmin(admin);
 	}
 
 	@DeleteMapping("/delete/{userId}")
-	public Admin deleteAdmin(@PathVariable("userId") Admin admin) throws AdminNotFoundException {
-		return this.adminService.deleteAdmin(admin.getUserId());
+	public Admin deleteAdmin(@PathVariable("userId") int adminId) throws AdminNotFoundException {
+		return this.adminService.deleteAdmin(adminId);
 	}
 
 	@GetMapping("/showAll")

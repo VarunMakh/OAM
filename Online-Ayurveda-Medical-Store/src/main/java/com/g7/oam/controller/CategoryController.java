@@ -34,8 +34,8 @@ public class CategoryController {
 		return this.categoryService.updateCategory(category);
 	}
 
-	@GetMapping("/view/{categoryId}")
-	public Category viewCategory(@PathVariable("categoryId") Category category) throws CategoryNotFoundException {
+	@GetMapping("/view")
+	public Category viewCategory(@RequestBody Category category) throws CategoryNotFoundException {
 		return this.categoryService.viewCategory(category);
 	}
 

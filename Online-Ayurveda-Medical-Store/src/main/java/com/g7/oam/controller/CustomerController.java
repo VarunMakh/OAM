@@ -34,14 +34,14 @@ public class CustomerController {
 		return this.customerService.updateCustomer(customer);
 	}
 
-	@GetMapping("/view/{userId}")
-	public Customer viewCustomer(@PathVariable("userId") Customer customer) throws CustomerNotFoundException {
+	@GetMapping("/view")
+	public Customer viewCustomer(@RequestBody Customer customer) throws CustomerNotFoundException {
 		return this.customerService.viewCustomer(customer);
 	}
 
 	@DeleteMapping("delete/{userId}")
-	public Customer deleteCustomer(@PathVariable("userId") Customer customer) throws CustomerNotFoundException {
-		return this.customerService.deleteCustomer(customer.getUserId());
+	public Customer deleteCustomer(@PathVariable("userId") int customerId) throws CustomerNotFoundException {
+		return this.customerService.deleteCustomer(customerId);
 	}
 
 	@GetMapping("/showAll")

@@ -47,7 +47,6 @@ public class CustomerServiceImpl implements ICustomerService {
 		Optional<Customer> optional = null;
 		optional = repository.findById(customer.getUserId());
 		if (optional.isPresent()) {
-			repository.findById(customer.getUserId());
 			return optional.get();
 		} else {
 			throw new CustomerNotFoundException("Customer not found!");

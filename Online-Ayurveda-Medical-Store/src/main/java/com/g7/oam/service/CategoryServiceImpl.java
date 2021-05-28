@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.g7.oam.entities.Category;
 import com.g7.oam.exception.CategoryNotFoundException;
+import com.g7.oam.exception.CustomerNotFoundException;
 import com.g7.oam.repository.ICategoryRepository;
 
 @Service
@@ -33,47 +34,41 @@ public class CategoryServiceImpl implements ICategoryService {
 	@Transactional
 	public Category updateCategory(Category category) throws CategoryNotFoundException {
 		Optional<Category> optional = null;
-		try {
-			optional = repository.findById(category.getCategoryId());
+		optional = repository.findById(category.getCategoryId());
+		if (optional.isPresent()) {
 			repository.save(category);
-		} catch (Exception e) {
-			e.printStackTrace();
-			if (optional.get() == null) {
+			return optional.get();
+		} else {
 				throw new CategoryNotFoundException("Category not found for updation!");
 			}
 		}
-		return optional.get();
-	}
+		
+	
 
 	@Override
 	public Category viewCategory(Category category) throws CategoryNotFoundException {
 		Optional<Category> optional = null;
-		try {
-			optional = repository.findById(category.getCategoryId());
-			repository.findById(category.getCategoryId());
-		} catch (Exception e) {
-			e.printStackTrace();
-			if (optional.get() == null) {
+		optional = repository.findById(category.getCategoryId());
+		if (optional.isPresent()) {
+			return optional.get();
+		} else {
 				throw new CategoryNotFoundException("Category not found!");
 			}
 		}
-		return optional.get();
-	}
-
+		
+	
+		
 	@Override
 	@Transactional
 	public Category deleteCategory(int categoryId) throws CategoryNotFoundException {
 		Optional<Category> optional = null;
-		try {
-			optional = repository.findById(categoryId);
+		optional = repository.findById(categoryId);
+		if (optional.isPresent()) {
 			repository.deleteById(categoryId);
-		} catch (Exception e) {
-			e.printStackTrace();
-			if (optional.get() == null) {
-				throw new CategoryNotFoundException("Category not found for deletion!");
-			}
+			return optional.get();
+		} else {
+			throw new CategoryNotFoundException("Category not found for deletion!");
 		}
-		return optional.get();
 	}
 
 	@Override

@@ -10,9 +10,24 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
 
 	@ExceptionHandler(CustomerNotFoundException.class)
-	public ResponseEntity<String> handleCustomerException(CustomerNotFoundException e) {
+	public ResponseEntity<String> handleCustomerException(CustomerNotFoundException ex) {
 		HttpHeaders header = new HttpHeaders();
-		header.add("Description", "Trying to get a Customer...");
+		header.add("Description", "Trying to get a Customer");
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(header).body(ex.getMessage());
+
+	}
+
+	@ExceptionHandler(AdminNotFoundException.class)
+	public ResponseEntity<String> handleAdminException(AdminNotFoundException e) {
+		HttpHeaders header = new HttpHeaders();
+		header.add("Description", "Trying to get a Admin...");
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(header).body(e.getMessage());
+	}
+
+	@ExceptionHandler(MedicineNotFoundException.class)
+	public ResponseEntity<String> handleMedicineException(MedicineNotFoundException e) {
+		HttpHeaders header = new HttpHeaders();
+		header.add("Description", "Trying to get a Medicine...");
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(header).body(e.getMessage());
 	}
 
@@ -30,17 +45,4 @@ public class GlobalExceptionHandler {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(header).body(e.getMessage());
 	}
 
-	@ExceptionHandler(AdminNotFoundException.class)
-	public ResponseEntity<String> handleAdminException(AdminNotFoundException e) {
-		HttpHeaders header = new HttpHeaders();
-		header.add("Description", "Trying to get a Admin...");
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(header).body(e.getMessage());
-	}
-
-	@ExceptionHandler(MedicineNotFoundException.class)
-	public ResponseEntity<String> handleMedicineException(MedicineNotFoundException e) {
-		HttpHeaders header = new HttpHeaders();
-		header.add("Description", "Trying to get a Medicine...");
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(header).body(e.getMessage());
-	}
 }

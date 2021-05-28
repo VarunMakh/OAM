@@ -33,47 +33,40 @@ public class AdminServiceImpl implements IAdminService {
 	@Transactional
 	public Admin updateAdmin(Admin admin) throws AdminNotFoundException {
 		Optional<Admin> optional = null;
-		try {
-			optional = repository.findById(admin.getUserId());
+		optional = repository.findById(admin.getUserId());
+		if (optional.isPresent()) {
 			repository.save(admin);
-		} catch (Exception e) {
-			e.printStackTrace();
-			if (optional.get() == null) {
-				throw new AdminNotFoundException("Admin not found for updation!");
-			}
+			return optional.get();
+		} else {
+
+			throw new AdminNotFoundException("Admin not found for updation!");
 		}
-		return optional.get();
 	}
 
 	@Override
 	public Admin viewAdmin(Admin admin) throws AdminNotFoundException {
 		Optional<Admin> optional = null;
-		try {
-			optional = repository.findById(admin.getUserId());
-			repository.findById(admin.getUserId());
-		} catch (Exception e) {
-			e.printStackTrace();
-			if (optional.get() == null) {
-				throw new AdminNotFoundException("Admin not found!");
-			}
+		optional = repository.findById(admin.getUserId());
+		if (optional.isPresent()) {
+			return optional.get();
+		} else {
+
+			throw new AdminNotFoundException("Admin not found!");
 		}
-		return optional.get();
 	}
 
 	@Override
 	@Transactional
 	public Admin deleteAdmin(int adminId) throws AdminNotFoundException {
 		Optional<Admin> optional = null;
-		try {
-			optional = repository.findById(adminId);
+		optional = repository.findById(adminId);
+		if (optional.isPresent()) {
 			repository.deleteById(adminId);
-		} catch (Exception e) {
-			e.printStackTrace();
-			if (optional.get() == null) {
-				throw new AdminNotFoundException("Admin not found for deletion!");
-			}
+			return optional.get();
+		} else {
+
+			throw new AdminNotFoundException("Admin not found for deletion!");
 		}
-		return optional.get();
 	}
 
 	@Override

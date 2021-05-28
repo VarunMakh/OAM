@@ -47,7 +47,6 @@ public class MedicineServiceImpl implements IMedicineService {
 		Optional<Medicine> optional = null;
 		optional = repository.findById(medicine.getMedicineId());
 		if (optional.isPresent()) {
-			repository.findById(medicine.getMedicineId());
 			return optional.get();
 		} else {
 			throw new MedicineNotFoundException("Medicine not found!");

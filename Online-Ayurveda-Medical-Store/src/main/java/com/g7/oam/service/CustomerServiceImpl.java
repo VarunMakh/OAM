@@ -33,47 +33,38 @@ public class CustomerServiceImpl implements ICustomerService {
 	@Transactional
 	public Customer updateCustomer(Customer customer) throws CustomerNotFoundException {
 		Optional<Customer> optional = null;
-		try {
-			optional = repository.findById(customer.getUserId());
+		optional = repository.findById(customer.getUserId());
+		if (optional.isPresent()) {
 			repository.save(customer);
-		} catch (Exception e) {
-			e.printStackTrace();
-			if (optional.get() == null) {
-				throw new CustomerNotFoundException("Customer not found for updation!");
-			}
+			return optional.get();
+		} else {
+			throw new CustomerNotFoundException("Customer not found for updation!");
 		}
-		return optional.get();
 	}
 
 	@Override
 	public Customer viewCustomer(Customer customer) throws CustomerNotFoundException {
 		Optional<Customer> optional = null;
-		try {
-			optional = repository.findById(customer.getUserId());
+		optional = repository.findById(customer.getUserId());
+		if (optional.isPresent()) {
 			repository.findById(customer.getUserId());
-		} catch (Exception e) {
-			e.printStackTrace();
-			if (optional.get() == null) {
-				throw new CustomerNotFoundException("Customer not found!");
-			}
+			return optional.get();
+		} else {
+			throw new CustomerNotFoundException("Customer not found!");
 		}
-		return optional.get();
 	}
 
 	@Override
 	@Transactional
 	public Customer deleteCustomer(int customerId) throws CustomerNotFoundException {
 		Optional<Customer> optional = null;
-		try {
-			optional = repository.findById(customerId);
+		optional = repository.findById(customerId);
+		if (optional.isPresent()) {
 			repository.deleteById(customerId);
-		} catch (Exception e) {
-			e.printStackTrace();
-			if (optional.get() == null) {
-				throw new CustomerNotFoundException("Customer not found for deletion!");
-			}
+			return optional.get();
+		} else {
+			throw new CustomerNotFoundException("Customer not found for deletion!");
 		}
-		return optional.get();
 	}
 
 	@Override

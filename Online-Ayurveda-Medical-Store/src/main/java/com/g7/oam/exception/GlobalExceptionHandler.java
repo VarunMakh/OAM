@@ -12,7 +12,7 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(CustomerNotFoundException.class)
 	public ResponseEntity<String> handleCustomerException(CustomerNotFoundException ex) {
 		HttpHeaders header = new HttpHeaders();
-		header.add("Description", "Trying to get a Customer");
+		header.add("Description", "Trying to get a Customer...");
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(header).body(ex.getMessage());
 
 	}
@@ -20,7 +20,7 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(AdminNotFoundException.class)
 	public ResponseEntity<String> handleAdminException(AdminNotFoundException e) {
 		HttpHeaders header = new HttpHeaders();
-		header.add("Description", "Trying to get a Admin...");
+		header.add("Description", "Trying to get an Admin...");
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(header).body(e.getMessage());
 	}
 
@@ -41,7 +41,7 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(OrderNotFoundException.class)
 	public ResponseEntity<String> handleOrderException(OrderNotFoundException e) {
 		HttpHeaders header = new HttpHeaders();
-		header.add("Description", "Trying to get a Order...");
+		header.add("Description", "Trying to get an Order...");
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(header).body(e.getMessage());
 	}
 

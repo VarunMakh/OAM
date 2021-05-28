@@ -16,19 +16,23 @@ import com.g7.oam.entities.Order;
 import com.g7.oam.exception.CustomerNotFoundException;
 import com.g7.oam.exception.MedicineNotFoundException;
 import com.g7.oam.exception.OrderNotFoundException;
+import com.g7.oam.repository.ICustomerRepository;
+import com.g7.oam.repository.IMedicineRepository;
 import com.g7.oam.repository.IOrderRepository;
 
 @Service
 public class OrderServiceImpl implements IOrderService {
 
 	@Autowired
-	IOrderRepository repository;
+	IOrderRepository orderRepository;
+	IMedicineRepository medicineRepository;
+	ICustomerRepository customerRepository;
 
 	@Override
 	@Transactional
 	public Order addOrder(Order order) {
 		try {
-			repository.save(order);
+			orderRepository.save(order);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -40,8 +44,8 @@ public class OrderServiceImpl implements IOrderService {
 	public Order updateOrder(Order order) throws OrderNotFoundException {
 		Optional<Order> optional = null;
 		try {
-			optional = repository.findById(order.getOrderId());
-			repository.save(order);
+			optional = orderRepository.findById(order.getOrderId());
+			orderRepository.save(order);
 		} catch (Exception e) {
 			e.printStackTrace();
 			if (optional.get() == null) {
@@ -55,8 +59,8 @@ public class OrderServiceImpl implements IOrderService {
 	public Order viewOrder(Order order) throws OrderNotFoundException {
 		Optional<Order> optional = null;
 		try {
-			optional = repository.findById(order.getOrderId());
-			repository.findById(order.getOrderId());
+			optional = orderRepository.findById(order.getOrderId());
+			orderRepository.findById(order.getOrderId());
 		} catch (Exception e) {
 			e.printStackTrace();
 			if (optional.get() == null) {
@@ -71,8 +75,8 @@ public class OrderServiceImpl implements IOrderService {
 	public Order cancelOrder(int orderId) throws OrderNotFoundException {
 		Optional<Order> optional = null;
 		try {
-			optional = repository.findById(orderId);
-			repository.deleteById(orderId);
+			optional = orderRepository.findById(orderId);
+			orderRepository.deleteById(orderId);
 		} catch (Exception e) {
 			e.printStackTrace();
 			if (optional.get() == null) {
@@ -85,39 +89,41 @@ public class OrderServiceImpl implements IOrderService {
 	@Override
 	public List<Order> showAllOrders(int medicineId) throws MedicineNotFoundException {
 		List<Order> orderList = null;
-		List<Order> allOrderList = new ArrayList<>();
-		try {
-			orderList = repository.findAll();
+		List<Order> medicineOrderList = new ArrayList<>();
+		Optional<Medicine> optional = null;
+		optional = medicineRepository.findById(medicineId);
+		if (optional.isPresent()) {
+			orderList = orderRepository.findAll();
 			for (Order ol : orderList) {
 				List<Medicine> medicineList = ol.getMedicineList();
 				for (Medicine medicine : medicineList) {
 					if (medicine.getMedicineId() == medicineId)
-						allOrderList.add(ol);
+						medicineOrderList.add(ol);
 				}
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+			return medicineOrderList;
+		} else {
 			throw new MedicineNotFoundException("Medicine not found!");
 		}
-		return allOrderList;
 	}
 
 	@Override
 	public List<Order> showAllOrders(Customer customer) throws CustomerNotFoundException {
 		List<Order> orderList = null;
-		List<Order> allOrderList = new ArrayList<>();
-		try {
-			orderList = repository.findAll();
+		List<Order> customerOrderList = new ArrayList<>();
+		Optional<Customer> optional = null;
+		optional = customerRepository.findById(customer.getUserId());
+		if (optional.isPresent()) {
+			orderList = orderRepository.findAll();
 			for (Order ol : orderList) {
 				if (ol.getCustomer().equals(customer)) {
-					allOrderList.add(ol);
+					customerOrderList.add(ol);
 				}
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+			return customerOrderList;
+		} else {
 			throw new CustomerNotFoundException("Customer not found!");
 		}
-		return allOrderList;
 	}
 
 	@Override
@@ -125,7 +131,7 @@ public class OrderServiceImpl implements IOrderService {
 		List<Order> orderList = null;
 		List<Order> allOrderList = new ArrayList<>();
 		try {
-			orderList = repository.findAll();
+			orderList = orderRepository.findAll();
 			for (Order ol : orderList) {
 				if (ol.getOrderDate().equals(date)) {
 					allOrderList.add(ol);
@@ -141,21 +147,17 @@ public class OrderServiceImpl implements IOrderService {
 	public float calculateTotalCost(int orderId) throws OrderNotFoundException {
 		float cost = 0;
 		Optional<Order> optional = null;
-		try {
-			optional = repository.findById(orderId);
+		optional = orderRepository.findById(orderId);
+		if (optional.isPresent()) {
 			List<Medicine> medicineList = optional.get().getMedicineList();
 			for (Medicine meds : medicineList) {
 				cost += meds.getMedicineCost();
 			}
 			optional.get().setTotalCost(cost);
-			repository.save(optional.get());
-		} catch (Exception e) {
-			e.printStackTrace();
-			if (optional.get() == null) {
-				throw new OrderNotFoundException("Order not found to calculate cost!");
-			}
+			orderRepository.save(optional.get());
+			return optional.get().getTotalCost();
+		} else {
+			throw new OrderNotFoundException("Order not found to calculate cost!");
 		}
-		return optional.get().getTotalCost();
 	}
-
 }

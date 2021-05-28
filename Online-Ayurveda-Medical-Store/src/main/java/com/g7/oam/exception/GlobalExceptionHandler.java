@@ -13,7 +13,7 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<String> handleCustomerException(CustomerNotFoundException e) {
 		HttpHeaders header = new HttpHeaders();
 		header.add("Description", "Trying to get a Customer...");
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(header).body(e.getMessage();
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(header).body(e.getMessage());
 	}
 	
 	@ExceptionHandler(CategoryNotFoundException.class)

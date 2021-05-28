@@ -32,46 +32,39 @@ public class MedicineServiceImpl implements IMedicineService {
 	@Override
 	@Transactional
 	public Medicine updateMedicine(Medicine medicine) throws MedicineNotFoundException {
-		Optional<Medicine> optional = repository.findById(medicine.getMedicineId());
-		if(optional.isPresent()) {
-			
+		Optional<Medicine> optional = null;
+		optional = repository.findById(medicine.getMedicineId());
+		if (optional.isPresent()) {
 			repository.save(medicine);
 			return optional.get();
-		} 
-		else{
-				throw new MedicineNotFoundException("Medicine not found for updation!");
-			}
-		
-		
+		} else {
+			throw new MedicineNotFoundException("Medicine not found for updation!");
+		}
 	}
 
 	@Override
 	public Medicine viewMedicine(Medicine medicine) throws MedicineNotFoundException {
 		Optional<Medicine> optional = null;
-		try {
-			optional = repository.findById(medicine.getMedicineId());
+		optional = repository.findById(medicine.getMedicineId());
+		if (optional.isPresent()) {
 			repository.findById(medicine.getMedicineId());
-		} catch (Exception e) {
-			e.printStackTrace();
-			if (optional.get() == null) {
-				throw new MedicineNotFoundException("Medicine not found!");
-			}
+			return optional.get();
+		} else {
+			throw new MedicineNotFoundException("Medicine not found!");
 		}
-		return medicine;
 	}
 
 	@Override
 	@Transactional
 	public Medicine deleteMedicine(int medicineId) throws MedicineNotFoundException {
-		Optional<Medicine> optional =  repository.findById(medicineId);
-		if(optional.isPresent()) {
-			
+		Optional<Medicine> optional = null;
+		optional = repository.findById(medicineId);
+		if (optional.isPresent()) {
 			repository.deleteById(medicineId);
 			return optional.get();
-		} 
-		else{
-				throw new MedicineNotFoundException("Medicine not found for deletion!");
-			}
+		} else {
+			throw new MedicineNotFoundException("Medicine not found for deletion!");
+		}
 	}
 
 	@Override

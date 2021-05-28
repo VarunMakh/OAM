@@ -32,17 +32,17 @@ public class MedicineServiceImpl implements IMedicineService {
 	@Override
 	@Transactional
 	public Medicine updateMedicine(Medicine medicine) throws MedicineNotFoundException {
-		Optional<Medicine> optional = null;
-		try {
-			optional = repository.findById(medicine.getMedicineId());
+		Optional<Medicine> optional = repository.findById(medicine.getMedicineId());
+		if(optional.isPresent()) {
+			
 			repository.save(medicine);
-		} catch (Exception e) {
-			e.printStackTrace();
-			if (optional.get() == null) {
+			return optional.get();
+		} 
+		else{
 				throw new MedicineNotFoundException("Medicine not found for updation!");
 			}
-		}
-		return optional.get();
+		
+		
 	}
 
 	@Override
@@ -63,17 +63,15 @@ public class MedicineServiceImpl implements IMedicineService {
 	@Override
 	@Transactional
 	public Medicine deleteMedicine(int medicineId) throws MedicineNotFoundException {
-		Optional<Medicine> optional = null;
-		try {
-			optional = repository.findById(medicineId);
+		Optional<Medicine> optional =  repository.findById(medicineId);
+		if(optional.isPresent()) {
+			
 			repository.deleteById(medicineId);
-		} catch (Exception e) {
-			e.printStackTrace();
-			if (optional.get() == null) {
-				throw new MedicineNotFoundException("Medicine not found for deletion");
+			return optional.get();
+		} 
+		else{
+				throw new MedicineNotFoundException("Medicine not found for deletion!");
 			}
-		}
-		return optional.get();
 	}
 
 	@Override

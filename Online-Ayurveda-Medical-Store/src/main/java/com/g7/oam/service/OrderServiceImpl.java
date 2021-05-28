@@ -47,47 +47,39 @@ public class OrderServiceImpl implements IOrderService {
 	@Transactional
 	public Order updateOrder(Order order) throws OrderNotFoundException {
 		Optional<Order> optional = null;
-		try {
-			optional = orderRepository.findById(order.getOrderId());
+		optional = orderRepository.findById(order.getOrderId());
+		if(optional.isPresent()){
 			orderRepository.save(order);
-		} catch (Exception e) {
-			e.printStackTrace();
-			if (optional.get() == null) {
-				throw new OrderNotFoundException("Order not found for updation!");
-			}
+			return optional.get();
+		} else {
+			throw new OrderNotFoundException("Order not found for updation!");
 		}
-		return optional.get();
 	}
 
 	@Override
 	public Order viewOrder(Order order) throws OrderNotFoundException {
 		Optional<Order> optional = null;
-		try {
-			optional = orderRepository.findById(order.getOrderId());
+		optional = orderRepository.findById(order.getOrderId());
+		if (optional.isPresent()){
 			orderRepository.findById(order.getOrderId());
-		} catch (Exception e) {
-			e.printStackTrace();
-			if (optional.get() == null) {
+			return optional.get();
+			
+		} else{
 				throw new OrderNotFoundException("Order not found!");
-			}
 		}
-		return optional.get();
 	}
 
 	@Override
 	@Transactional
 	public Order cancelOrder(int orderId) throws OrderNotFoundException {
 		Optional<Order> optional = null;
-		try {
-			optional = orderRepository.findById(orderId);
+		optional = orderRepository.findById(orderId);
+		if(optional.isPresent()) {
 			orderRepository.deleteById(orderId);
-		} catch (Exception e) {
-			e.printStackTrace();
-			if (optional.get() == null) {
-				throw new OrderNotFoundException("Order not found for cancellation!");
-			}
+			return optional.get();
+		} else{
+			throw new OrderNotFoundException("Order not found for cancellation!");
 		}
-		return optional.get();
 	}
 
 	@Override

@@ -3,8 +3,11 @@ package com.g7.oam.controller;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +24,8 @@ import com.g7.oam.exception.MedicineNotFoundException;
 import com.g7.oam.exception.OrderNotFoundException;
 import com.g7.oam.service.IOrderService;
 
+import io.swagger.annotations.Api;
+@Validated
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
@@ -29,18 +34,18 @@ public class OrderController {
 	IOrderService orderService;
 
 	@PostMapping("/add")
-	public Order addOrder(@RequestBody Order order) {
+	public Order addOrder(@RequestBody @Valid Order order) {
 		this.orderService.addOrder(order);
 		return order;
 	}
 
 	@PutMapping("/update")
-	public Order updateOrder(@RequestBody Order order) throws OrderNotFoundException {
+	public Order updateOrder(@RequestBody @Valid Order order) throws OrderNotFoundException {
 		return this.orderService.updateOrder(order);
 	}
 
 	@GetMapping("/view")
-	public Order viewOrder(@RequestBody Order order) throws OrderNotFoundException {
+	public Order viewOrder(@RequestBody @Valid Order order) throws OrderNotFoundException {
 		return this.orderService.viewOrder(order);
 	}
 
@@ -55,7 +60,7 @@ public class OrderController {
 	}
 
 	@GetMapping("/showAllByCustomer")
-	public List<Order> showAllOrders(@RequestBody Customer customer) throws CustomerNotFoundException {
+	public List<Order> showAllOrders(@RequestBody @Valid Customer customer) throws CustomerNotFoundException {
 		return this.orderService.showAllOrders(customer);
 	}
 

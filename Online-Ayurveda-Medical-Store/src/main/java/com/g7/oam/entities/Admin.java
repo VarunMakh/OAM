@@ -3,11 +3,17 @@ package com.g7.oam.entities;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+import io.swagger.annotations.ApiModelProperty;
 
 @Entity
 @DiscriminatorValue(value = "2")
 public class Admin extends User {
 
+	@ApiModelProperty(name="Admin Name",value="Admin Name consists of alphabets ")
+	@NotEmpty(message = "Admin Name cannot be empty.")
+	@Pattern(regexp="[A-za-z0-9-+]+",message="Please enter a valid Admin name.")
 	@Column
 	private String adminName;
 

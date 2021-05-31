@@ -11,6 +11,11 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import io.swagger.annotations.ApiModelProperty;
 
 @Entity
 @Table(name = "OAM_User")
@@ -22,8 +27,17 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int userId;
+
+	@ApiModelProperty(name="User password",value="User Password consists of alphanumeric characters and special symbols lile {'-','+'}")
+	@NotEmpty(message = "User password cannot be empty.")
+	@Size(min=4,max=15,message="Please enter a valid User password, User password should be from 4 to 15 characters long.")
+	@Pattern(regexp="[A-za-z0-9-+]+",message="Please enter a valid User password.")
 	@Column
 	private String password;
+
+	@ApiModelProperty(name="User Type",value="User Type consists of alphabets")
+	@NotEmpty(message = "User Type cannot be empty.")
+	@Pattern(regexp="[A-za-z0-9-+]+",message="Please enter a valid User Type.")
 	@Column
 	private String userType;
 

@@ -11,6 +11,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import io.swagger.annotations.ApiModelProperty;
 
 @Entity
 public class Medicine {
@@ -18,14 +23,35 @@ public class Medicine {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int medicineId;
+	
+	@ApiModelProperty(name="Medicine Name",value="Medicine Name consists of alphanumeric characters and special symbols lile {'-','+'}")
+	@NotEmpty(message = "Medicine Name cannot be empty.")
+	@Size(min=4,max=15,message="Please enter a valid medicine name, Medicine name should be from 4 to 15 characters long.")
+	@Pattern(regexp="[A-za-z0-9-+]+",message="Please enter a valid Medicine name.")
 	@Column
 	private String medicineName;
+	
+	@ApiModelProperty(name="Medicine cost",value="Medicine Cost is numeric value representing the cost of the medicine")
+	@NotEmpty(message = "Medicine cost cannot be empty.")
+	@Size(min=1,max=6,message="Please enter a valid medicine cost, Medicine name should be from 1 to 6 digits long.")
+	@Pattern(regexp="[0-9]",message="Please enter a valid Medicine cost.")
 	@Column
 	private float medicineCost;
+	
+	@ApiModelProperty(name="Medicine Mfd",value="Medicine Mfd consists of numeric value for date with delimiter '-")
+	@NotEmpty(message = "Medicine mfd cannot be empty.")
+	@Size(min=10,max=10,message="Please enter a valid medicine date, Medicine mfd should be exactly in 4 characters for year 2 for month and 2 for date each each group separated by a '-'.")
+	@Pattern(regexp="[^(19|20)\\d\\d[-](0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])$]",message="Please enter a valid Medicine mfd.")
 	@Column
 	private LocalDate mfd;
+	
+	@ApiModelProperty(name="Medicine Expiry Date",value="Medicine Expiry Date consists of numeric value for date with delimiter '-")
+	@NotEmpty(message = "Medicine Expiry date cannot be empty.")
+	@Size(min=10,max=10,message="Please enter a valid medicine expiry date, Medicine name should be exactly in 4 characters for year 2 for month and 2 for date each each group separated by a '-'.")
+	@Pattern(regexp="[^(19|20)\\d\\d[-](0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])$]",message="Please enter a valid Medicine expiry date.")
 	@Column
 	private LocalDate expiryDate;
+	
 	@Column
 	@Enumerated(EnumType.STRING)
 	private Company company;

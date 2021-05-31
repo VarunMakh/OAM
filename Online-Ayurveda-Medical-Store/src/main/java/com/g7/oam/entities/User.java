@@ -28,16 +28,16 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int userId;
 
-	@ApiModelProperty(name="User password",value="User Password consists of alphanumeric characters and special symbols lile {'-','+'}")
-	@NotEmpty(message = "User password cannot be empty.")
-	@Size(min=4,max=15,message="Please enter a valid User password, User password should be from 4 to 15 characters long.")
-	@Pattern(regexp="[A-za-z0-9-+]+",message="Please enter a valid User password.")
 	@Column
+	@ApiModelProperty(name = "User Password", value = "User Password consists of alphanumeric as well as special characters.")
+	@NotEmpty(message = "User password cannot be empty!")
+	@Size(min = 4, max = 15, message = "Please enter a valid User Password, the User Password should be from 4 to 15 characters long.")
+	@Pattern(regexp = "[A-za-z0-9]+", message = "Please enter a valid User Password.")
 	private String password;
 
-	@ApiModelProperty(name="User Type",value="User Type consists of alphabets")
-	@NotEmpty(message = "User Type cannot be empty.")
-	@Pattern(regexp="[A-za-z0-9-+]+",message="Please enter a valid User Type.")
+	@ApiModelProperty(name = "User Type", value = "User Type is either 'admin' or 'customer'")
+	@NotEmpty(message = "User Type cannot be empty!")
+	@Pattern(regexp = "[admin|customer]", message = "Please enter a valid User Type.")
 	@Column
 	private String userType;
 

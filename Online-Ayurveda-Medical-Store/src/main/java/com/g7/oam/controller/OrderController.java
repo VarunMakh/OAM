@@ -24,7 +24,6 @@ import com.g7.oam.exception.MedicineNotFoundException;
 import com.g7.oam.exception.OrderNotFoundException;
 import com.g7.oam.service.IOrderService;
 
-import io.swagger.annotations.Api;
 @Validated
 @RestController
 @RequestMapping("/orders")

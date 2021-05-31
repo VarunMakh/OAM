@@ -27,33 +27,34 @@ public class Medicine {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int medicineId;
-	
-	@ApiModelProperty(name="Medicine Name",value="Medicine Name consists of alphanumeric characters and special symbols lile {'-','+'}")
+
+	@ApiModelProperty(name = "Medicine Name", value = "Medicine Name consists of alphanumeric characters and special symbols like {'-','+'}")
 	@NotEmpty(message = "Medicine Name cannot be empty.")
-	@Size(min=4,max=15,message="Please enter a valid medicine name, Medicine name should be from 4 to 15 characters long.")
-	@Pattern(regexp="^[a-zA-z0-9+-]+",message="Please enter a valid Medicine name.")
+	@Size(min = 4, max = 15, message = "Please enter a valid medicine name, Medicine name should be from 4 to 15 characters long.")
+	@Pattern(regexp = "^[a-zA-z0-9+-]+", message = "Please enter a valid Medicine name.")
 	@Column
 	private String medicineName;
-	
-	@ApiModelProperty(name="Medicine cost",value="Medicine Cost is numeric value representing the cost of the medicine")
+
+	@ApiModelProperty(name = "Medicine cost", value = "Medicine Cost is numeric value representing the cost of the medicine")
 	@Min(1)
 	@Max(10000)
 	@Column
 	private float medicineCost;
-	
-	@ApiModelProperty(name="Medicine Mfd",value="Medicine Mfd consists of numeric value for date with delimiter '-")
-	//@Pattern(regexp="[^(19|20)\\d\\d[-](0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])$]",message="Please enter a valid Medicine mfd.")
+
+	@ApiModelProperty(name = "Medicine Mfd", value = "Medicine Mfd consists of numeric value for date with delimiter '-")
+	// @Pattern(regexp="[^(19|20)\\d\\d[-](0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])$]",message="Please
+	// enter a valid Medicine mfd.")
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	@Column
 	private LocalDate mfd;
-	
-	
-	@ApiModelProperty(name="Medicine Expiry Date",value="Medicine Expiry Date consists of numeric value for date with delimiter '-")
-	//@Pattern(regexp="[^(19|20)\\d\\d[-](0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])$]",message="Please enter a valid Medicine expiry date.")
+
+	@ApiModelProperty(name = "Medicine Expiry Date", value = "Medicine Expiry Date consists of numeric value for date with delimiter '-")
+	// @Pattern(regexp="[^(19|20)\\d\\d[-](0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])$]",message="Please
+	// enter a valid Medicine expiry date.")
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	@Column
 	private LocalDate expiryDate;
-	
+
 	@Column
 	@Enumerated(EnumType.STRING)
 	private Company company;

@@ -2,6 +2,8 @@ package com.g7.oam.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,18 +26,18 @@ public class AdminController {
 	IAdminService adminService;
 
 	@PostMapping("/add")
-	public Admin addAdmin(@RequestBody Admin admin) {
+	public Admin addAdmin(@RequestBody @Valid Admin admin) {
 		this.adminService.addAdmin(admin);
 		return admin;
 	}
 
 	@PutMapping("/update")
-	public Admin updateAdmin(@RequestBody Admin admin) throws AdminNotFoundException {
+	public Admin updateAdmin(@RequestBody @Valid Admin admin) throws AdminNotFoundException {
 		return this.adminService.updateAdmin(admin);
 	}
 
 	@GetMapping("/view")
-	public Admin viewAdmin(@RequestBody Admin admin) throws AdminNotFoundException {
+	public Admin viewAdmin(@RequestBody @Valid Admin admin) throws AdminNotFoundException {
 		return this.adminService.viewAdmin(admin);
 	}
 

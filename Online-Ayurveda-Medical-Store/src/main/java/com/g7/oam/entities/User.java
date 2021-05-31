@@ -37,7 +37,7 @@ public class User {
 
 	@ApiModelProperty(name = "User Type", value = "User Type is either 'admin' or 'customer'")
 	@NotEmpty(message = "User Type cannot be empty!")
-	@Pattern(regexp = "[admin|customer]", message = "Please enter a valid User Type.")
+	@Pattern(regexp = "(customer|admin)", message = "Please enter a valid User Type!")
 	@Column
 	private String userType;
 

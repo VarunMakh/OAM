@@ -68,7 +68,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<Object>(map, HttpStatus.BAD_REQUEST);
 
 	}
-	
+
 	@ExceptionHandler(ConstraintViolationException.class)
 	public ResponseEntity<String> handleViolationException(OrderNotFoundException e) {
 		HttpHeaders header = new HttpHeaders();
@@ -76,5 +76,4 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).headers(header).body(e.getMessage());
 	}
 
-	
 }

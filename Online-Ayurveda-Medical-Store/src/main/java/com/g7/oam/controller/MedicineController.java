@@ -26,7 +26,7 @@ public class MedicineController {
 	IMedicineService medicineService;
 
 	@PostMapping("/add")
-	public Medicine addMedicine(@RequestBody  @Valid Medicine medicine) {
+	public Medicine addMedicine(@RequestBody @Valid Medicine medicine) {
 		this.medicineService.addMedicine(medicine);
 		return medicine;
 	}

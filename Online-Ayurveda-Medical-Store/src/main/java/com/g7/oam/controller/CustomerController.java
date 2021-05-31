@@ -2,6 +2,8 @@ package com.g7.oam.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,18 +26,18 @@ public class CustomerController {
 	ICustomerService customerService;
 
 	@PostMapping("/add")
-	public Customer addCustomer(@RequestBody Customer customer) {
+	public Customer addCustomer(@RequestBody @Valid Customer customer) {
 		this.customerService.addCustomer(customer);
 		return customer;
 	}
 
 	@PutMapping("/update")
-	public Customer updateCustomer(@RequestBody Customer customer) throws CustomerNotFoundException {
+	public Customer updateCustomer(@RequestBody @Valid Customer customer) throws CustomerNotFoundException {
 		return this.customerService.updateCustomer(customer);
 	}
 
 	@GetMapping("/view")
-	public Customer viewCustomer(@RequestBody Customer customer) throws CustomerNotFoundException {
+	public Customer viewCustomer(@RequestBody @Valid Customer customer) throws CustomerNotFoundException {
 		return this.customerService.viewCustomer(customer);
 	}
 

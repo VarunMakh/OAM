@@ -3,6 +3,7 @@ package com.g7.oam.exception;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -67,4 +68,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<Object>(map, HttpStatus.BAD_REQUEST);
 
 	}
+	
+	@ExceptionHandler(ConstraintViolationException.class)
+	public ResponseEntity<String> handleViolationException(OrderNotFoundException e) {
+		HttpHeaders header = new HttpHeaders();
+		header.add("Description", "Trying to get an Order...");
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).headers(header).body(e.getMessage());
+	}
+
+	
 }

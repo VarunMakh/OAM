@@ -2,6 +2,8 @@ package com.g7.oam.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,18 +26,18 @@ public class MedicineController {
 	IMedicineService medicineService;
 
 	@PostMapping("/add")
-	public Medicine addMedicine(@RequestBody Medicine medicine) {
+	public Medicine addMedicine(@RequestBody  @Valid Medicine medicine) {
 		this.medicineService.addMedicine(medicine);
 		return medicine;
 	}
 
 	@PutMapping("/update")
-	public Medicine updateMedicine(@RequestBody Medicine medicine) throws MedicineNotFoundException {
+	public Medicine updateMedicine(@RequestBody @Valid Medicine medicine) throws MedicineNotFoundException {
 		return this.medicineService.updateMedicine(medicine);
 	}
 
 	@GetMapping("/view")
-	public Medicine viewMedicine(@RequestBody Medicine medicine) throws MedicineNotFoundException {
+	public Medicine viewMedicine(@RequestBody @Valid Medicine medicine) throws MedicineNotFoundException {
 		return this.medicineService.viewMedicine(medicine);
 
 	}

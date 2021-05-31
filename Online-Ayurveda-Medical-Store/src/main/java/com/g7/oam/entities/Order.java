@@ -25,12 +25,13 @@ public class Order {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int orderId;
 	@Column
-	private LocalDate orderDate;
+	private LocalDate orderDate = LocalDate.now();
 	@ManyToMany
 	@JoinTable(name = "Order_Medicine", joinColumns = @JoinColumn(name = "Order_ID", referencedColumnName = "orderId"), inverseJoinColumns = @JoinColumn(name = "Medicine_ID", referencedColumnName = "medicineId"))
+	@NotEmpty(message = "Order List cannot be empty")
 	private List<Medicine> medicineList;
 	@Column
-	private LocalDate dispatchDate;
+	private LocalDate dispatchDate = orderDate.plusDays(3);
 	@Column
 	private float totalCost;
 	@OneToOne
@@ -59,10 +60,6 @@ public class Order {
 
 	public int getOrderId() {
 		return orderId;
-	}
-
-	public void setOrderId(int orderId) {
-		this.orderId = orderId;
 	}
 
 	public LocalDate getOrderDate() {

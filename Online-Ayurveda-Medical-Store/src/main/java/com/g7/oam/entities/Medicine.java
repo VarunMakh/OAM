@@ -58,6 +58,7 @@ public class Medicine {
 	@Column
 	@Enumerated(EnumType.STRING)
 	private Company company;
+	
 	@OneToOne
 	@JoinColumn(name = "Category_ID", referencedColumnName = "categoryId")
 	private Category category;

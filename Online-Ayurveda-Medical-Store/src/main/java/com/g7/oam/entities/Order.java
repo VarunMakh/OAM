@@ -1,3 +1,4 @@
+
 package com.g7.oam.entities;
 
 import java.time.LocalDate;
@@ -15,7 +16,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
+
+import io.swagger.annotations.ApiModelProperty;
 
 @Entity
 @Table(name = "Customer_Order")
@@ -24,19 +26,30 @@ public class Order {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int orderId;
+	
+	@ApiModelProperty(name = "Order Date", value = "Order Date is system generated for the current date.")
 	@Column
 	private LocalDate orderDate = LocalDate.now();
+	
+	@ApiModelProperty(name = "Medicine List", value = "Medicine List is a list of medicines associated with an Order.")
 	@ManyToMany
 	@JoinTable(name = "Order_Medicine", joinColumns = @JoinColumn(name = "Order_ID", referencedColumnName = "orderId"), inverseJoinColumns = @JoinColumn(name = "Medicine_ID", referencedColumnName = "medicineId"))
-	@NotEmpty(message = "Order List cannot be empty")
 	private List<Medicine> medicineList;
+	
+	@ApiModelProperty(name = "Dispatch Date", value = "Dispatch Date is system generated for 3 days from the current date.")
 	@Column
 	private LocalDate dispatchDate = orderDate.plusDays(3);
+	
+	@ApiModelProperty(name = "Total Cost", value = "Total Cost is system generated to calculate the total cost from the Medicine List.")
 	@Column
 	private float totalCost;
+	
+	@ApiModelProperty(name = "User ID", value = "User ID is the Customer who placed the order, it must be a valid User ID.")
 	@OneToOne
 	@JoinColumn(name = "User_ID", referencedColumnName = "userId")
 	private Customer customer;
+	
+	@ApiModelProperty(name = "Order Status", value = "Order Status is an enumerated object, referenced with alphabetical characters only.")
 	@Column
 	@Enumerated(EnumType.STRING)
 	private OrderStatus status;
@@ -64,10 +77,6 @@ public class Order {
 
 	public LocalDate getOrderDate() {
 		return orderDate;
-	}
-
-	public void setOrderDate(LocalDate orderDate) {
-		this.orderDate = orderDate;
 	}
 
 	public List<Medicine> getMedicineList() {

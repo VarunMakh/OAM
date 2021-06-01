@@ -1,4 +1,3 @@
-
 package com.g7.oam.entities;
 
 import java.time.LocalDate;

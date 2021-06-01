@@ -17,7 +17,11 @@ public class MedicineServiceImpl implements IMedicineService {
 
 	@Autowired
 	IMedicineRepository repository;
-
+	
+	public MedicineServiceImpl(IMedicineRepository repository) {
+		this.repository=repository;
+	}
+	
 	@Override
 	@Transactional
 	public Medicine addMedicine(Medicine medicine) {

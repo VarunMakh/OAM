@@ -29,12 +29,13 @@ public class CategoryServiceImpl implements ICategoryService {
 	@Override
 	@Transactional
 	public Category addCategory(Category category) {
+		Category savedCategory = null;
 		try {
-			repository.save(category);
+			savedCategory = repository.save(category);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
-		return category;
+		return savedCategory;
 	}
 
 	@Override

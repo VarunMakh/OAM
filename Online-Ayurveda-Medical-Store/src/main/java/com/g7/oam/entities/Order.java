@@ -28,7 +28,7 @@ public class Order {
 	
 	@ApiModelProperty(name = "Order Date", value = "Order Date is system generated for the current date.")
 	@Column
-	private LocalDate orderDate = LocalDate.now();
+	private LocalDate orderDate;
 	
 	@ApiModelProperty(name = "Medicine List", value = "Medicine List is a list of medicines associated with an Order.")
 	@ManyToMany
@@ -37,7 +37,7 @@ public class Order {
 	
 	@ApiModelProperty(name = "Dispatch Date", value = "Dispatch Date is system generated for 3 days from the current date.")
 	@Column
-	private LocalDate dispatchDate = orderDate.plusDays(3);
+	private LocalDate dispatchDate;
 	
 	@ApiModelProperty(name = "Total Cost", value = "Total Cost is system generated to calculate the total cost from the Medicine List.")
 	@Column
@@ -55,7 +55,6 @@ public class Order {
 
 	public Order() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Order(int orderId, LocalDate orderDate, List<Medicine> medicineList, LocalDate dispatchDate, float totalCost,
@@ -76,6 +75,10 @@ public class Order {
 
 	public LocalDate getOrderDate() {
 		return orderDate;
+	}
+	
+	public void setOrderDate(LocalDate orderDate) {
+		this.orderDate = orderDate;
 	}
 
 	public List<Medicine> getMedicineList() {

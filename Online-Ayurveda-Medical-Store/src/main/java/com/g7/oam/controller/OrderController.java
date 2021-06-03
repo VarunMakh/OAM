@@ -34,6 +34,8 @@ public class OrderController {
 
 	@PostMapping("/add")
 	public Order addOrder(@RequestBody @Valid Order order) {
+		order.setOrderDate(LocalDate.now());
+		order.setDispatchDate(order.getOrderDate().plusDays(3));
 		this.orderService.addOrder(order);
 		return order;
 	}

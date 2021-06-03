@@ -31,7 +31,7 @@ public class Medicine {
 	@ApiModelProperty(name = "Medicine Name", value = "Medicine Name consists of alphanumeric characters and special symbols like {'-','+'}")
 	@NotEmpty(message = "Medicine Name cannot be empty.")
 	@Size(min = 4, max = 15, message = "Please enter a valid medicine name, Medicine name should be from 4 to 15 characters long.")
-	@Pattern(regexp = "^[a-zA-z0-9+-]+", message = "Please enter a valid Medicine name.")
+	@Pattern(regexp = "^[A-z0-9+-]+", message = "Please enter a valid Medicine name.")
 	@Column
 	private String medicineName;
 
@@ -42,15 +42,11 @@ public class Medicine {
 	private float medicineCost;
 
 	@ApiModelProperty(name = "Medicine Mfd", value = "Medicine Mfd consists of numeric value for date with delimiter '-")
-	// @Pattern(regexp="[^(19|20)\\d\\d[-](0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])$]",message="Please
-	// enter a valid Medicine mfd.")
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	@Column
 	private LocalDate mfd;
 
 	@ApiModelProperty(name = "Medicine Expiry Date", value = "Medicine Expiry Date consists of numeric value for date with delimiter '-")
-	// @Pattern(regexp="[^(19|20)\\d\\d[-](0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])$]",message="Please
-	// enter a valid Medicine expiry date.")
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	@Column
 	private LocalDate expiryDate;
@@ -65,7 +61,6 @@ public class Medicine {
 
 	public Medicine() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Medicine(int medicineId, String medicineName, float medicineCost, LocalDate mfd, LocalDate expiryDate,

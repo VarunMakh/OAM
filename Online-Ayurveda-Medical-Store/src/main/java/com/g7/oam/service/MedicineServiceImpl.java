@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,20 +17,22 @@ import com.g7.oam.repository.IMedicineRepository;
 @Service
 public class MedicineServiceImpl implements IMedicineService {
 
+	Logger logger = LoggerFactory.getLogger(MedicineServiceImpl.class);
+
 	@Autowired
 	IMedicineRepository repository;
-	
+
 	public MedicineServiceImpl(IMedicineRepository repository) {
-		this.repository=repository;
+		this.repository = repository;
 	}
-	
+
 	@Override
 	@Transactional
 	public Medicine addMedicine(Medicine medicine) {
 		try {
 			repository.save(medicine);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		return medicine;
 	}
@@ -36,8 +40,7 @@ public class MedicineServiceImpl implements IMedicineService {
 	@Override
 	@Transactional
 	public Medicine updateMedicine(Medicine medicine) throws MedicineNotFoundException {
-		Optional<Medicine> optional = null;
-		optional = repository.findById(medicine.getMedicineId());
+		Optional<Medicine> optional = repository.findById(medicine.getMedicineId());
 		if (optional.isPresent()) {
 			repository.save(medicine);
 			return optional.get();
@@ -48,8 +51,7 @@ public class MedicineServiceImpl implements IMedicineService {
 
 	@Override
 	public Medicine viewMedicine(Medicine medicine) throws MedicineNotFoundException {
-		Optional<Medicine> optional = null;
-		optional = repository.findById(medicine.getMedicineId());
+		Optional<Medicine> optional = repository.findById(medicine.getMedicineId());
 		if (optional.isPresent()) {
 			return optional.get();
 		} else {
@@ -60,8 +62,7 @@ public class MedicineServiceImpl implements IMedicineService {
 	@Override
 	@Transactional
 	public Medicine deleteMedicine(int medicineId) throws MedicineNotFoundException {
-		Optional<Medicine> optional = null;
-		optional = repository.findById(medicineId);
+		Optional<Medicine> optional = repository.findById(medicineId);
 		if (optional.isPresent()) {
 			repository.deleteById(medicineId);
 			return optional.get();
@@ -76,7 +77,7 @@ public class MedicineServiceImpl implements IMedicineService {
 		try {
 			medsList = repository.findAll();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		return medsList;
 	}

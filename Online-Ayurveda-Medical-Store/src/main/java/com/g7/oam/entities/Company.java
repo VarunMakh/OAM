@@ -2,8 +2,8 @@ package com.g7.oam.entities;
 
 public enum Company {
 
-	Divis("Divis Laboratories Ltd."), Sun("Sun Pharmaceutical Industries Ltd."), Reddy("Dr. Reddys Laboratories Ltd."),
-	Cipla("Cipla Ltd."), Biocon("Biocon Ltd.");
+	DIVIS("Divis Laboratories Ltd."), SUN("Sun Pharmaceutical Industries Ltd."), REDDY("Dr. Reddys Laboratories Ltd."),
+	CIPLA("Cipla Ltd."), BIOCON("Biocon Ltd.");
 
 	String name;
 

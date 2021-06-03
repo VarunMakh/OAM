@@ -12,7 +12,6 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -32,12 +31,9 @@ public class User {
 	@ApiModelProperty(name = "User Password", value = "User Password consists of alphanumeric as well as special characters.")
 	@NotEmpty(message = "User password cannot be empty!")
 	@Size(min = 4, max = 15, message = "Please enter a valid User Password, the User Password should be from 4 to 15 characters long.")
-	@Pattern(regexp = "[A-za-z0-9]+", message = "Please enter a valid User Password.")
 	private String password;
 
 	@ApiModelProperty(name = "User Type", value = "User Type is either 'admin' or 'customer'")
-	@NotEmpty(message = "User Type cannot be empty!")
-	@Pattern(regexp = "(customer|admin)", message = "Please enter a valid User Type!")
 	@Column
 	private String userType;
 
@@ -56,10 +52,6 @@ public class User {
 		return userId;
 	}
 
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
-
 	public String getPassword() {
 		return password;
 	}
@@ -70,6 +62,10 @@ public class User {
 
 	public String getUserType() {
 		return userType;
+	}
+	
+	public void setUserType(String userType) {
+		this.userType = userType;
 	}
 
 	@Override

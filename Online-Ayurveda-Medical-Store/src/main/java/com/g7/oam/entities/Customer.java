@@ -16,18 +16,16 @@ public class Customer extends User {
 	@ApiModelProperty(name = "Customer Name", value = "Customer name consists of 3-15 alphanumeric characters.")
 	@NotEmpty(message = "Customer Name cannot be empty!")
 	@Size(min = 3, max = 15, message = "Please enter a valid name between 3-15 characters!")
-	@Pattern(regexp = "[A-za-z0-9]+", message = "Please enter a valid Customer Name.")
+	@Pattern(regexp = "[A-z0-9]+", message = "Please enter a valid Customer Name.")
 	@Column
 	private String customerName;
 
 	public Customer() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Customer(int userId, String password) {
 		super(userId, password, "customer");
-		// TODO Auto-generated constructor stub
 	}
 
 	public Customer(int userId, String password, String customerName) {
@@ -46,6 +44,16 @@ public class Customer extends User {
 	@Override
 	public String toString() {
 		return "Customer [customerName=" + customerName + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return super.equals(obj);
 	}
 
 }

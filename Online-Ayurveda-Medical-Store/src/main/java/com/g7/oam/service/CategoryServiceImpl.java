@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +17,14 @@ import com.g7.oam.repository.ICategoryRepository;
 @Service
 public class CategoryServiceImpl implements ICategoryService {
 
+	Logger logger = LoggerFactory.getLogger(CategoryServiceImpl.class);
+
 	@Autowired
 	ICategoryRepository repository;
+
+	public CategoryServiceImpl(ICategoryRepository repository) {
+		this.repository = repository;
+	}
 
 	@Override
 	@Transactional
@@ -24,7 +32,7 @@ public class CategoryServiceImpl implements ICategoryService {
 		try {
 			repository.save(category);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		return category;
 	}
@@ -32,8 +40,7 @@ public class CategoryServiceImpl implements ICategoryService {
 	@Override
 	@Transactional
 	public Category updateCategory(Category category) throws CategoryNotFoundException {
-		Optional<Category> optional = null;
-		optional = repository.findById(category.getCategoryId());
+		Optional<Category> optional = repository.findById(category.getCategoryId());
 		if (optional.isPresent()) {
 			repository.save(category);
 			return optional.get();
@@ -44,8 +51,7 @@ public class CategoryServiceImpl implements ICategoryService {
 
 	@Override
 	public Category viewCategory(Category category) throws CategoryNotFoundException {
-		Optional<Category> optional = null;
-		optional = repository.findById(category.getCategoryId());
+		Optional<Category> optional = repository.findById(category.getCategoryId());
 		if (optional.isPresent()) {
 			return optional.get();
 		} else {
@@ -56,8 +62,7 @@ public class CategoryServiceImpl implements ICategoryService {
 	@Override
 	@Transactional
 	public Category deleteCategory(int categoryId) throws CategoryNotFoundException {
-		Optional<Category> optional = null;
-		optional = repository.findById(categoryId);
+		Optional<Category> optional = repository.findById(categoryId);
 		if (optional.isPresent()) {
 			repository.deleteById(categoryId);
 			return optional.get();
@@ -72,7 +77,7 @@ public class CategoryServiceImpl implements ICategoryService {
 		try {
 			categoryList = repository.findAll();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		return categoryList;
 	}

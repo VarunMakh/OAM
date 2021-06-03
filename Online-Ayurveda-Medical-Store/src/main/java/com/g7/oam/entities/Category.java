@@ -21,13 +21,12 @@ public class Category {
 	@ApiModelProperty(name = "Customer Name", value = "Category name consists of 3-15 alphanumeric characters.")
 	@NotBlank(message = "Category Name cannot be blank!")
 	@Size(min = 3, max = 15, message = "Please enter a valid name between 3-15 characters!")
-	@Pattern(regexp = "[A-za-z0-9]+", message = "Please enter a valid Category Name.")
+	@Pattern(regexp = "[A-z0-9]+", message = "Please enter a valid Category Name.")
 	@Column
 	private String categoryName;
 
 	public Category() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Category(int categoryId, String categoryName) {

@@ -27,6 +27,7 @@ public class AdminController {
 
 	@PostMapping("/add")
 	public Admin addAdmin(@RequestBody @Valid Admin admin) {
+		admin.setUserType("admin");
 		this.adminService.addAdmin(admin);
 		return admin;
 	}

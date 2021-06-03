@@ -22,12 +22,10 @@ public class Admin extends User {
 
 	public Admin() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Admin(int userId, String password) {
 		super(userId, password, "admin");
-		// TODO Auto-generated constructor stub
 	}
 
 	public Admin(int userId, String password, String adminName) {
@@ -46,6 +44,16 @@ public class Admin extends User {
 	@Override
 	public String toString() {
 		return "Admin [adminName=" + adminName + "]";
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return super.equals(obj);
+	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode();
 	}
 
 }

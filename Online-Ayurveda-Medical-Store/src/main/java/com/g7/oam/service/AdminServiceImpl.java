@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +17,14 @@ import com.g7.oam.repository.IAdminRepository;
 @Service
 public class AdminServiceImpl implements IAdminService {
 
+	Logger logger = LoggerFactory.getLogger(AdminServiceImpl.class);
+
 	@Autowired
 	IAdminRepository repository;
+
+	public AdminServiceImpl(IAdminRepository repository) {
+		this.repository = repository;
+	}
 
 	@Override
 	@Transactional
@@ -24,7 +32,7 @@ public class AdminServiceImpl implements IAdminService {
 		try {
 			repository.save(admin);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		return admin;
 	}
@@ -32,25 +40,21 @@ public class AdminServiceImpl implements IAdminService {
 	@Override
 	@Transactional
 	public Admin updateAdmin(Admin admin) throws AdminNotFoundException {
-		Optional<Admin> optional = null;
-		optional = repository.findById(admin.getUserId());
+		Optional<Admin> optional = repository.findById(admin.getUserId());
 		if (optional.isPresent()) {
 			repository.save(admin);
 			return optional.get();
 		} else {
-
 			throw new AdminNotFoundException("Admin not found for updation!");
 		}
 	}
 
 	@Override
 	public Admin viewAdmin(Admin admin) throws AdminNotFoundException {
-		Optional<Admin> optional = null;
-		optional = repository.findById(admin.getUserId());
+		Optional<Admin> optional = repository.findById(admin.getUserId());
 		if (optional.isPresent()) {
 			return optional.get();
 		} else {
-
 			throw new AdminNotFoundException("Admin not found!");
 		}
 	}
@@ -58,13 +62,11 @@ public class AdminServiceImpl implements IAdminService {
 	@Override
 	@Transactional
 	public Admin deleteAdmin(int adminId) throws AdminNotFoundException {
-		Optional<Admin> optional = null;
-		optional = repository.findById(adminId);
+		Optional<Admin> optional = repository.findById(adminId);
 		if (optional.isPresent()) {
 			repository.deleteById(adminId);
 			return optional.get();
 		} else {
-
 			throw new AdminNotFoundException("Admin not found for deletion!");
 		}
 	}
@@ -75,7 +77,7 @@ public class AdminServiceImpl implements IAdminService {
 		try {
 			adminList = repository.findAll();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		return adminList;
 	}

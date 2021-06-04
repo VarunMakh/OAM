@@ -29,12 +29,13 @@ public class MedicineServiceImpl implements IMedicineService {
 	@Override
 	@Transactional
 	public Medicine addMedicine(Medicine medicine) {
+		Medicine savedMedicine = null;
 		try {
-			repository.save(medicine);
+			savedMedicine = repository.save(medicine);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
-		return medicine;
+		return savedMedicine;
 	}
 
 	@Override

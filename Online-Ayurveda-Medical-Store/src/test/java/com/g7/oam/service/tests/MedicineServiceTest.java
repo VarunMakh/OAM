@@ -97,14 +97,15 @@ public class MedicineServiceTest {
 	@DisplayName("False Value Test for Medicine Update")
 	public void testFalseUpdateMedicine() throws MedicineNotFoundException {
 
-		Medicine testOutput = new Medicine(44, "crocinVVV", (float) 20, LocalDate.of(2020, 02, 02),
+		Medicine testOutput = new Medicine(231, "crocinVVV", (float) 20, LocalDate.of(2020, 02, 02),
 				LocalDate.of(2021, 12, 12), Company.SUN, new Category(42, "Digestion"));
 
 		when(repository.findById(testOutput.getMedicineId())).thenReturn(Optional.of(testOutput));
 		when(repository.save(testOutput)).thenReturn(testOutput);
 		Medicine actual = service.updateMedicine(testOutput);
-		assertNotEquals(testOutput, actual);
 		verify(repository).save(testOutput);
+		assertNotEquals(testOutput, actual);
+		
 
 	}
 	

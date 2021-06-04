@@ -52,7 +52,6 @@ public class CustomerController {
 		return new ResponseEntity<>(obj, HttpStatus.OK);
 
 	}
-
 	@GetMapping("/view")
 	public ResponseEntity<CustomerDTO> viewCustomer(@RequestBody @Valid Customer customer)
 			throws CustomerNotFoundException {

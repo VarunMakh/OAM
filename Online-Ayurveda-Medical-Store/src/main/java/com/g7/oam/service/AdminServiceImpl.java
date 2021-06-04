@@ -29,12 +29,13 @@ public class AdminServiceImpl implements IAdminService {
 	@Override
 	@Transactional
 	public Admin addAdmin(Admin admin) {
+		Admin savedAdmin = null;
 		try {
-			repository.save(admin);
+			savedAdmin = repository.save(admin);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
-		return admin;
+		return savedAdmin;
 	}
 
 	@Override

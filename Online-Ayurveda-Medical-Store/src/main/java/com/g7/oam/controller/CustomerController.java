@@ -78,6 +78,7 @@ public class CustomerController {
 
 	@GetMapping("/showAll")
 	public ResponseEntity<List<CustomerDTO>> showAllCustomers() {
+		
 		List<Customer> customerList = this.customerService.showAllCustomers();
 		List<CustomerDTO> customerDtoList = new ArrayList<>();
 		for (Customer customer : customerList) {

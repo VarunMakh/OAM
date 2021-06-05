@@ -15,6 +15,6 @@ public interface IMedicineService {
 
 	public Medicine deleteMedicine(int medicineId) throws MedicineNotFoundException;
 
-	public List<Medicine> showAllMedicine();
+	public List<Medicine> showAllMedicines();
 
 }

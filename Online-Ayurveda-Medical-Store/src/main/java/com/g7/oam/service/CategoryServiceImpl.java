@@ -29,6 +29,7 @@ public class CategoryServiceImpl implements ICategoryService {
 	@Override
 	@Transactional
 	public Category addCategory(Category category) {
+
 		Category savedCategory = null;
 		try {
 			savedCategory = repository.save(category);
@@ -36,11 +37,13 @@ public class CategoryServiceImpl implements ICategoryService {
 			logger.error(e.getMessage());
 		}
 		return savedCategory;
+
 	}
 
 	@Override
 	@Transactional
 	public Category updateCategory(Category category) throws CategoryNotFoundException {
+
 		Optional<Category> optional = repository.findById(category.getCategoryId());
 		if (optional.isPresent()) {
 			repository.save(category);
@@ -48,21 +51,25 @@ public class CategoryServiceImpl implements ICategoryService {
 		} else {
 			throw new CategoryNotFoundException("Category not found for updation!");
 		}
+
 	}
 
 	@Override
 	public Category viewCategory(Category category) throws CategoryNotFoundException {
+
 		Optional<Category> optional = repository.findById(category.getCategoryId());
 		if (optional.isPresent()) {
 			return optional.get();
 		} else {
 			throw new CategoryNotFoundException("Category not found!");
 		}
+
 	}
 
 	@Override
 	@Transactional
 	public Category deleteCategory(int categoryId) throws CategoryNotFoundException {
+
 		Optional<Category> optional = repository.findById(categoryId);
 		if (optional.isPresent()) {
 			repository.deleteById(categoryId);
@@ -70,10 +77,12 @@ public class CategoryServiceImpl implements ICategoryService {
 		} else {
 			throw new CategoryNotFoundException("Category not found for deletion!");
 		}
+
 	}
 
 	@Override
 	public List<Category> showAllCategories() {
+
 		List<Category> categoryList = null;
 		try {
 			categoryList = repository.findAll();

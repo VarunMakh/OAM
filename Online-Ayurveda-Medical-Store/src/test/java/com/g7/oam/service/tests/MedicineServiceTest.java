@@ -178,7 +178,7 @@ public class MedicineServiceTest {
 		List<Medicine> medList = mock(List.class);
 
 		when(repository.findAll()).thenReturn(medList);
-		List<Medicine> actualList = service.showAllMedicine();
+		List<Medicine> actualList = service.showAllMedicines();
 		verify(repository).findAll();
 		assertIterableEquals(medList, actualList);
 

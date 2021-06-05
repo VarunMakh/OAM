@@ -2,9 +2,9 @@ package com.g7.oam.dto;
 
 public class UserDTO {
 
-	int userId;
-	String userName;
-	String userType;
+	private int userId;
+	private String userName;
+	private String userType;
 
 	public UserDTO() {
 		super();

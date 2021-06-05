@@ -29,6 +29,7 @@ public class AdminServiceImpl implements IAdminService {
 	@Override
 	@Transactional
 	public Admin addAdmin(Admin admin) {
+
 		Admin savedAdmin = null;
 		try {
 			savedAdmin = repository.save(admin);
@@ -36,11 +37,13 @@ public class AdminServiceImpl implements IAdminService {
 			logger.error(e.getMessage());
 		}
 		return savedAdmin;
+
 	}
 
 	@Override
 	@Transactional
 	public Admin updateAdmin(Admin admin) throws AdminNotFoundException {
+
 		Optional<Admin> optional = repository.findById(admin.getUserId());
 		if (optional.isPresent()) {
 			repository.save(admin);
@@ -48,21 +51,25 @@ public class AdminServiceImpl implements IAdminService {
 		} else {
 			throw new AdminNotFoundException("Admin not found for updation!");
 		}
+
 	}
 
 	@Override
 	public Admin viewAdmin(Admin admin) throws AdminNotFoundException {
+
 		Optional<Admin> optional = repository.findById(admin.getUserId());
 		if (optional.isPresent()) {
 			return optional.get();
 		} else {
 			throw new AdminNotFoundException("Admin not found!");
 		}
+
 	}
 
 	@Override
 	@Transactional
 	public Admin deleteAdmin(int adminId) throws AdminNotFoundException {
+
 		Optional<Admin> optional = repository.findById(adminId);
 		if (optional.isPresent()) {
 			repository.deleteById(adminId);
@@ -70,10 +77,12 @@ public class AdminServiceImpl implements IAdminService {
 		} else {
 			throw new AdminNotFoundException("Admin not found for deletion!");
 		}
+
 	}
 
 	@Override
 	public List<Admin> showAllAdmins() {
+
 		List<Admin> adminList = null;
 		try {
 			adminList = repository.findAll();

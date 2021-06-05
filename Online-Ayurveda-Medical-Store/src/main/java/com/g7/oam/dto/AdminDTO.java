@@ -2,8 +2,8 @@ package com.g7.oam.dto;
 
 public class AdminDTO {
 
-	int adminId;
-	String adminName;
+	private int adminId;
+	private String adminName;
 
 	public AdminDTO() {
 		super();

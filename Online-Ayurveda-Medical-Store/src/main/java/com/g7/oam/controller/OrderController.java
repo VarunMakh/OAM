@@ -40,7 +40,7 @@ public class OrderController {
 	IOrderService orderService;
 
 	@PostMapping("/add")
-	public ResponseEntity<OrderDTO> addOrder(@RequestBody @Valid Order order) throws OrderNotFoundException {
+	public ResponseEntity<OrderDTO> addOrder(@RequestBody @Valid Order order) {
 
 		order.setOrderDate(LocalDate.now());
 		order.setDispatchDate(order.getOrderDate().plusDays(3));
@@ -266,14 +266,4 @@ public class OrderController {
 
 	}
 
-	/*
-	 * @GetMapping("/calculateCost/{orderId}") public ResponseEntity<Float>
-	 * calculateTotalCost(@PathVariable("orderId") int orderid) throws
-	 * OrderNotFoundException {
-	 * 
-	 * float cost = this.orderService.calculateTotalCost(orderid); return new
-	 * ResponseEntity<>(cost, HttpStatus.OK);
-	 * 
-	 * }
-	 */
 }

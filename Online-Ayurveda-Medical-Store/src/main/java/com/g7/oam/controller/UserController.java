@@ -25,21 +25,26 @@ public class UserController {
 
 	@GetMapping("/showAll")
 	public ResponseEntity<List<UserDTO>> showAllUsers() {
+
 		List<User> userList = this.userService.showAllUsers();
 		List<UserDTO> userDtoList = new ArrayList<>();
+
 		for (User user : userList) {
+
 			UserDTO userDto = new UserDTO();
 			userDto.setUserId(user.getUserId());
 			userDto.setUserType(user.getUserType());
-			if(userDto.getUserType().equals("customer")) {
+
+			if (userDto.getUserType().equals("customer")) {
 				Customer customer = (Customer) user;
 				userDto.setUserName(customer.getCustomerName());
-			}
-			else if(userDto.getUserType().equals("admin")) {
+			} else if (userDto.getUserType().equals("admin")) {
 				Admin admin = (Admin) user;
-				userDto.setUserName(admin.getAdminName());			}
+				userDto.setUserName(admin.getAdminName());
+			}
 			userDtoList.add(userDto);
 		}
-		return new ResponseEntity<>(userDtoList, HttpStatus.OK); 
+
+		return new ResponseEntity<>(userDtoList, HttpStatus.OK);
 	}
 }

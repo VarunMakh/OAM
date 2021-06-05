@@ -29,6 +29,7 @@ public class MedicineServiceImpl implements IMedicineService {
 	@Override
 	@Transactional
 	public Medicine addMedicine(Medicine medicine) {
+
 		Medicine savedMedicine = null;
 		try {
 			savedMedicine = repository.save(medicine);
@@ -41,6 +42,7 @@ public class MedicineServiceImpl implements IMedicineService {
 	@Override
 	@Transactional
 	public Medicine updateMedicine(Medicine medicine) throws MedicineNotFoundException {
+
 		Optional<Medicine> optional = repository.findById(medicine.getMedicineId());
 		if (optional.isPresent()) {
 			repository.save(medicine);
@@ -52,17 +54,20 @@ public class MedicineServiceImpl implements IMedicineService {
 
 	@Override
 	public Medicine viewMedicine(Medicine medicine) throws MedicineNotFoundException {
+
 		Optional<Medicine> optional = repository.findById(medicine.getMedicineId());
 		if (optional.isPresent()) {
 			return optional.get();
 		} else {
 			throw new MedicineNotFoundException("Medicine not found!");
 		}
+
 	}
 
 	@Override
 	@Transactional
 	public Medicine deleteMedicine(int medicineId) throws MedicineNotFoundException {
+
 		Optional<Medicine> optional = repository.findById(medicineId);
 		if (optional.isPresent()) {
 			repository.deleteById(medicineId);
@@ -70,10 +75,12 @@ public class MedicineServiceImpl implements IMedicineService {
 		} else {
 			throw new MedicineNotFoundException("Medicine not found for deletion!");
 		}
+
 	}
 
 	@Override
-	public List<Medicine> showAllMedicine() {
+	public List<Medicine> showAllMedicines() {
+
 		List<Medicine> medsList = null;
 		try {
 			medsList = repository.findAll();

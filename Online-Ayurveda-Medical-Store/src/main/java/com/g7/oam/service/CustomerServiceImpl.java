@@ -29,6 +29,7 @@ public class CustomerServiceImpl implements ICustomerService {
 	@Override
 	@Transactional
 	public Customer addCustomer(Customer customer) {
+
 		Customer savedCustomer = null;
 		try {
 			savedCustomer = repository.save(customer);
@@ -36,11 +37,13 @@ public class CustomerServiceImpl implements ICustomerService {
 			logger.error(e.getMessage());
 		}
 		return savedCustomer;
+
 	}
 
 	@Override
 	@Transactional
 	public Customer updateCustomer(Customer customer) throws CustomerNotFoundException {
+
 		Optional<Customer> optional = repository.findById(customer.getUserId());
 		if (optional.isPresent()) {
 			repository.save(customer);
@@ -48,21 +51,25 @@ public class CustomerServiceImpl implements ICustomerService {
 		} else {
 			throw new CustomerNotFoundException("Customer not found for updation!");
 		}
+
 	}
 
 	@Override
 	public Customer viewCustomer(Customer customer) throws CustomerNotFoundException {
+
 		Optional<Customer> optional = repository.findById(customer.getUserId());
 		if (optional.isPresent()) {
 			return optional.get();
 		} else {
 			throw new CustomerNotFoundException("Customer not found!");
 		}
+
 	}
 
 	@Override
 	@Transactional
 	public Customer deleteCustomer(int customerId) throws CustomerNotFoundException {
+
 		Optional<Customer> optional = repository.findById(customerId);
 		if (optional.isPresent()) {
 			repository.deleteById(customerId);
@@ -70,10 +77,12 @@ public class CustomerServiceImpl implements ICustomerService {
 		} else {
 			throw new CustomerNotFoundException("Customer not found for deletion!");
 		}
+
 	}
 
 	@Override
 	public List<Customer> showAllCustomers() {
+
 		List<Customer> customerList = null;
 		try {
 			customerList = repository.findAll();

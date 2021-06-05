@@ -73,6 +73,7 @@ public class AdminController {
 
 	@GetMapping("/showAll")
 	public ResponseEntity<List<AdminDTO>> showAllAdmin() {
+
 		List<Admin> adminList = this.adminService.showAllAdmins();
 		List<AdminDTO> adminDtoList = new ArrayList<>();
 		for (Admin admin : adminList) {

@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.g7.oam.dto.CustomerDTO;
+import com.g7.oam.dto.MedicineDTO;
 import com.g7.oam.dto.OrderDTO;
 import com.g7.oam.entities.Customer;
 import com.g7.oam.entities.Medicine;
@@ -39,119 +41,229 @@ public class OrderController {
 
 	@PostMapping("/add")
 	public ResponseEntity<OrderDTO> addOrder(@RequestBody @Valid Order order) {
+
+		order.setOrderDate(LocalDate.now());
+		order.setDispatchDate(order.getOrderDate().plusDays(3));
 		Order savedOrder = this.orderService.addOrder(order);
-		OrderDTO obj = new OrderDTO();
-		obj.setOrderId(savedOrder.getOrderId());
-		obj.setOrderDate(savedOrder.getOrderDate());
-		obj.setMedicineList(savedOrder.getMedicineList());
-		obj.setDispatchDate(savedOrder.getDispatchDate());
-		obj.setTotalCost(savedOrder.getTotalCost());
-		obj.setCustomer(savedOrder.getCustomer());
-		obj.setStatus(savedOrder.getStatus());
-		return new ResponseEntity<>(obj, HttpStatus.OK);
+		OrderDTO orderDto = new OrderDTO();
+		orderDto.setOrderId(savedOrder.getOrderId());
+		orderDto.setOrderDate(savedOrder.getOrderDate());
+		List<MedicineDTO> orderMedicineDtoList = new ArrayList<>();
+		for (Medicine medicine : savedOrder.getMedicineList()) {
+			MedicineDTO medicineDto = new MedicineDTO();
+			medicineDto.setMedicineId(medicine.getMedicineId());
+			medicineDto.setMedicineName(medicine.getMedicineName());
+			medicineDto.setExpiryDate(medicine.getExpiryDate());
+			medicineDto.setMedicineCost(medicine.getMedicineCost());
+			orderMedicineDtoList.add(medicineDto);
+		}
+		orderDto.setMedicineDtoList(orderMedicineDtoList);
+		orderDto.setDispatchDate(savedOrder.getDispatchDate());
+		orderDto.setTotalCost(savedOrder.getTotalCost());
+
+		CustomerDTO customerDto = new CustomerDTO();
+		customerDto.setCustomerId(savedOrder.getCustomer().getUserId());
+		customerDto.setCustomerName(savedOrder.getCustomer().getCustomerName());
+
+		orderDto.setCustomerDto(customerDto);
+		orderDto.setStatus(savedOrder.getStatus());
+		return new ResponseEntity<>(orderDto, HttpStatus.OK);
+    
 	}
 
 	@PutMapping("/update")
 	public ResponseEntity<OrderDTO> updateOrder(@RequestBody @Valid Order order) throws OrderNotFoundException {
+
 		Order updatedOrder = this.orderService.updateOrder(order);
-		OrderDTO obj = new OrderDTO();
-		obj.setOrderId(updatedOrder.getOrderId());
-		obj.setOrderDate(updatedOrder.getOrderDate());
-		obj.setMedicineList(updatedOrder.getMedicineList());
-		obj.setDispatchDate(updatedOrder.getDispatchDate());
-		obj.setTotalCost(updatedOrder.getTotalCost());
-		obj.setCustomer(updatedOrder.getCustomer());
-		obj.setStatus(updatedOrder.getStatus());
-		return new ResponseEntity<>(obj, HttpStatus.OK);
+		OrderDTO orderDto = new OrderDTO();
+		orderDto.setOrderId(updatedOrder.getOrderId());
+		orderDto.setOrderDate(updatedOrder.getOrderDate());
+		List<MedicineDTO> orderMedicineDtoList = new ArrayList<>();
+		for (Medicine medicine : updatedOrder.getMedicineList()) {
+			MedicineDTO medicineDto = new MedicineDTO();
+			medicineDto.setMedicineId(medicine.getMedicineId());
+			medicineDto.setMedicineName(medicine.getMedicineName());
+			medicineDto.setExpiryDate(medicine.getExpiryDate());
+			medicineDto.setMedicineCost(medicine.getMedicineCost());
+			orderMedicineDtoList.add(medicineDto);
+		}
+		orderDto.setMedicineDtoList(orderMedicineDtoList);
+		orderDto.setDispatchDate(updatedOrder.getDispatchDate());
+		orderDto.setTotalCost(updatedOrder.getTotalCost());
+
+		CustomerDTO customerDto = new CustomerDTO();
+		customerDto.setCustomerId(updatedOrder.getCustomer().getUserId());
+		customerDto.setCustomerName(updatedOrder.getCustomer().getCustomerName());
+
+		orderDto.setCustomerDto(customerDto);
+		orderDto.setStatus(updatedOrder.getStatus());
+		return new ResponseEntity<>(orderDto, HttpStatus.OK);
+
 	}
 
 	@GetMapping("/view")
 	public ResponseEntity<OrderDTO> viewOrder(@RequestBody @Valid Order order) throws OrderNotFoundException {
+
 		Order retrievedOrder = this.orderService.viewOrder(order);
-		OrderDTO obj = new OrderDTO();
-		obj.setOrderId(retrievedOrder.getOrderId());
-		obj.setOrderDate(retrievedOrder.getOrderDate());
-		obj.setMedicineList(retrievedOrder.getMedicineList());
-		obj.setDispatchDate(retrievedOrder.getDispatchDate());
-		obj.setTotalCost(retrievedOrder.getTotalCost());
-		obj.setCustomer(retrievedOrder.getCustomer());
-		obj.setStatus(retrievedOrder.getStatus());
-		return new ResponseEntity<>(obj, HttpStatus.OK);	}
+		OrderDTO orderDto = new OrderDTO();
+		orderDto.setOrderId(retrievedOrder.getOrderId());
+		orderDto.setOrderDate(retrievedOrder.getOrderDate());
+		List<MedicineDTO> orderMedicineDtoList = new ArrayList<>();
+		for (Medicine medicine : retrievedOrder.getMedicineList()) {
+			MedicineDTO medicineDto = new MedicineDTO();
+			medicineDto.setMedicineId(medicine.getMedicineId());
+			medicineDto.setMedicineName(medicine.getMedicineName());
+			medicineDto.setExpiryDate(medicine.getExpiryDate());
+			medicineDto.setMedicineCost(medicine.getMedicineCost());
+			orderMedicineDtoList.add(medicineDto);
+		}
+		orderDto.setMedicineDtoList(orderMedicineDtoList);
+		orderDto.setDispatchDate(retrievedOrder.getDispatchDate());
+		orderDto.setTotalCost(retrievedOrder.getTotalCost());
+
+		CustomerDTO customerDto = new CustomerDTO();
+		customerDto.setCustomerId(retrievedOrder.getCustomer().getUserId());
+		customerDto.setCustomerName(retrievedOrder.getCustomer().getCustomerName());
+
+		orderDto.setCustomerDto(customerDto);
+		orderDto.setStatus(retrievedOrder.getStatus());
+		return new ResponseEntity<>(orderDto, HttpStatus.OK);
+
+	}
 
 	@DeleteMapping("/cancel/{orderId}")
 	public ResponseEntity<OrderDTO> cancelOrder(@PathVariable("orderId") int orderId) throws OrderNotFoundException {
-		Order cancelOrder = this.orderService.cancelOrder(orderId);
-		OrderDTO obj = new OrderDTO();
-		obj.setOrderId(cancelOrder.getOrderId());
-		obj.setOrderDate(cancelOrder.getOrderDate());
-		obj.setMedicineList(cancelOrder.getMedicineList());
-		obj.setDispatchDate(cancelOrder.getDispatchDate());
-		obj.setTotalCost(cancelOrder.getTotalCost());
-		obj.setCustomer(cancelOrder.getCustomer());
-		obj.setStatus(cancelOrder.getStatus());
-		return new ResponseEntity<>(obj, HttpStatus.OK);	}
 
-	@GetMapping("/showAllByMedicine/{medicineId}")
-	public ResponseEntity<List<OrderDTO>> showAllOrders(@PathVariable("medicineId") int medicineid) throws MedicineNotFoundException {
-		List<Order> orderList = this.orderService.showAllOrders(medicineid);
-		List<OrderDTO> orderDtoList = new ArrayList<>();
-		
-		for(Order order : orderList) {
+		Order cancelledOrder = this.orderService.cancelOrder(orderId);
+		OrderDTO orderDto = new OrderDTO();
+		orderDto.setOrderId(cancelledOrder.getOrderId());
+		orderDto.setOrderDate(cancelledOrder.getOrderDate());
+		List<MedicineDTO> orderMedicineDtoList = new ArrayList<>();
+		for (Medicine medicine : cancelledOrder.getMedicineList()) {
+			MedicineDTO medicineDto = new MedicineDTO();
+			medicineDto.setMedicineId(medicine.getMedicineId());
+			medicineDto.setMedicineName(medicine.getMedicineName());
+			medicineDto.setExpiryDate(medicine.getExpiryDate());
+			medicineDto.setMedicineCost(medicine.getMedicineCost());
+			orderMedicineDtoList.add(medicineDto);
+		}
+		orderDto.setMedicineDtoList(orderMedicineDtoList);
+		orderDto.setDispatchDate(cancelledOrder.getDispatchDate());
+		orderDto.setTotalCost(cancelledOrder.getTotalCost());
+
+		CustomerDTO customerDto = new CustomerDTO();
+		customerDto.setCustomerId(cancelledOrder.getCustomer().getUserId());
+		customerDto.setCustomerName(cancelledOrder.getCustomer().getCustomerName());
+
+		orderDto.setCustomerDto(customerDto);
+		orderDto.setStatus(cancelledOrder.getStatus());
+		return new ResponseEntity<>(orderDto, HttpStatus.OK);
+
+	}
+
+	@GetMapping("/showAllByMedicineId/{medicineId}")
+	public ResponseEntity<List<OrderDTO>> showAllOrders(@PathVariable("medicineId") int medicineid)
+			throws MedicineNotFoundException {
+
+		List<Order> ordersByMedicineIdList = this.orderService.showAllOrders(medicineid);
+		List<OrderDTO> ordersByMedicineIdDtoList = new ArrayList<>();
+		for (Order order : ordersByMedicineIdList) {
 			OrderDTO orderDto = new OrderDTO();
 			orderDto.setOrderId(order.getOrderId());
 			orderDto.setOrderDate(order.getOrderDate());
-			orderDto.setMedicineList(order.getMedicineList());
+			List<MedicineDTO> orderMedicineDtoList = new ArrayList<>();
+			for (Medicine medicine : order.getMedicineList()) {
+				MedicineDTO medicineDto = new MedicineDTO();
+				medicineDto.setMedicineId(medicine.getMedicineId());
+				medicineDto.setMedicineName(medicine.getMedicineName());
+				medicineDto.setExpiryDate(medicine.getExpiryDate());
+				medicineDto.setMedicineCost(medicine.getMedicineCost());
+				orderMedicineDtoList.add(medicineDto);
+			}
+			orderDto.setMedicineDtoList(orderMedicineDtoList);
 			orderDto.setDispatchDate(order.getDispatchDate());
 			orderDto.setTotalCost(order.getTotalCost());
-			orderDto.setCustomer(order.getCustomer());
+
+			CustomerDTO customerDto = new CustomerDTO();
+			customerDto.setCustomerId(order.getCustomer().getUserId());
+			customerDto.setCustomerName(order.getCustomer().getCustomerName());
+
+			orderDto.setCustomerDto(customerDto);
 			orderDto.setStatus(order.getStatus());
-			orderDtoList.add(orderDto);
+			ordersByMedicineIdDtoList.add(orderDto);
 		}
-		return new ResponseEntity<>(orderDtoList, HttpStatus.OK);
+		return new ResponseEntity<>(ordersByMedicineIdDtoList, HttpStatus.OK);
+
 	}
 
 	@GetMapping("/showAllByCustomer")
-	public ResponseEntity<List<OrderDTO>> showAllOrders(@RequestBody @Valid Customer customer) throws CustomerNotFoundException {
-		List<Order> orderList = this.orderService.showAllOrders(customer);
-		List<OrderDTO> orderDtoList = new ArrayList<>();
-		
-		for(Order order : orderList) {
+	public ResponseEntity<List<OrderDTO>> showAllOrders(@RequestBody @Valid Customer customer)
+			throws CustomerNotFoundException {
+
+		List<Order> ordersByCustomerList = this.orderService.showAllOrders(customer);
+		List<OrderDTO> ordersByCustomerDtoList = new ArrayList<>();
+		for (Order order : ordersByCustomerList) {
 			OrderDTO orderDto = new OrderDTO();
 			orderDto.setOrderId(order.getOrderId());
 			orderDto.setOrderDate(order.getOrderDate());
-			orderDto.setMedicineList(order.getMedicineList());
+			List<MedicineDTO> orderMedicineDtoList = new ArrayList<>();
+			for (Medicine medicine : order.getMedicineList()) {
+				MedicineDTO medicineDto = new MedicineDTO();
+				medicineDto.setMedicineId(medicine.getMedicineId());
+				medicineDto.setMedicineName(medicine.getMedicineName());
+				medicineDto.setExpiryDate(medicine.getExpiryDate());
+				medicineDto.setMedicineCost(medicine.getMedicineCost());
+				orderMedicineDtoList.add(medicineDto);
+			}
+			orderDto.setMedicineDtoList(orderMedicineDtoList);
 			orderDto.setDispatchDate(order.getDispatchDate());
 			orderDto.setTotalCost(order.getTotalCost());
-			orderDto.setCustomer(order.getCustomer());
+
+			CustomerDTO customerDto = new CustomerDTO();
+			customerDto.setCustomerId(order.getCustomer().getUserId());
+			customerDto.setCustomerName(order.getCustomer().getCustomerName());
+
+			orderDto.setCustomerDto(customerDto);
 			orderDto.setStatus(order.getStatus());
-			orderDtoList.add(orderDto);
+			ordersByCustomerDtoList.add(orderDto);
 		}
-		return new ResponseEntity<>(orderDtoList, HttpStatus.OK);
-		//return this.orderService.showAllOrders(customer);
+		return new ResponseEntity<>(ordersByCustomerDtoList, HttpStatus.OK);
+
 	}
 
 	@GetMapping("/showAllByDate/{orderDate}")
 	public ResponseEntity<List<OrderDTO>> showAllOrders(
 			@PathVariable("orderDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
-		List<Order> orderList = this.orderService.showAllOrders(date);
-		List<OrderDTO> orderDtoList = new ArrayList<>();
-		
-		for(Order order : orderList) {
+
+		List<Order> ordersByDateList = this.orderService.showAllOrders(date);
+		List<OrderDTO> ordersByDateDtoList = new ArrayList<>();
+		for (Order order : ordersByDateList) {
 			OrderDTO orderDto = new OrderDTO();
 			orderDto.setOrderId(order.getOrderId());
 			orderDto.setOrderDate(order.getOrderDate());
-			orderDto.setMedicineList(order.getMedicineList());
+			List<MedicineDTO> orderMedicineDtoList = new ArrayList<>();
+			for (Medicine medicine : order.getMedicineList()) {
+				MedicineDTO medicineDto = new MedicineDTO();
+				medicineDto.setMedicineId(medicine.getMedicineId());
+				medicineDto.setMedicineName(medicine.getMedicineName());
+				medicineDto.setExpiryDate(medicine.getExpiryDate());
+				medicineDto.setMedicineCost(medicine.getMedicineCost());
+				orderMedicineDtoList.add(medicineDto);
+			}
+			orderDto.setMedicineDtoList(orderMedicineDtoList);
 			orderDto.setDispatchDate(order.getDispatchDate());
 			orderDto.setTotalCost(order.getTotalCost());
-			orderDto.setCustomer(order.getCustomer());
+
+			CustomerDTO customerDto = new CustomerDTO();
+			customerDto.setCustomerId(order.getCustomer().getUserId());
+			customerDto.setCustomerName(order.getCustomer().getCustomerName());
+
+			orderDto.setCustomerDto(customerDto);
 			orderDto.setStatus(order.getStatus());
-			orderDtoList.add(orderDto);
+			ordersByDateDtoList.add(orderDto);
 		}
-		return new ResponseEntity<>(orderDtoList, HttpStatus.OK);
+		return new ResponseEntity<>(ordersByDateDtoList, HttpStatus.OK);
+
 	}
 
-	@GetMapping("/calculateCost/{orderId}")
-	public float calculateTotalCost(@PathVariable("orderId") int orderid) throws OrderNotFoundException {
-		return this.orderService.calculateTotalCost(orderid);
-	}
 }

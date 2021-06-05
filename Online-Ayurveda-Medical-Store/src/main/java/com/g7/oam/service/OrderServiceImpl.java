@@ -43,17 +43,22 @@ public class OrderServiceImpl implements IOrderService {
 	@Override
 	@Transactional
 	public Order addOrder(Order order) {
+
+		Order savedOrder = null;
 		try {
-			orderRepository.save(order);
+			savedOrder = orderRepository.save(order);
+			savedOrder.setTotalCost(calculateTotalCost(savedOrder.getOrderId()));
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
-		return order;
+		return savedOrder;
+
 	}
 
 	@Override
 	@Transactional
 	public Order updateOrder(Order order) throws OrderNotFoundException {
+
 		Optional<Order> optional = orderRepository.findById(order.getOrderId());
 		if (optional.isPresent()) {
 			orderRepository.save(order);
@@ -61,10 +66,12 @@ public class OrderServiceImpl implements IOrderService {
 		} else {
 			throw new OrderNotFoundException("Order not found for updation!");
 		}
+
 	}
 
 	@Override
 	public Order viewOrder(Order order) throws OrderNotFoundException {
+
 		Optional<Order> optional = orderRepository.findById(order.getOrderId());
 		if (optional.isPresent()) {
 			orderRepository.findById(order.getOrderId());
@@ -73,11 +80,13 @@ public class OrderServiceImpl implements IOrderService {
 		} else {
 			throw new OrderNotFoundException("Order not found!");
 		}
+
 	}
 
 	@Override
 	@Transactional
 	public Order cancelOrder(int orderId) throws OrderNotFoundException {
+
 		Optional<Order> optional = orderRepository.findById(orderId);
 		if (optional.isPresent()) {
 			orderRepository.deleteById(orderId);
@@ -85,13 +94,16 @@ public class OrderServiceImpl implements IOrderService {
 		} else {
 			throw new OrderNotFoundException("Order not found for cancellation!");
 		}
+
 	}
 
 	@Override
 	public List<Order> showAllOrders(int medicineId) throws MedicineNotFoundException {
+
 		List<Order> orderList = null;
 		List<Order> medicineOrderList = new ArrayList<>();
 		Optional<Medicine> optional = medicineRepository.findById(medicineId);
+
 		if (optional.isPresent()) {
 			orderList = orderRepository.findAll();
 			for (Order ol : orderList) {
@@ -105,12 +117,15 @@ public class OrderServiceImpl implements IOrderService {
 		} else {
 			throw new MedicineNotFoundException("Medicine not found!");
 		}
+
 	}
 
 	@Override
 	public List<Order> showAllOrders(Customer customer) throws CustomerNotFoundException {
+
 		List<Order> orderList = null;
 		List<Order> customerOrderList = new ArrayList<>();
+
 		Optional<Customer> optional = customerRepository.findById(customer.getUserId());
 		if (optional.isPresent()) {
 			orderList = orderRepository.findAll();
@@ -123,12 +138,15 @@ public class OrderServiceImpl implements IOrderService {
 		} else {
 			throw new CustomerNotFoundException("Customer not found!");
 		}
+
 	}
 
 	@Override
 	public List<Order> showAllOrders(LocalDate date) {
+
 		List<Order> orderList = null;
 		List<Order> allOrderList = new ArrayList<>();
+
 		try {
 			orderList = orderRepository.findAll();
 			for (Order ol : orderList) {
@@ -140,12 +158,15 @@ public class OrderServiceImpl implements IOrderService {
 			logger.error(e.getMessage());
 		}
 		return allOrderList;
+
 	}
 
 	@Override
 	public float calculateTotalCost(int orderId) throws OrderNotFoundException {
+
 		float cost = 0;
 		Optional<Order> optional = orderRepository.findById(orderId);
+
 		if (optional.isPresent()) {
 			List<Medicine> medicineList = optional.get().getMedicineList();
 			for (Medicine meds : medicineList) {
@@ -158,4 +179,5 @@ public class OrderServiceImpl implements IOrderService {
 			throw new OrderNotFoundException("Order not found to calculate cost!");
 		}
 	}
+
 }

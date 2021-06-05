@@ -1,6 +1,5 @@
 package com.g7.oam.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.g7.oam.dto.CategoryDTO;
 import com.g7.oam.entities.Category;
 import com.g7.oam.exception.CategoryNotFoundException;
 import com.g7.oam.service.ICategoryService;
@@ -30,62 +28,45 @@ public class CategoryController {
 	ICategoryService categoryService;
 
 	@PostMapping("/add")
-	public ResponseEntity<CategoryDTO> addCategory(@RequestBody @Valid Category category) {
+	public ResponseEntity<Category> addCategory(@RequestBody @Valid Category category) {
 
 		Category savedCategory = this.categoryService.addCategory(category);
-		CategoryDTO obj = new CategoryDTO();
-		obj.setCategoryId(savedCategory.getCategoryId());
-		obj.setCategoryName(savedCategory.getCategoryName());
-		return new ResponseEntity<>(obj, HttpStatus.OK);
+		return new ResponseEntity<>(savedCategory, HttpStatus.OK);
 
 	}
 
 	@PutMapping("/update")
-	public ResponseEntity<CategoryDTO> updateCategory(@RequestBody @Valid Category category)
+	public ResponseEntity<Category> updateCategory(@RequestBody @Valid Category category)
 			throws CategoryNotFoundException {
 
 		Category updatedCategory = this.categoryService.updateCategory(category);
-		CategoryDTO obj = new CategoryDTO();
-		obj.setCategoryId(updatedCategory.getCategoryId());
-		obj.setCategoryName(updatedCategory.getCategoryName());
-		return new ResponseEntity<>(obj, HttpStatus.OK);
+		return new ResponseEntity<>(updatedCategory, HttpStatus.OK);
+
 	}
 
 	@GetMapping("/view")
-	public ResponseEntity<CategoryDTO> viewCategory(@RequestBody @Valid Category category)
+	public ResponseEntity<Category> viewCategory(@RequestBody @Valid Category category)
 			throws CategoryNotFoundException {
 
 		Category retrievedCategory = this.categoryService.viewCategory(category);
-		CategoryDTO obj = new CategoryDTO();
-		obj.setCategoryId(retrievedCategory.getCategoryId());
-		obj.setCategoryName(retrievedCategory.getCategoryName());
-		return new ResponseEntity<>(obj, HttpStatus.OK);
+		return new ResponseEntity<>(retrievedCategory, HttpStatus.OK);
 
 	}
 
 	@DeleteMapping("delete/{categoryId}")
-	public ResponseEntity<CategoryDTO> deleteCategory(@PathVariable("categoryId") int categoryId)
+	public ResponseEntity<Category> deleteCategory(@PathVariable("categoryId") int categoryId)
 			throws CategoryNotFoundException {
 
 		Category deletedCategory = this.categoryService.deleteCategory(categoryId);
-		CategoryDTO obj = new CategoryDTO();
-		obj.setCategoryId(deletedCategory.getCategoryId());
-		obj.setCategoryName(deletedCategory.getCategoryName());
-		return new ResponseEntity<>(obj, HttpStatus.OK);
+		return new ResponseEntity<>(deletedCategory, HttpStatus.OK);
 
 	}
 
 	@GetMapping("/showAll")
-	public ResponseEntity<List<CategoryDTO>> showAllCategory() {
+	public ResponseEntity<List<Category>> showAllCategory() {
+
 		List<Category> categoryList = this.categoryService.showAllCategories();
-		List<CategoryDTO> categoryDtoList = new ArrayList<>();
-		for (Category category : categoryList) {
-			CategoryDTO categoryDto = new CategoryDTO();
-			categoryDto.setCategoryId(category.getCategoryId());
-			categoryDto.setCategoryName(category.getCategoryName());
-			categoryDtoList.add(categoryDto);
-		}
-		return new ResponseEntity<>(categoryDtoList, HttpStatus.OK);
+		return new ResponseEntity<>(categoryList, HttpStatus.OK);
 	}
 
 }

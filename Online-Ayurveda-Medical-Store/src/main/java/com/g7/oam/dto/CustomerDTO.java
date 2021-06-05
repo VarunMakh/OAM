@@ -2,8 +2,8 @@ package com.g7.oam.dto;
 
 public class CustomerDTO {
 
-	int customerId;
-	String customerName;
+	private int customerId;
+	private String customerName;
 	
 	public CustomerDTO() {
 		super();

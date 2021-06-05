@@ -2,9 +2,6 @@ package com.g7.oam.dto;
 
 import java.time.LocalDate;
 
-import com.g7.oam.entities.Category;
-import com.g7.oam.entities.Company;
-
 public class MedicineDTO {
 
 	private int medicineId;

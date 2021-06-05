@@ -68,7 +68,7 @@ public class OrderController {
 		orderDto.setCustomerDto(customerDto);
 		orderDto.setStatus(savedOrder.getStatus());
 		return new ResponseEntity<>(orderDto, HttpStatus.OK);
-    
+
 	}
 
 	@PutMapping("/update")

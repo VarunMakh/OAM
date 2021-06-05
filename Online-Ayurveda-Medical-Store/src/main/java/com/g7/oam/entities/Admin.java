@@ -16,7 +16,7 @@ public class Admin extends User {
 	@ApiModelProperty(name = "Admin Name", value = "Admin Name consists of alphabets ")
 	@NotEmpty(message = "Admin Name cannot be empty.")
 	@Size(min = 3, max = 15, message = "Please enter a valid name between 3-15 characters!")
-	@Pattern(regexp = "[A-za-z0-9]+", message = "Please enter a valid Admin Name.")
+	@Pattern(regexp = "[A-z0-9]+", message = "Please enter a valid Admin Name.")
 	@Column
 	private String adminName;
 

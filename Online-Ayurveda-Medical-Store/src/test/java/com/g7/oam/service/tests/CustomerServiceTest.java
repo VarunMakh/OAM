@@ -156,7 +156,6 @@ public class CustomerServiceTest {
 		assertThrows(CustomerNotFoundException.class, executable);
 		
 	}
-
 	@Test
 	@DisplayName("Test View All Customers")
 	public void testViewAllCustomers() throws CustomerNotFoundException {

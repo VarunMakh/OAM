@@ -1,22 +1,26 @@
 package com.g7.oam.service.tests;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
 import java.util.Optional;
+
 import java.time.LocalDate;
+
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
+import org.junit.jupiter.api.function.Executable;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -52,13 +56,15 @@ public class MedicineServiceTest {
 
 		Medicine testInput = new Medicine(44, "crocinx", (float) 10, LocalDate.of(2020, 02, 02),
 				LocalDate.of(2021, 12, 12), Company.REDDY, new Category(42, "Digestion"));
-		Medicine actual = new Medicine(44, "crocinx", (float) 10, LocalDate.of(2020, 02, 02),
+		Medicine expected = new Medicine(44, "crocinx", (float) 10, LocalDate.of(2020, 02, 02),
 				LocalDate.of(2021, 12, 12), Company.REDDY, new Category(42, "Digestion"));
 
-		when(repository.save(testInput)).thenReturn(actual);
-		service.addMedicine(testInput);
-		assertEquals(testInput, actual);
+		when(repository.save(testInput)).thenReturn(expected);
+		Medicine actual = service.addMedicine(testInput);
+		assertNotNull(actual);
 		verify(repository).save(testInput);
+		assertEquals(expected, actual);
+		
 
 	}
 
@@ -68,13 +74,14 @@ public class MedicineServiceTest {
 
 		Medicine testInput = new Medicine(44, "crocinx", (float) 10, LocalDate.of(2020, 02, 02),
 				LocalDate.of(2021, 12, 12), Company.REDDY, new Category(42, "Digestion"));
-		Medicine actual = new Medicine(40, "crocinx", (float) 10, LocalDate.of(2020, 02, 02),
+		Medicine expected = new Medicine(40, "crocinx", (float) 10, LocalDate.of(2020, 02, 02),
 				LocalDate.of(2021, 12, 12), Company.REDDY, new Category(42, "Digestion"));
 
-		when(repository.save(testInput)).thenReturn(actual);
-		service.addMedicine(testInput);
-		assertNotEquals(testInput, actual);
+		when(repository.save(testInput)).thenReturn(expected);
+		Medicine actual = service.addMedicine(testInput);
 		verify(repository).save(testInput);
+		assertNotNull(actual);
+		assertEquals(expected, actual);
 
 	}
 
@@ -82,14 +89,16 @@ public class MedicineServiceTest {
 	@DisplayName("Test Medicine Update")
 	public void testUpdateMedicine() throws MedicineNotFoundException {
 
-		Medicine testOutput = new Medicine(44, "crocinVVV", (float) 20, LocalDate.of(2020, 02, 02),
-				LocalDate.of(2021, 12, 12), Company.SUN, new Category(42, "Digestion"));
+		Medicine testInput = new Medicine(44, "crocinx", (float) 10, LocalDate.of(2020, 02, 02),
+				LocalDate.of(2021, 12, 12), Company.REDDY, new Category(42, "Digestion"));
+		Medicine expected = new Medicine(44, "crocinx", (float) 10, LocalDate.of(2020, 02, 02),
+				LocalDate.of(2021, 12, 12), Company.REDDY, new Category(42, "Digestion"));
 
-		when(repository.findById(testOutput.getMedicineId())).thenReturn(Optional.of(testOutput));
-		when(repository.save(testOutput)).thenReturn(testOutput);
-		Medicine actual = service.updateMedicine(testOutput);
-		assertEquals(testOutput, actual);
-		verify(repository).save(testOutput);
+		when(repository.findById(testInput.getMedicineId())).thenReturn(Optional.of(expected));
+		Medicine actual = service.updateMedicine(testInput);
+		assertNotNull(actual);
+		verify(repository).save(testInput);
+		assertEquals(expected, actual);
 
 	}
 
@@ -97,16 +106,15 @@ public class MedicineServiceTest {
 	@DisplayName("False Value Test for Medicine Update")
 	public void testFalseUpdateMedicine() throws MedicineNotFoundException {
 
-		Medicine testOutput = new Medicine(231, "crocinVVV", (float) 20, LocalDate.of(2020, 02, 02),
-				LocalDate.of(2021, 12, 12), Company.SUN, new Category(42, "Digestion"));
+		Medicine testInput = new Medicine(44, "crocinx", (float) 10, LocalDate.of(2020, 02, 02),
+				LocalDate.of(2021, 12, 12), Company.REDDY, new Category(42, "Digestion"));
+		Medicine expected = new Medicine(412, "crocinx", (float) 10, LocalDate.of(2020, 02, 02),
+				LocalDate.of(2021, 12, 12), Company.REDDY, new Category(42, "Digestion"));
 
-		when(repository.findById(testOutput.getMedicineId())).thenReturn(Optional.of(testOutput));
-		when(repository.save(testOutput)).thenReturn(testOutput);
-		Medicine actual = service.updateMedicine(testOutput);
-		verify(repository).save(testOutput);
-		assertNotEquals(testOutput, actual);
+		when(repository.findById(testInput.getMedicineId())).thenReturn(Optional.of(expected));
+		Executable executable = ()-> service.updateMedicine(expected);
+		assertThrows(MedicineNotFoundException.class,executable);
 		
-
 	}
 	
 	@Test
@@ -115,13 +123,14 @@ public class MedicineServiceTest {
 
 		Medicine testInput = new Medicine(44, "crocinVVV", (float) 20, LocalDate.of(2020, 02, 02),
 				LocalDate.of(2021, 12, 12), Company.SUN, new Category(42, "Digestion"));
-		Medicine actual = new Medicine(44, "crocinVVV", (float) 20, LocalDate.of(2020, 02, 02),
+		Medicine expected = new Medicine(44, "crocinVVV", (float) 20, LocalDate.of(2020, 02, 02),
 				LocalDate.of(2021, 12, 12), Company.SUN, new Category(42, "Digestion"));
 
-		when(repository.findById(testInput.getMedicineId())).thenReturn(Optional.of(actual));
-		service.viewMedicine(testInput);
+		when(repository.findById(testInput.getMedicineId())).thenReturn(Optional.of(expected));
+		Medicine actual = service.updateMedicine(testInput);
+		assertNotNull(actual);
 		verify(repository).findById(testInput.getMedicineId());
-		assertEquals(testInput, actual);
+		assertEquals(expected, actual);
 
 	}
 
@@ -131,28 +140,28 @@ public class MedicineServiceTest {
 
 		Medicine testInput = new Medicine(12, "crocinVVV", (float) 20, LocalDate.of(2020, 02, 02),
 				LocalDate.of(2021, 12, 12), Company.SUN, new Category(42, "Digestion"));
-		Medicine actual = new Medicine(44, "crocinVVV", (float) 20, LocalDate.of(2020, 02, 02),
+		Medicine expected = new Medicine(44, "crocinVVV", (float) 20, LocalDate.of(2020, 02, 02),
 				LocalDate.of(2021, 12, 12), Company.SUN, new Category(42, "Digestion"));
 
-		when(repository.findById(testInput.getMedicineId())).thenReturn(Optional.of(actual));
-		service.viewMedicine(testInput);
-		verify(repository).findById(testInput.getMedicineId());
-		assertNotEquals(testInput, actual);
-
+		when(repository.findById(testInput.getMedicineId())).thenReturn(Optional.of(expected));
+		Executable executable =() -> service.updateMedicine(expected);
+	    assertThrows(MedicineNotFoundException.class,executable);
 	}
 
 	@Test
 	@DisplayName("Test Medicine Delete")
 	public void testDeleteMedicine() throws MedicineNotFoundException {
 
-		Medicine testOutput = new Medicine(44, "crocinVVV", (float) 20, LocalDate.of(2020, 02, 02),
+		Medicine testInput = new Medicine(44, "crocinVVV", (float) 20, LocalDate.of(2020, 02, 02),
 				LocalDate.of(2021, 12, 12), Company.SUN, new Category(42, "Digestion"));
-		Medicine actual = new Medicine(44, "crocinVVV", (float) 20, LocalDate.of(2020, 02, 02),
+		Medicine expected = new Medicine(44, "crocinVVV", (float) 20, LocalDate.of(2020, 02, 02),
 				LocalDate.of(2021, 12, 12), Company.SUN, new Category(42, "Digestion"));
-		repository.save(testOutput);
-		repository.deleteById(testOutput.getMedicineId());
-		when(repository.findById(testOutput.getMedicineId())).thenReturn(Optional.of(testOutput));
-		assertEquals(Optional.of(testOutput).get(), actual);
+		
+		when(repository.findById(testInput.getMedicineId())).thenReturn(Optional.of(expected));
+		Medicine actual = service.deleteMedicine(testInput.getMedicineId());
+		assertNotNull(actual);
+		verify(repository).deleteById(testInput.getMedicineId());
+		assertEquals(expected, actual);
 
 	}
 
@@ -160,15 +169,14 @@ public class MedicineServiceTest {
 	@DisplayName("Test False Value for Medicine Delete")
 	public void testFalseDeleteMedicine() throws MedicineNotFoundException {
 
-		Medicine testOutput = new Medicine(44, "crocinVVV", (float) 20, LocalDate.of(2020, 02, 02),
+		Medicine testInput = new Medicine(44, "crocinVVV", (float) 20, LocalDate.of(2020, 02, 02),
 				LocalDate.of(2021, 12, 12), Company.SUN, new Category(42, "Digestion"));
-		Medicine actual = new Medicine(414, "crocinVVV", (float) 20, LocalDate.of(2020, 02, 02),
+		Medicine expected = new Medicine(414, "crocinVVV", (float) 20, LocalDate.of(2020, 02, 02),
 				LocalDate.of(2021, 12, 12), Company.SUN, new Category(42, "Digestion"));
-		repository.save(testOutput);
-		repository.deleteById(testOutput.getMedicineId());
-		when(repository.findById(testOutput.getMedicineId())).thenReturn(Optional.of(testOutput));
-		assertNotEquals(Optional.of(testOutput).get(), actual);
-
+		
+		when(repository.findById(testInput.getMedicineId())).thenReturn(Optional.of(expected));
+		Executable executable = ()-> service.updateMedicine(expected);
+		assertThrows(MedicineNotFoundException.class,executable);
 	}
 
 	@Test
@@ -179,6 +187,7 @@ public class MedicineServiceTest {
 
 		when(repository.findAll()).thenReturn(medList);
 		List<Medicine> actualList = service.showAllMedicines();
+		assertNotNull(actualList);
 		verify(repository).findAll();
 		assertIterableEquals(medList, actualList);
 

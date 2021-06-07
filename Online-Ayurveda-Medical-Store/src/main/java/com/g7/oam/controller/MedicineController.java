@@ -21,8 +21,6 @@ import com.g7.oam.entities.Medicine;
 import com.g7.oam.exception.MedicineNotFoundException;
 import com.g7.oam.service.IMedicineService;
 
-
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -38,11 +36,9 @@ public class MedicineController {
 
 	@PostMapping("/add")
 	@ApiOperation(value = "Add Medicine using Post Mapping", response = Medicine.class)
-
 	public ResponseEntity<Medicine> addMedicine(@RequestBody @Valid Medicine medicine) {
 
 		logger.info("Add Medicine Called in Customer Controller");
-
 		Medicine savedMedicine = this.medicineService.addMedicine(medicine);
 		return new ResponseEntity<>(savedMedicine, HttpStatus.OK);
 
@@ -63,11 +59,11 @@ public class MedicineController {
 	@ApiOperation(value = "View Medicine using Get Mapping", response = Medicine.class)
 	public ResponseEntity<Medicine> viewMedicine(@RequestBody @Valid Medicine medicine)
 			throws MedicineNotFoundException {
-		
+
 		logger.info("View Medicine Called in Customer Controller");
 		Medicine retrivedMedicine = this.medicineService.viewMedicine(medicine);
 		return new ResponseEntity<>(retrivedMedicine, HttpStatus.OK);
-		
+
 	}
 
 	@DeleteMapping("/delete/{medicineId}")

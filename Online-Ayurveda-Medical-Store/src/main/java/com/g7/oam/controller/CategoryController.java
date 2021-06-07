@@ -32,12 +32,10 @@ public class CategoryController {
 
 	@Autowired
 	ICategoryService categoryService;
-	org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(MedicineController.class);
-
+	org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(CategoryController.class);
 
 	@PostMapping("/add")
 	@ApiOperation(value = "Add Category using Post Mapping", response = Category.class)
-
 	public ResponseEntity<Category> addCategory(@RequestBody @Valid Category category) {
 
 		logger.info("Add Category Called in Category Controller");
@@ -86,6 +84,7 @@ public class CategoryController {
 		logger.info("Add Category Called in Category Controller");
 		List<Category> categoryList = this.categoryService.showAllCategories();
 		return new ResponseEntity<>(categoryList, HttpStatus.OK);
+
 	}
 
 }

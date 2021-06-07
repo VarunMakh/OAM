@@ -159,7 +159,7 @@ public class CustomerServiceTest {
 	
 	@Test
 	@DisplayName("Test View All Customers")
-	public void testViewAllCustomers() throws CustomerNotFoundException {
+	public void testViewAllCustomers() {
 		
 		@SuppressWarnings("unchecked")
 		List<Customer> expectedList = mock(List.class);

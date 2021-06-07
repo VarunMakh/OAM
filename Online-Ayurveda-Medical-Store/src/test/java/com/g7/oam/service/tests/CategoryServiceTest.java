@@ -160,9 +160,10 @@ public class CategoryServiceTest {
 		
 	}
 	@Test
-	@DisplayName("Test View All Category")
+	@DisplayName("Test View All Categories")
 	public void testViewAllCategory() throws CategoryNotFoundException {
 		
+		@SuppressWarnings("unchecked")
 		List<Category> expectedList = mock(List.class);
 
 		when(repository.findAll()).thenReturn(expectedList);

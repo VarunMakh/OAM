@@ -28,14 +28,13 @@ import com.g7.oam.entities.Customer;
 import com.g7.oam.entities.Medicine;
 import com.g7.oam.entities.Order;
 import com.g7.oam.entities.OrderStatus;
-import com.g7.oam.exception.CustomerNotFoundException;
-import com.g7.oam.exception.MedicineNotFoundException;
 import com.g7.oam.exception.OrderNotFoundException;
 import com.g7.oam.repository.IOrderRepository;
 import com.g7.oam.service.OrderServiceImpl;
 
 @SpringBootTest
 public class OrderServiceTest {
+
 	IOrderRepository repository;
 	private static OrderServiceImpl service;
 	private static AutoCloseable ac;
@@ -78,9 +77,15 @@ public class OrderServiceTest {
 	@Test
 	@DisplayName("False Value Test for Order Add")
 	public void testFalseValueAddOrder() {
-		List<Medicine> obj = new ArrayList<>();
-		obj.add(null);
-		Order testInput = new Order(1, LocalDate.of(2020, 06, 05), obj, LocalDate.of(2024, 06, 04), (float) 1040,
+
+		List<Medicine> medicineList = new ArrayList<>();
+		Medicine medicine1 = new Medicine(800, "crocin", 50, LocalDate.of(2024, 06, 04), LocalDate.of(2024, 02, 04),
+				Company.SUN, new Category(900, "GC"));
+		Medicine medicine2 = new Medicine(801, "crocin", 50, LocalDate.of(2024, 06, 04), LocalDate.of(2024, 02, 04),
+				Company.SUN, new Category(900, "GC"));
+		medicineList.add(medicine1);
+		medicineList.add(medicine2);
+		Order testInput = new Order(1, LocalDate.of(2020, 06, 05), medicineList, LocalDate.of(2024, 06, 04), (float) 1040,
 				new Customer(12, "fad", "rahul"), OrderStatus.PLACED);
 		Order expected = null;
 
@@ -88,15 +93,23 @@ public class OrderServiceTest {
 		Order actual = service.addOrder(testInput);
 		verify(repository).save(testInput);
 		assertNull(actual);
+		
 	}
 
 	@Test
 	@DisplayName("Test Order Update")
 	public void testUpdateOrder() throws OrderNotFoundException {
 
-		Order testInput = new Order(1, LocalDate.of(2020, 06, 05), null, LocalDate.of(2024, 06, 04), (float) 1040,
+		List<Medicine> medicineList = new ArrayList<>();
+		Medicine medicine1 = new Medicine(800, "crocin", 50, LocalDate.of(2024, 06, 04), LocalDate.of(2024, 02, 04),
+				Company.SUN, new Category(900, "GC"));
+		Medicine medicine2 = new Medicine(801, "crocin", 50, LocalDate.of(2024, 06, 04), LocalDate.of(2024, 02, 04),
+				Company.SUN, new Category(900, "GC"));
+		medicineList.add(medicine1);
+		medicineList.add(medicine2);
+		Order testInput = new Order(1, LocalDate.of(2020, 06, 05), medicineList, LocalDate.of(2024, 06, 04), (float) 1040,
 				new Customer(12, "fad", "rahul"), OrderStatus.PLACED);
-		Order expected = new Order(1, LocalDate.of(2020, 06, 05), null, LocalDate.of(2024, 06, 04), (float) 1040,
+		Order expected = new Order(1, LocalDate.of(2020, 06, 05), medicineList, LocalDate.of(2024, 06, 04), (float) 1040,
 				new Customer(12, "fad", "rahul"), OrderStatus.PLACED);
 
 		when(repository.findById(testInput.getOrderId())).thenReturn(Optional.of(expected));
@@ -110,11 +123,16 @@ public class OrderServiceTest {
 	@DisplayName("False Value Test for Order Update")
 	public void testFalseValueUpdateOrder() throws OrderNotFoundException {
 
-		List<Medicine> obj = new ArrayList<>();
-		obj.add(null);
-		Order testInput = new Order(1, LocalDate.of(2020, 06, 05), obj, LocalDate.of(2024, 06, 04), (float) 1040,
+		List<Medicine> medicineList = new ArrayList<>();
+		Medicine medicine1 = new Medicine(800, "crocin", 50, LocalDate.of(2024, 06, 04), LocalDate.of(2024, 02, 04),
+				Company.SUN, new Category(900, "GC"));
+		Medicine medicine2 = new Medicine(801, "crocin", 50, LocalDate.of(2024, 06, 04), LocalDate.of(2024, 02, 04),
+				Company.SUN, new Category(900, "GC"));
+		medicineList.add(medicine1);
+		medicineList.add(medicine2);
+		Order testInput = new Order(1, LocalDate.of(2020, 06, 05), medicineList, LocalDate.of(2024, 06, 04), (float) 1040,
 				new Customer(12, "fad", "rahul"), OrderStatus.PLACED);
-		Order expected = new Order(2, LocalDate.of(2020, 06, 05), obj, LocalDate.of(2024, 06, 04), (float) 1040,
+		Order expected = new Order(2, LocalDate.of(2020, 06, 05), medicineList, LocalDate.of(2024, 06, 04), (float) 1040,
 				new Customer(12, "fad", "rahul"), OrderStatus.PLACED);
 
 		when(repository.findById(testInput.getOrderId())).thenReturn(Optional.of(expected));
@@ -126,9 +144,16 @@ public class OrderServiceTest {
 	@DisplayName("Test View Order by ID")
 	public void testViewOrderById() throws OrderNotFoundException {
 
-		Order testInput = new Order(1, LocalDate.of(2020, 06, 05), null, LocalDate.of(2024, 06, 04), (float) 1040,
+		List<Medicine> medicineList = new ArrayList<>();
+		Medicine medicine1 = new Medicine(800, "crocin", 50, LocalDate.of(2024, 06, 04), LocalDate.of(2024, 02, 04),
+				Company.SUN, new Category(900, "GC"));
+		Medicine medicine2 = new Medicine(801, "crocin", 50, LocalDate.of(2024, 06, 04), LocalDate.of(2024, 02, 04),
+				Company.SUN, new Category(900, "GC"));
+		medicineList.add(medicine1);
+		medicineList.add(medicine2);
+		Order testInput = new Order(1, LocalDate.of(2020, 06, 05), medicineList, LocalDate.of(2024, 06, 04), (float) 1040,
 				new Customer(12, "fad", "rahul"), OrderStatus.PLACED);
-		Order expected = new Order(1, LocalDate.of(2020, 06, 05), null, LocalDate.of(2024, 06, 04), (float) 1040,
+		Order expected = new Order(1, LocalDate.of(2020, 06, 05), medicineList, LocalDate.of(2024, 06, 04), (float) 1040,
 				new Customer(12, "fad", "rahul"), OrderStatus.PLACED);
 
 		when(repository.findById(testInput.getOrderId())).thenReturn(Optional.of(expected));
@@ -143,9 +168,16 @@ public class OrderServiceTest {
 	@DisplayName("False Value Test for View Order by ID")
 	public void testFalseViewViewOrderById() throws OrderNotFoundException {
 
-		Order testInput = new Order(1, LocalDate.of(2020, 06, 05), null, LocalDate.of(2024, 06, 04), (float) 1040,
+		List<Medicine> medicineList = new ArrayList<>();
+		Medicine medicine1 = new Medicine(800, "crocin", 50, LocalDate.of(2024, 06, 04), LocalDate.of(2024, 02, 04),
+				Company.SUN, new Category(900, "GC"));
+		Medicine medicine2 = new Medicine(801, "crocin", 50, LocalDate.of(2024, 06, 04), LocalDate.of(2024, 02, 04),
+				Company.SUN, new Category(900, "GC"));
+		medicineList.add(medicine1);
+		medicineList.add(medicine2);
+		Order testInput = new Order(1, LocalDate.of(2020, 06, 05), medicineList, LocalDate.of(2024, 06, 04), (float) 1040,
 				new Customer(12, "fad", "rahul"), OrderStatus.PLACED);
-		Order expected = new Order(2, LocalDate.of(2020, 06, 05), null, LocalDate.of(2024, 06, 04), (float) 1040,
+		Order expected = new Order(2, LocalDate.of(2020, 06, 05), medicineList, LocalDate.of(2024, 06, 04), (float) 1040,
 				new Customer(12, "fad", "rahul"), OrderStatus.PLACED);
 
 		when(repository.findById(testInput.getOrderId())).thenReturn(Optional.of(expected));
@@ -158,9 +190,16 @@ public class OrderServiceTest {
 	@DisplayName("Test for Order Cancel")
 	public void testCancelOrder() throws OrderNotFoundException {
 
-		Order testInput = new Order(1, LocalDate.of(2020, 06, 05), null, LocalDate.of(2024, 06, 04), (float) 1040,
+		List<Medicine> medicineList = new ArrayList<>();
+		Medicine medicine1 = new Medicine(800, "crocin", 50, LocalDate.of(2024, 06, 04), LocalDate.of(2024, 02, 04),
+				Company.SUN, new Category(900, "GC"));
+		Medicine medicine2 = new Medicine(801, "crocin", 50, LocalDate.of(2024, 06, 04), LocalDate.of(2024, 02, 04),
+				Company.SUN, new Category(900, "GC"));
+		medicineList.add(medicine1);
+		medicineList.add(medicine2);
+		Order testInput = new Order(1, LocalDate.of(2020, 06, 05), medicineList, LocalDate.of(2024, 06, 04), (float) 1040,
 				new Customer(12, "fad", "rahul"), OrderStatus.PLACED);
-		Order expected = new Order(1, LocalDate.of(2020, 06, 05), null, LocalDate.of(2024, 06, 04), (float) 1040,
+		Order expected = new Order(1, LocalDate.of(2020, 06, 05), medicineList, LocalDate.of(2024, 06, 04), (float) 1040,
 				new Customer(12, "fad", "rahul"), OrderStatus.PLACED);
 
 		when(repository.findById(testInput.getOrderId())).thenReturn(Optional.of(expected));
@@ -175,14 +214,49 @@ public class OrderServiceTest {
 	@DisplayName("False value Test for Order Cancel")
 	public void testFalseViewCancelOrder() throws OrderNotFoundException {
 
-		Order testInput = new Order(1, LocalDate.of(2020, 06, 05), null, LocalDate.of(2024, 06, 04), (float) 1040,
+		List<Medicine> medicineList = new ArrayList<>();
+		Medicine medicine1 = new Medicine(800, "crocin", 50, LocalDate.of(2024, 06, 04), LocalDate.of(2024, 02, 04),
+				Company.SUN, new Category(900, "GC"));
+		Medicine medicine2 = new Medicine(801, "crocin", 50, LocalDate.of(2024, 06, 04), LocalDate.of(2024, 02, 04),
+				Company.SUN, new Category(900, "GC"));
+		medicineList.add(medicine1);
+		medicineList.add(medicine2);
+		Order testInput = new Order(1, LocalDate.of(2020, 06, 05), medicineList, LocalDate.of(2024, 06, 04), (float) 1040,
 				new Customer(12, "fad", "rahul"), OrderStatus.PLACED);
-		Order expected = new Order(2, LocalDate.of(2020, 06, 05), null, LocalDate.of(2024, 06, 04), (float) 1040,
+		Order expected = new Order(2, LocalDate.of(2020, 06, 05), medicineList, LocalDate.of(2024, 06, 04), (float) 1040,
 				new Customer(12, "fad", "rahul"), OrderStatus.PLACED);
 
 		when(repository.findById(testInput.getOrderId())).thenReturn(Optional.of(expected));
 		Executable executable = () -> service.cancelOrder(expected.getOrderId());
 		assertThrows(OrderNotFoundException.class, executable);
+
+	}
+	
+	@Test
+	@DisplayName("Test View All Orders")
+	public void testViewAllOrders() {
+
+		List<Medicine> medicineList = new ArrayList<>();
+		Medicine medicine1 = new Medicine(800, "crocin", 50, LocalDate.of(2024, 06, 04), LocalDate.of(2024, 02, 04),
+				Company.SUN, new Category(900, "GC"));
+		Medicine medicine2 = new Medicine(801, "crocin", 50, LocalDate.of(2024, 06, 04), LocalDate.of(2024, 02, 04),
+				Company.SUN, new Category(900, "GC"));
+		medicineList.add(medicine1);
+		medicineList.add(medicine2);
+		Order order1 = new Order(1, LocalDate.of(2020, 06, 05), medicineList, LocalDate.of(2024, 06, 04), (float) 1040,
+				new Customer(12, "fad", "rahul"), OrderStatus.PLACED);
+		Order order2 = new Order(2, LocalDate.of(2020, 06, 05), medicineList, LocalDate.of(2024, 06, 04), (float) 1040,
+				new Customer(12, "fad", "rahul"), OrderStatus.DISPATCHED);
+		
+		List<Order> expectedList = new ArrayList<>();
+		expectedList.add(order1);
+		expectedList.add(order2);
+		
+		when(repository.findAll()).thenReturn(expectedList);
+		List<Order> actualList = service.showAllOrders(LocalDate.of(2020, 06, 05));
+		assertNotNull(actualList);
+		verify(repository).findAll();
+		assertIterableEquals(expectedList, actualList);
 
 	}
 

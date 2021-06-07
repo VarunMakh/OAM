@@ -161,6 +161,7 @@ public class AdminServiceTest {
 	@DisplayName("Test View All Admins")
 	public void testViewAllAdmins() throws AdminNotFoundException {
 
+		@SuppressWarnings("unchecked")
 		List<Admin> expectedList = mock(List.class);
 
 		when(repository.findAll()).thenReturn(expectedList);

@@ -21,34 +21,36 @@ import com.g7.oam.entities.User;
 
 @SpringBootTest
 public class UserServiceTest {
-	
+
 	IUserRepository repository;
 	private static UserServiceImpl service;
 	private static AutoCloseable ac;
-	
+
 	@BeforeEach
 	public void doInit() {
 		repository = mock(IUserRepository.class);
 		service = new UserServiceImpl(repository);
 		ac = MockitoAnnotations.openMocks(this);
 	}
+
 	@AfterEach
-	public void doAtEnd() throws Exception{
+	public void doAtEnd() throws Exception {
 		ac.close();
 	}
-	
-   @Test
-   @DisplayName("Test for View all users")
-   public void testViewAllUsers() {
-	   List<User> expectedList = mock(List.class);
-	   
-	   when(repository.findAll()).thenReturn(expectedList);
-	   List<User> actualList = service.showAllUsers();
-	   assertNotNull(actualList);
-	   verify(repository).findAll();
-	   assertIterableEquals(expectedList, actualList);
-	   
-   }
 
+	@Test
+	@DisplayName("Test for View all users")
+	public void testViewAllUsers() {
+
+		@SuppressWarnings("unchecked")
+		List<User> expectedList = mock(List.class);
+
+		when(repository.findAll()).thenReturn(expectedList);
+		List<User> actualList = service.showAllUsers();
+		assertNotNull(actualList);
+		verify(repository).findAll();
+		assertIterableEquals(expectedList, actualList);
+
+	}
 
 }

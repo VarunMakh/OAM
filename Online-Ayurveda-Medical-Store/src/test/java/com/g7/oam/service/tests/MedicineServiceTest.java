@@ -4,7 +4,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -14,7 +13,6 @@ import java.util.List;
 import java.util.Optional;
 
 import java.time.LocalDate;
-
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -64,7 +62,6 @@ public class MedicineServiceTest {
 		assertNotNull(actual);
 		verify(repository).save(testInput);
 		assertEquals(expected, actual);
-		
 
 	}
 
@@ -74,14 +71,12 @@ public class MedicineServiceTest {
 
 		Medicine testInput = new Medicine(44, "crocinx", (float) 10, LocalDate.of(2020, 02, 02),
 				LocalDate.of(2021, 12, 12), Company.REDDY, new Category(42, "Digestion"));
-		Medicine expected = new Medicine(40, "crocinx", (float) 10, LocalDate.of(2020, 02, 02),
-				LocalDate.of(2021, 12, 12), Company.REDDY, new Category(42, "Digestion"));
+		Medicine expected = null;
 
 		when(repository.save(testInput)).thenReturn(expected);
 		Medicine actual = service.addMedicine(testInput);
 		verify(repository).save(testInput);
-		assertNotNull(actual);
-		assertEquals(expected, actual);
+		assertNull(actual);
 
 	}
 
@@ -112,11 +107,11 @@ public class MedicineServiceTest {
 				LocalDate.of(2021, 12, 12), Company.REDDY, new Category(42, "Digestion"));
 
 		when(repository.findById(testInput.getMedicineId())).thenReturn(Optional.of(expected));
-		Executable executable = ()-> service.updateMedicine(expected);
-		assertThrows(MedicineNotFoundException.class,executable);
-		
+		Executable executable = () -> service.updateMedicine(expected);
+		assertThrows(MedicineNotFoundException.class, executable);
+
 	}
-	
+
 	@Test
 	@DisplayName("Test View Medicine by ID")
 	public void testViewByMedicineId() throws MedicineNotFoundException {
@@ -130,7 +125,7 @@ public class MedicineServiceTest {
 		Medicine actual = service.updateMedicine(testInput);
 		assertNotNull(actual);
 		verify(repository).findById(testInput.getMedicineId());
-		assertEquals(expected, actual);
+		assertEquals(actual, expected);
 
 	}
 
@@ -144,8 +139,8 @@ public class MedicineServiceTest {
 				LocalDate.of(2021, 12, 12), Company.SUN, new Category(42, "Digestion"));
 
 		when(repository.findById(testInput.getMedicineId())).thenReturn(Optional.of(expected));
-		Executable executable =() -> service.updateMedicine(expected);
-	    assertThrows(MedicineNotFoundException.class,executable);
+		Executable executable = () -> service.updateMedicine(expected);
+		assertThrows(MedicineNotFoundException.class, executable);
 	}
 
 	@Test
@@ -156,7 +151,7 @@ public class MedicineServiceTest {
 				LocalDate.of(2021, 12, 12), Company.SUN, new Category(42, "Digestion"));
 		Medicine expected = new Medicine(44, "crocinVVV", (float) 20, LocalDate.of(2020, 02, 02),
 				LocalDate.of(2021, 12, 12), Company.SUN, new Category(42, "Digestion"));
-		
+
 		when(repository.findById(testInput.getMedicineId())).thenReturn(Optional.of(expected));
 		Medicine actual = service.deleteMedicine(testInput.getMedicineId());
 		assertNotNull(actual);
@@ -173,23 +168,24 @@ public class MedicineServiceTest {
 				LocalDate.of(2021, 12, 12), Company.SUN, new Category(42, "Digestion"));
 		Medicine expected = new Medicine(414, "crocinVVV", (float) 20, LocalDate.of(2020, 02, 02),
 				LocalDate.of(2021, 12, 12), Company.SUN, new Category(42, "Digestion"));
-		
+
 		when(repository.findById(testInput.getMedicineId())).thenReturn(Optional.of(expected));
-		Executable executable = ()-> service.updateMedicine(expected);
-		assertThrows(MedicineNotFoundException.class,executable);
+		Executable executable = () -> service.updateMedicine(expected);
+		assertThrows(MedicineNotFoundException.class, executable);
 	}
 
 	@Test
 	@DisplayName("Test View All Medicines")
-	public void testViewAllMedicine() throws MedicineNotFoundException {
+	public void testViewAllMedicine() {
 
-		List<Medicine> medList = mock(List.class);
+		@SuppressWarnings("unchecked")
+		List<Medicine> expectedList = mock(List.class);
 
-		when(repository.findAll()).thenReturn(medList);
+		when(repository.findAll()).thenReturn(expectedList);
 		List<Medicine> actualList = service.showAllMedicines();
 		assertNotNull(actualList);
 		verify(repository).findAll();
-		assertIterableEquals(medList, actualList);
+		assertIterableEquals(expectedList, actualList);
 
 	}
 

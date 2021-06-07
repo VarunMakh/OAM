@@ -10,6 +10,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -66,15 +67,16 @@ public class OrderServiceTest {
 	@Test
 	@DisplayName("False Value Test for Order Add")
 	public void testFalseValueAddOrder() {
-		
-		Order testInput = new Order(1,LocalDate.of(2020, 06, 05),null, LocalDate.of(2024, 06, 04), (float)1040, new Customer(12,"fad","rahul"),OrderStatus.PLACED);
+		List<Medicine> obj = new ArrayList<>();
+		obj.add(null);
+		Order testInput = new Order(1,LocalDate.of(2020, 06, 05),obj, LocalDate.of(2024, 06, 04), (float)1040, new Customer(12,"fad","rahul"),OrderStatus.PLACED);
 		Order expected = null;
 		
 		when(repository.save(testInput)).thenReturn(expected);
 		Order actual = service.addOrder(testInput);
 		verify(repository).save(testInput);
-		assertEquals(expected, actual);
-	}
+		assertNull(actual);
+		}
 	
 	@Test
 	@DisplayName("Test Order Update")
@@ -94,8 +96,10 @@ public class OrderServiceTest {
 	@DisplayName("False Value Test for Order Update")
 	public void testFalseValueUpdateOrder() throws OrderNotFoundException  {
 		
-		Order testInput = new Order(1,LocalDate.of(2020, 06, 05),null, LocalDate.of(2024, 06, 04), (float)1040, new Customer(12,"fad","rahul"),OrderStatus.PLACED);
-		Order expected = new Order(1,LocalDate.of(2020, 06, 05),null, LocalDate.of(2024, 06, 04), (float)1040, new Customer(12,"fad","rahul"),OrderStatus.PLACED);
+		List<Medicine> obj = new ArrayList<>();
+		obj.add(null);
+		Order testInput = new Order(1,LocalDate.of(2020, 06, 05),obj, LocalDate.of(2024, 06, 04), (float)1040, new Customer(12,"fad","rahul"),OrderStatus.PLACED);
+		Order expected = new Order(2,LocalDate.of(2020, 06, 05),obj, LocalDate.of(2024, 06, 04), (float)1040, new Customer(12,"fad","rahul"),OrderStatus.PLACED);
 		
 		when(repository.findById(testInput.getOrderId())).thenReturn(Optional.of(expected));
 		Executable executable = () -> service.updateOrder(expected);
@@ -105,7 +109,8 @@ public class OrderServiceTest {
 	@Test
 	@DisplayName("Test View Order by ID")
 	public void testViewOrderById() throws OrderNotFoundException {
-
+		
+		
 		Order testInput = new Order(1,LocalDate.of(2020, 06, 05),null, LocalDate.of(2024, 06, 04), (float)1040, new Customer(12,"fad","rahul"),OrderStatus.PLACED);
 		Order expected = new Order(1,LocalDate.of(2020, 06, 05),null, LocalDate.of(2024, 06, 04), (float)1040, new Customer(12,"fad","rahul"),OrderStatus.PLACED);
 
@@ -122,11 +127,11 @@ public class OrderServiceTest {
 	public void testFalseViewViewOrderById() throws OrderNotFoundException {
 
 		Order testInput = new Order(1,LocalDate.of(2020, 06, 05),null, LocalDate.of(2024, 06, 04), (float)1040, new Customer(12,"fad","rahul"),OrderStatus.PLACED);
-		Order expected = new Order(1,LocalDate.of(2020, 06, 05),null, LocalDate.of(2024, 06, 04), (float)1040, new Customer(12,"fad","rahul"),OrderStatus.PLACED);
+		Order expected = new Order(2,LocalDate.of(2020, 06, 05),null, LocalDate.of(2024, 06, 04), (float)1040, new Customer(12,"fad","rahul"),OrderStatus.PLACED);
 
 		when(repository.findById(testInput.getOrderId())).thenReturn(Optional.of(expected));
 		Executable executable = () -> service.viewOrder(expected);
-		assertThrows(CustomerNotFoundException.class, executable);
+		assertThrows(OrderNotFoundException.class, executable);
 
 	}
 	
@@ -150,7 +155,7 @@ public class OrderServiceTest {
 	public void testFalseViewCancelOrder() throws OrderNotFoundException {
 
 		Order testInput = new Order(1,LocalDate.of(2020, 06, 05),null, LocalDate.of(2024, 06, 04), (float)1040, new Customer(12,"fad","rahul"),OrderStatus.PLACED);
-		Order expected = new Order(1,LocalDate.of(2020, 06, 05),null, LocalDate.of(2024, 06, 04), (float)1040, new Customer(12,"fad","rahul"),OrderStatus.PLACED);
+		Order expected = new Order(2,LocalDate.of(2020, 06, 05),null, LocalDate.of(2024, 06, 04), (float)1040, new Customer(12,"fad","rahul"),OrderStatus.PLACED);
 
 		when(repository.findById(testInput.getOrderId())).thenReturn(Optional.of(expected));
 		Executable executable = () -> service.cancelOrder(expected.getOrderId());
@@ -160,7 +165,7 @@ public class OrderServiceTest {
 
 	@Test
 	@DisplayName("Test View All Orders by medicineId")
-	public void testViewAllOrders(int medicineId) throws MedicineNotFoundException {
+	public void testViewAllOrders(int medicineId) throws MedicineNotFoundException,OrderNotFoundException {
 		
 		List<Order> expectedList = mock(List.class);
 
@@ -201,64 +206,4 @@ public class OrderServiceTest {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 }

@@ -28,6 +28,7 @@ public class AdminController {
 
 	@Autowired
 	IAdminService adminService;
+	
 
 	@PostMapping("/add")
 	public ResponseEntity<AdminDTO> addAdmin(@RequestBody @Valid Admin admin) {

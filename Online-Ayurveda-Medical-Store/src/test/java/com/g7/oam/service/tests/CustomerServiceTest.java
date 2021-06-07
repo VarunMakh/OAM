@@ -156,10 +156,12 @@ public class CustomerServiceTest {
 		assertThrows(CustomerNotFoundException.class, executable);
 		
 	}
+	
 	@Test
 	@DisplayName("Test View All Customers")
 	public void testViewAllCustomers() throws CustomerNotFoundException {
 		
+		@SuppressWarnings("unchecked")
 		List<Customer> expectedList = mock(List.class);
 
 		when(repository.findAll()).thenReturn(expectedList);

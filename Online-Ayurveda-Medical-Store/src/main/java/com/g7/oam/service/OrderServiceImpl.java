@@ -36,9 +36,13 @@ public class OrderServiceImpl implements IOrderService {
 	@Autowired
 	ICustomerRepository customerRepository;
 
-	public OrderServiceImpl(IMedicineRepository repository) {
-		this.medicineRepository = repository;
+	public OrderServiceImpl(IOrderRepository repository) {
+		this.orderRepository = repository;
 	}
+	
+	//public OrderServiceImpl(IMedicineRepository repository) {
+		//this.medicineRepository = repository;
+	//}
 
 	@Override
 	@Transactional
@@ -74,7 +78,7 @@ public class OrderServiceImpl implements IOrderService {
 
 		Optional<Order> optional = orderRepository.findById(order.getOrderId());
 		if (optional.isPresent()) {
-			orderRepository.findById(order.getOrderId());
+			//orderRepository.findById(order.getOrderId());
 			return optional.get();
 
 		} else {

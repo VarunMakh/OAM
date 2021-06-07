@@ -29,7 +29,6 @@ public class User {
 
 	@Column
 	@ApiModelProperty(name = "User Password", value = "User Password consists of alphanumeric as well as special characters.")
-	@NotEmpty(message = "User password cannot be empty!")
 	@Size(min = 4, max = 15, message = "Please enter a valid User Password, the User Password should be from 4 to 15 characters long.")
 	private String password;
 

@@ -83,6 +83,7 @@ public class CustomerServiceImpl implements ICustomerService {
 	@Override
 	public List<Customer> showAllCustomers() {
 
+		logger.info("Show All Customers method called");
 		List<Customer> customerList = null;
 		try {
 			customerList = repository.findAll();

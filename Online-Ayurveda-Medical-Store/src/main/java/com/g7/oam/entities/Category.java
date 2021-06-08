@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -19,7 +18,6 @@ public class Category {
 	private int categoryId;
 
 	@ApiModelProperty(name = "Customer Name", value = "Category name consists of 3-15 alphanumeric characters.")
-	@NotBlank(message = "Category Name cannot be blank!")
 	@Size(min = 3, max = 15, message = "Please enter a valid name between 3-15 characters!")
 	@Pattern(regexp = "[A-z0-9]+", message = "Please enter a valid Category Name.")
 	@Column

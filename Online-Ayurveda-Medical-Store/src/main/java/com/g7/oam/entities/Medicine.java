@@ -12,8 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -29,14 +27,13 @@ public class Medicine {
 	private int medicineId;
 
 	@ApiModelProperty(name = "Medicine Name", value = "Medicine Name consists of alphanumeric characters and special symbols like {'-','+'}")
-	@NotEmpty(message = "Medicine Name cannot be empty.")
 	@Size(min = 4, max = 15, message = "Please enter a valid medicine name, Medicine name should be from 4 to 15 characters long.")
 	@Pattern(regexp = "^[A-z0-9+-]+", message = "Please enter a valid Medicine name.")
 	@Column
 	private String medicineName;
 
 	@ApiModelProperty(name = "Medicine cost", value = "Medicine Cost is numeric value representing the cost of the medicine")
-	@Min(1)
+	@Pattern(regexp = "[1-9]*", message = "Please enter a valid Medicine Cost that is a number!")
 	@Max(10000)
 	@Column
 	private float medicineCost;

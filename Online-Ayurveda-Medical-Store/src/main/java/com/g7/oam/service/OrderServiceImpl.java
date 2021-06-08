@@ -125,10 +125,11 @@ public class OrderServiceImpl implements IOrderService {
 		List<Order> customerOrderList = new ArrayList<>();
 
 		Optional<Customer> optional = customerRepository.findById(customer.getUserId());
+		logger.info("Customer in showallbycustomer is: " + customer.getUserId());
 		if (optional.isPresent()) {
 			orderList = orderRepository.findAll();
 			for (Order ol : orderList) {
-				if (ol.getCustomer().equals(customer)) {
+				if (ol.getCustomer().getUserId() == customer.getUserId()) {
 					customerOrderList.add(ol);
 				}
 			}
@@ -168,7 +169,10 @@ public class OrderServiceImpl implements IOrderService {
 		if (optional.isPresent()) {
 			List<Medicine> medicineList = optional.get().getMedicineList();
 			for (Medicine meds : medicineList) {
-				cost += meds.getMedicineCost();
+				Optional<Medicine> medicine = medicineRepository.findById(meds.getMedicineId());
+				if (medicine.isPresent()) {
+					cost += medicine.get().getMedicineCost();
+				}
 			}
 			optional.get().setTotalCost(cost);
 			orderRepository.save(optional.get());

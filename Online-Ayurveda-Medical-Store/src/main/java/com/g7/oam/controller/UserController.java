@@ -2,8 +2,8 @@ package com.g7.oam.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +29,7 @@ public class UserController {
 
 	@Autowired
 	IUserService userService;
-	Logger logger = org.slf4j.LoggerFactory.getLogger(UserController.class);
+	Logger logger = Logger.getLogger(UserController.class.getName());
 
 	@GetMapping("/showAll")
 	@ApiOperation(value = "Show All Users using Get Mapping", response = User.class)

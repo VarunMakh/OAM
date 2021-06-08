@@ -4,11 +4,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 import javax.transaction.Transactional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +24,7 @@ import com.g7.oam.repository.IOrderRepository;
 @Service
 public class OrderServiceImpl implements IOrderService {
 
-	Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
+	Logger logger = Logger.getLogger(OrderServiceImpl.class.getName());
 
 	@Autowired
 	IOrderRepository orderRepository;
@@ -49,7 +48,7 @@ public class OrderServiceImpl implements IOrderService {
 			savedOrder = orderRepository.save(order);
 			savedOrder.setTotalCost(calculateTotalCost(savedOrder.getOrderId()));
 		} catch (Exception e) {
-			logger.error(e.getMessage());
+			logger.info(e.getMessage());
 		}
 		return savedOrder;
 
@@ -154,7 +153,7 @@ public class OrderServiceImpl implements IOrderService {
 				}
 			}
 		} catch (Exception e) {
-			logger.error(e.getMessage());
+			logger.info(e.getMessage());
 		}
 		return allOrderList;
 

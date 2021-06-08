@@ -2,11 +2,10 @@ package com.g7.oam.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 import javax.transaction.Transactional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +16,7 @@ import com.g7.oam.repository.ICategoryRepository;
 @Service
 public class CategoryServiceImpl implements ICategoryService {
 
-	Logger logger = LoggerFactory.getLogger(CategoryServiceImpl.class);
+	Logger logger = Logger.getLogger(CategoryServiceImpl.class.getName());
 
 	@Autowired
 	ICategoryRepository repository;
@@ -34,7 +33,7 @@ public class CategoryServiceImpl implements ICategoryService {
 		try {
 			savedCategory = repository.save(category);
 		} catch (Exception e) {
-			logger.error(e.getMessage());
+			logger.info(e.getMessage());
 		}
 		return savedCategory;
 
@@ -87,7 +86,7 @@ public class CategoryServiceImpl implements ICategoryService {
 		try {
 			categoryList = repository.findAll();
 		} catch (Exception e) {
-			logger.error(e.getMessage());
+			logger.info(e.getMessage());
 		}
 		return categoryList;
 	}

@@ -2,10 +2,10 @@ package com.g7.oam.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.validation.Valid;
 
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +35,7 @@ public class CustomerController {
 
 	@Autowired
 	ICustomerService customerService;
-	Logger logger = org.slf4j.LoggerFactory.getLogger(CustomerController.class);
+	Logger logger = Logger.getLogger(CustomerController.class.getName());
 
 	@PostMapping("/add")
 	@ApiOperation(value = "Add Customer using Post Mapping", response = Customer.class)

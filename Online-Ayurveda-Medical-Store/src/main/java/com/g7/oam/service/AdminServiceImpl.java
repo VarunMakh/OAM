@@ -2,11 +2,10 @@ package com.g7.oam.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 import javax.transaction.Transactional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +16,8 @@ import com.g7.oam.repository.IAdminRepository;
 @Service
 public class AdminServiceImpl implements IAdminService {
 
-	Logger logger = LoggerFactory.getLogger(AdminServiceImpl.class);
-
+	Logger logger = Logger.getLogger(AdminServiceImpl.class.getName());
+	
 	@Autowired
 	IAdminRepository repository;
 
@@ -34,7 +33,7 @@ public class AdminServiceImpl implements IAdminService {
 		try {
 			savedAdmin = repository.save(admin);
 		} catch (Exception e) {
-			logger.error(e.getMessage());
+			logger.info(e.getMessage());
 		}
 		return savedAdmin;
 
@@ -87,7 +86,7 @@ public class AdminServiceImpl implements IAdminService {
 		try {
 			adminList = repository.findAll();
 		} catch (Exception e) {
-			logger.error(e.getMessage());
+			logger.info(e.getMessage());
 		}
 		return adminList;
 	}

@@ -1,6 +1,7 @@
 package com.g7.oam.controller;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.validation.Valid;
 
@@ -32,7 +33,7 @@ public class MedicineController {
 
 	@Autowired
 	IMedicineService medicineService;
-	org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(MedicineController.class);
+	Logger logger = Logger.getLogger(MedicineController.class.getName());
 
 	@PostMapping("/add")
 	@ApiOperation(value = "Add Medicine using Post Mapping", response = Medicine.class)

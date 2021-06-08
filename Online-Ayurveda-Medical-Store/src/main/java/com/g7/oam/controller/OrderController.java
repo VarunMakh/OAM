@@ -3,10 +3,10 @@ package com.g7.oam.controller;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.validation.Valid;
 
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -43,7 +43,7 @@ public class OrderController {
 
 	@Autowired
 	IOrderService orderService;
-	Logger logger = org.slf4j.LoggerFactory.getLogger(OrderController.class);
+	Logger logger = Logger.getLogger(OrderController.class.getName());
 
 	@PostMapping("/add")
 	@ApiOperation(value = "Add Order using Post Mapping", response = Order.class)

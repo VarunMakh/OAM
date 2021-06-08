@@ -2,11 +2,11 @@ package com.g7.oam.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 import javax.transaction.Transactional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ import com.g7.oam.repository.IMedicineRepository;
 @Service
 public class MedicineServiceImpl implements IMedicineService {
 
-	Logger logger = LoggerFactory.getLogger(MedicineServiceImpl.class);
+	Logger logger = Logger.getLogger(MedicineServiceImpl.class.getName());
 
 	@Autowired
 	IMedicineRepository repository;
@@ -34,7 +34,7 @@ public class MedicineServiceImpl implements IMedicineService {
 		try {
 			savedMedicine = repository.save(medicine);
 		} catch (Exception e) {
-			logger.error(e.getMessage());
+			logger.info(e.getMessage());
 		}
 		return savedMedicine;
 	}
@@ -85,7 +85,7 @@ public class MedicineServiceImpl implements IMedicineService {
 		try {
 			medsList = repository.findAll();
 		} catch (Exception e) {
-			logger.error(e.getMessage());
+			logger.info(e.getMessage());
 		}
 		return medsList;
 	}

@@ -1,6 +1,7 @@
 package com.g7.oam.controller;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.validation.Valid;
 
@@ -32,7 +33,7 @@ public class CategoryController {
 
 	@Autowired
 	ICategoryService categoryService;
-	org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(CategoryController.class);
+	Logger logger = Logger.getLogger(CategoryController.class.getName());
 
 	@PostMapping("/add")
 	@ApiOperation(value = "Add Category using Post Mapping", response = Category.class)

@@ -2,11 +2,10 @@ package com.g7.oam.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 import javax.transaction.Transactional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +16,7 @@ import com.g7.oam.repository.ICustomerRepository;
 @Service
 public class CustomerServiceImpl implements ICustomerService {
 
-	Logger logger = LoggerFactory.getLogger(CustomerServiceImpl.class);
+	Logger logger = Logger.getLogger(CustomerServiceImpl.class.getName());
 
 	@Autowired
 	ICustomerRepository repository;
@@ -34,7 +33,7 @@ public class CustomerServiceImpl implements ICustomerService {
 		try {
 			savedCustomer = repository.save(customer);
 		} catch (Exception e) {
-			logger.error(e.getMessage());
+			logger.info(e.getMessage());
 		}
 		return savedCustomer;
 
@@ -88,7 +87,7 @@ public class CustomerServiceImpl implements ICustomerService {
 		try {
 			customerList = repository.findAll();
 		} catch (Exception e) {
-			logger.error(e.getMessage());
+			logger.info(e.getMessage());
 		}
 		return customerList;
 	}

@@ -1,11 +1,11 @@
 package com.g7.oam.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
 import javax.transaction.Transactional;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -88,6 +88,20 @@ public class MedicineServiceImpl implements IMedicineService {
 			logger.info(e.getMessage());
 		}
 		return medsList;
+	}
+
+	@Override
+	public List<Medicine> sortMedicinesByCost() {
+		
+		List<Medicine> meds = new ArrayList<>();
+		try {
+			meds = repository.sortMedicinesByCost();
+		} catch (Exception e) {
+			logger.info(e.getMessage());
+		}
+
+		return meds;
+		
 	}
 
 }

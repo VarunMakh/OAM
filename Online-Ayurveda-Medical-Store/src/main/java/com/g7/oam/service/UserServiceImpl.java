@@ -41,7 +41,7 @@ public class UserServiceImpl implements IUserService {
 		Optional<User> optional = repository.findById(user.getUserId());
 		User loggedInUser = null;
 		if (optional.isPresent()) {
-			if (optional.get().getPassword() == user.getPassword()) {
+			if (optional.get().getPassword().equals(user.getPassword())) {
 				loggedInUser = optional.get();
 			} else {
 				throw new InvalidLoginException("Password does not match!");

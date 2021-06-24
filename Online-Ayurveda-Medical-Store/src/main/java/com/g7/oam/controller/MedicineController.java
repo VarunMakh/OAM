@@ -79,11 +79,21 @@ public class MedicineController {
 	}
 
 	@GetMapping("/showAll")
-	@ApiOperation(value = "Show All Medicine using Put Mapping", response = Medicine.class)
+	@ApiOperation(value = "Show All Medicine using Get Mapping", response = Medicine.class)
 	public ResponseEntity<List<Medicine>> showAllMedicine() {
 
 		logger.info("ShowAll Medicine Called in Customer Controller");
 		List<Medicine> medicineList = this.medicineService.showAllMedicines();
+		return new ResponseEntity<>(medicineList, HttpStatus.OK);
+
+	}
+	
+	@GetMapping("/showAllByCost")
+	@ApiOperation(value = "Show All Medicines By Company using Get Mapping", response = Medicine.class)
+	public ResponseEntity<List<Medicine>> showAllMedicinesByCost() {
+
+		logger.info("ShowAll Medicine Called in Customer Controller");
+		List<Medicine> medicineList = this.medicineService.sortMedicinesByCost();
 		return new ResponseEntity<>(medicineList, HttpStatus.OK);
 
 	}

@@ -17,4 +17,6 @@ public interface IMedicineService {
 
 	public List<Medicine> showAllMedicines();
 
+	List<Medicine> sortMedicinesByCost();
+
 }

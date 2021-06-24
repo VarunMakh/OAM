@@ -60,6 +60,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		header.add(description, "Trying to get an Order...");
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).headers(header).body(e.getMessage());
 	}
+	
+	@ExceptionHandler(InvalidLoginException.class)
+	public ResponseEntity<String> handleLoginException(InvalidLoginException e) {
+		HttpHeaders header = new HttpHeaders();
+		header.add(description, "Trying to login...");
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(header).body(e.getMessage());
+	}
 
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException e,

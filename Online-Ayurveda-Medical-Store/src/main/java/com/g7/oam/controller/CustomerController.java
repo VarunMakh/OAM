@@ -29,10 +29,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @Validated
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/customers")
 @Api(value = "OAM - Customer")
-@CrossOrigin(origins = {"http://localhost:8090","http://localhost:4200"}, allowedHeaders = "*")
 public class CustomerController {
 
 	@Autowired

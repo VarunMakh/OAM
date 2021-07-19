@@ -33,7 +33,6 @@ public class Medicine {
 	private String medicineName;
 
 	@ApiModelProperty(name = "Medicine cost", value = "Medicine Cost is numeric value representing the cost of the medicine")
-	@Pattern(regexp = "[1-9]*", message = "Please enter a valid Medicine Cost that is a number!")
 	@Max(10000)
 	@Column
 	private float medicineCost;

@@ -24,6 +24,8 @@ public interface IOrderService {
 	public List<Order> showAllOrders(Customer customer) throws CustomerNotFoundException;
 
 	public List<Order> showAllOrders(LocalDate date);
+	
+	public List<Order> showAllOrders();
 
 	public float calculateTotalCost(int orderid) throws OrderNotFoundException;
 

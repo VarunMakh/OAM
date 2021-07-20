@@ -41,7 +41,7 @@ public class MedicineController {
 	@ApiOperation(value = "Add Medicine using Post Mapping", response = Medicine.class)
 	public ResponseEntity<Medicine> addMedicine(@RequestBody @Valid Medicine medicine) {
 
-		logger.info("Add Medicine Called in Customer Controller");
+		logger.info("Add Medicine Called in Medicine Controller");
 		Medicine savedMedicine = this.medicineService.addMedicine(medicine);
 		return new ResponseEntity<>(savedMedicine, HttpStatus.OK);
 
@@ -52,7 +52,7 @@ public class MedicineController {
 	public ResponseEntity<Medicine> updateMedicine(@RequestBody @Valid Medicine medicine)
 			throws MedicineNotFoundException {
 
-		logger.info("Update Medicine Called in Customer Controller");
+		logger.info("Update Medicine Called in Medicine Controller");
 		Medicine updatedMedicine = this.medicineService.updateMedicine(medicine);
 		return new ResponseEntity<>(updatedMedicine, HttpStatus.OK);
 
@@ -63,7 +63,7 @@ public class MedicineController {
 	public ResponseEntity<Medicine> viewMedicine(@RequestBody @Valid Medicine medicine)
 			throws MedicineNotFoundException {
 
-		logger.info("View Medicine Called in Customer Controller");
+		logger.info("View Medicine Called in Medicine Controller");
 		Medicine retrivedMedicine = this.medicineService.viewMedicine(medicine);
 		return new ResponseEntity<>(retrivedMedicine, HttpStatus.OK);
 
@@ -74,7 +74,7 @@ public class MedicineController {
 	public ResponseEntity<Medicine> deleteMedicine(@PathVariable("medicineId") int medicineId)
 			throws MedicineNotFoundException {
 
-		logger.info("Delete Medicine Called in Customer Controller");
+		logger.info("Delete Medicine Called in Medicine Controller");
 		Medicine deletedMedicine = this.medicineService.deleteMedicine(medicineId);
 		return new ResponseEntity<>(deletedMedicine, HttpStatus.OK);
 
@@ -84,7 +84,7 @@ public class MedicineController {
 	@ApiOperation(value = "Show All Medicine using Get Mapping", response = Medicine.class)
 	public ResponseEntity<List<Medicine>> showAllMedicine() {
 
-		logger.info("ShowAll Medicine Called in Customer Controller");
+		logger.info("ShowAll Medicine Called in Medicine Controller");
 		List<Medicine> medicineList = this.medicineService.showAllMedicines();
 		return new ResponseEntity<>(medicineList, HttpStatus.OK);
 
@@ -94,7 +94,7 @@ public class MedicineController {
 	@ApiOperation(value = "Show All Medicines By Company using Get Mapping", response = Medicine.class)
 	public ResponseEntity<List<Medicine>> showAllMedicinesByCost() {
 
-		logger.info("ShowAll Medicine Called in Customer Controller");
+		logger.info("ShowAll Medicine Called in Medicine Controller");
 		List<Medicine> medicineList = this.medicineService.sortMedicinesByCost();
 		return new ResponseEntity<>(medicineList, HttpStatus.OK);
 

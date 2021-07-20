@@ -16,6 +16,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import io.swagger.annotations.ApiModelProperty;
 
 @Entity
@@ -33,6 +36,7 @@ public class Order {
 	@ApiModelProperty(name = "Medicine List", value = "Medicine List is a list of medicines associated with an Order.")
 	@ManyToMany
 	@JoinTable(name = "Order_Medicine", joinColumns = @JoinColumn(name = "Order_ID", referencedColumnName = "orderId"), inverseJoinColumns = @JoinColumn(name = "Medicine_ID", referencedColumnName = "medicineId"))
+	@Fetch(FetchMode.JOIN)
 	private List<Medicine> medicineList;
 	
 	@ApiModelProperty(name = "Dispatch Date", value = "Dispatch Date is system generated for 3 days from the current date.")

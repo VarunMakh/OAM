@@ -12,6 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,6 +37,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @Validated
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/orders")
 @Api(value = "OAM - Order")
@@ -102,8 +104,23 @@ public class OrderController {
 
 	}
 
-	@GetMapping("/showAllByCustomer")
-	@ApiOperation(value = "Show All Orders by Customer using Get Mapping", response = Order.class)
+//	@GetMapping("/showAllByCustomer")
+//	@ApiOperation(value = "Show All Orders by Customer using Get Mapping", response = Order.class)
+//	public ResponseEntity<List<OrderDTO>> showAllOrders(@RequestBody @Valid Customer customer)
+//			throws CustomerNotFoundException {
+//
+//		logger.info("Show All Orders by Customer Called in Order Controller");
+//		List<Order> ordersByCustomerList = this.orderService.showAllOrders(customer);
+//		List<OrderDTO> ordersByCustomerDtoList = new ArrayList<>();
+//		for (Order order : ordersByCustomerList) {
+//			ordersByCustomerDtoList.add(convertToDTO(order));
+//		}
+//		return new ResponseEntity<>(ordersByCustomerDtoList, HttpStatus.OK);
+//
+//	}
+	
+	@PostMapping("/showAllByCustomer")
+	@ApiOperation(value = "Show All Orders by Customer using Post Mapping", response = Order.class)
 	public ResponseEntity<List<OrderDTO>> showAllOrders(@RequestBody @Valid Customer customer)
 			throws CustomerNotFoundException {
 
@@ -131,6 +148,20 @@ public class OrderController {
 		return new ResponseEntity<>(ordersByDateDtoList, HttpStatus.OK);
 
 	}
+	
+	@GetMapping("/showAllOrders")
+	@ApiOperation(value = "Show All Orders using Get Mapping", response = Order.class)
+	public ResponseEntity<List<OrderDTO>> showAllOrders() {
+
+		logger.info("Show All Orders called in Order Controller");
+		List<Order> orderList = this.orderService.showAllOrders();
+		List<OrderDTO> ordersDtoList = new ArrayList<>();
+		for (Order order : orderList) {
+			ordersDtoList.add(convertToDTO(order));
+		}
+		return new ResponseEntity<>(ordersDtoList, HttpStatus.OK);
+
+	}
 
 	public OrderDTO convertToDTO(Order order) {
 
@@ -139,16 +170,17 @@ public class OrderController {
 
 		orderDto.setOrderId(order.getOrderId());
 		orderDto.setOrderDate(order.getOrderDate());
-		List<MedicineDTO> orderMedicineDtoList = new ArrayList<>();
-		for (Medicine medicine : order.getMedicineList()) {
-			MedicineDTO medicineDto = new MedicineDTO();
-			medicineDto.setMedicineId(medicine.getMedicineId());
-			medicineDto.setMedicineName(medicine.getMedicineName());
-			medicineDto.setExpiryDate(medicine.getExpiryDate());
-			medicineDto.setMedicineCost(medicine.getMedicineCost());
-			orderMedicineDtoList.add(medicineDto);
-		}
-		orderDto.setMedicineDtoList(orderMedicineDtoList);
+//		List<MedicineDTO> orderMedicineDtoList = new ArrayList<>();
+//		for (Medicine medicine : order.getMedicineList()) {
+//			MedicineDTO medicineDto = new MedicineDTO();
+//			medicineDto.setMedicineId(medicine.getMedicineId());
+//			medicineDto.setMedicineName(medicine.getMedicineName());
+//			medicineDto.setExpiryDate(medicine.getExpiryDate());
+//			medicineDto.setMedicineCost(medicine.getMedicineCost());
+//			orderMedicineDtoList.add(medicineDto);
+//		}
+//		orderDto.setMedicineDtoList(orderMedicineDtoList);
+		orderDto.setMedicineList(order.getMedicineList());
 		orderDto.setDispatchDate(order.getDispatchDate());
 		orderDto.setTotalCost(order.getTotalCost());
 

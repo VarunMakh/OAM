@@ -182,4 +182,16 @@ public class OrderServiceImpl implements IOrderService {
 		}
 	}
 
+	@Override
+	public List<Order> showAllOrders() {
+		List<Order> orderList = null;
+
+		try {
+			orderList = orderRepository.findAll();
+		} catch (Exception e) {
+			logger.info(e.getMessage());
+		}
+		return orderList;
+	}
+
 }

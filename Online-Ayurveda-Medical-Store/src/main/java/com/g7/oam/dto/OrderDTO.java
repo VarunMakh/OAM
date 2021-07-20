@@ -3,13 +3,15 @@ package com.g7.oam.dto;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.g7.oam.entities.Medicine;
 import com.g7.oam.entities.OrderStatus;
 
 public class OrderDTO {
 
 	private int orderId;
 	private LocalDate orderDate;
-	private List<MedicineDTO> medicineDtoList;
+//	private List<MedicineDTO> medicineDtoList;
+	private List<Medicine> medicineList;
 	private LocalDate dispatchDate;
 	private float totalCost;
 	private CustomerDTO customerDto;
@@ -18,17 +20,41 @@ public class OrderDTO {
 	public OrderDTO() {
 		super();
 	}
+	
+	
+//	public OrderDTO(int orderId, LocalDate orderDate, List<MedicineDTO> medicineDtoList, LocalDate dispatchDate,
+//			float totalCost, CustomerDTO customerDto, OrderStatus status) {
+//		super();
+//		this.orderId = orderId;
+//		this.orderDate = orderDate;
+//		this.medicineDtoList = medicineDtoList;
+//		this.dispatchDate = dispatchDate;
+//		this.totalCost = totalCost;
+//		this.customerDto = customerDto;
+//		this.status = status;
+//	}
 
-	public OrderDTO(int orderId, LocalDate orderDate, List<MedicineDTO> medicineDtoList, LocalDate dispatchDate,
+	public OrderDTO(int orderId, LocalDate orderDate, List<Medicine> medicineList, LocalDate dispatchDate,
 			float totalCost, CustomerDTO customerDto, OrderStatus status) {
 		super();
 		this.orderId = orderId;
 		this.orderDate = orderDate;
-		this.medicineDtoList = medicineDtoList;
+		this.medicineList = medicineList;
 		this.dispatchDate = dispatchDate;
 		this.totalCost = totalCost;
 		this.customerDto = customerDto;
 		this.status = status;
+	}
+	
+	
+
+	public List<Medicine> getMedicineList() {
+		return medicineList;
+	}
+
+
+	public void setMedicineList(List<Medicine> medicineList) {
+		this.medicineList = medicineList;
 	}
 
 	public int getOrderId() {
@@ -47,13 +73,13 @@ public class OrderDTO {
 		this.orderDate = orderDate;
 	}
 
-	public List<MedicineDTO> getMedicineDtoList() {
-		return medicineDtoList;
-	}
-
-	public void setMedicineDtoList(List<MedicineDTO> medicineDtoList) {
-		this.medicineDtoList = medicineDtoList;
-	}
+//	public List<MedicineDTO> getMedicineDtoList() {
+//		return medicineDtoList;
+//	}
+//
+//	public void setMedicineDtoList(List<MedicineDTO> medicineDtoList) {
+//		this.medicineDtoList = medicineDtoList;
+//	}
 
 	public LocalDate getDispatchDate() {
 		return dispatchDate;
